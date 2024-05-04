@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D3552BD8-5A0C-CFCF-C402-72C674B5F005}</ProjectGuid>
+    <ProjectGuid>{B6939972-E572-22E7-D481-785238A2EAEF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -949,7 +949,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="URPWizard.csproj">
-      <Project>{FB98B262-6643-A544-C4FC-5B3D2C8AB6EE}</Project>
+      <Project>{8A021B0A-0B66-6BDA-2456-D9B886ED31C6}</Project>
       <Name>URPWizard</Name>
     </ProjectReference>
   </ItemGroup>

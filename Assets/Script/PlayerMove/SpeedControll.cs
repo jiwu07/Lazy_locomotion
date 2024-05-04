@@ -28,7 +28,7 @@ public class SpeedControll : MonoBehaviour
     void Start()
     {
         //data reading
-        //serialPort = new SerialPort(portName, baudRate);
+        serialPort = new SerialPort(portName, baudRate);
         //serialPort.Open();
 
         //data writing
@@ -52,7 +52,7 @@ public class SpeedControll : MonoBehaviour
 
        // data consists of time, sensor1 data, and sensor2 data, velocity, isjump
        float time =count  * timeInterval;
-	count ++; 
+	   count ++; 
        int A0 = int.Parse(dataArray[0]) ; 
        int A1 = int.Parse(dataArray[1]) ; 
        V = int.Parse(dataArray[2]);
@@ -66,31 +66,19 @@ public class SpeedControll : MonoBehaviour
        //playwith the animation of avatar
        float speed = V /6.0f ; //map the speed to normal speed
        animator.SetFloat("Speed", speed);
-        float f = V /20f; //map the speed to normal speed,normal walking as speed 4
+       float f = V /20f; //map the speed to normal speed,normal walking as speed 4
        animator.SetFloat("f", f);
-
-        /*        if(speed > 7)
-                {
-                    f = f / 2;
-                    animator.SetFloat("f", f);
-
-                }
-                else
-                {
-                    animator.SetFloat("f", f);
-
-                }*/
         
-                //controll the move speed of avatar
-                transform.Translate(Vector3.forward * speed * stepLength* Time.deltaTime );
+       //controll the move speed of avatar
+       transform.Translate(Vector3.forward * speed * stepLength* Time.deltaTime );
 
-                //jump try
-               /* AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                if (isJump == 1 && !animator.GetBool("JumpAir") )
-                {
-                   animator.SetBool("JumpAir", true);
-                    isJump = 0;
-                }*/
+       //jump try
+       /* AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+       if (isJump == 1 && !animator.GetBool("JumpAir") )
+       {
+            animator.SetBool("JumpAir", true);
+            isJump = 0;
+       }*/
 
         //show on the UI
        // speedText.text = "Speed: " + speed.ToString();
