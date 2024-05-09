@@ -49,11 +49,14 @@ static int last_bin = 0;
 static float last_triggered_pos = 0;
 static const float kBinDebounceWidth = 100.0 / augmentation::kBins / 3.0;
 
-AudioSynthWaveform       signal;
-AudioOutputI2S           i2s1;
-AudioConnection          patchCord1(signal, 0, i2s1, 0);
-AudioConnection          patchCord2(signal, 1, i2s1, 1);
-AudioControlSGTL5000     sgtl5000_1;
+AudioSynthWaveform    waveformL;
+AudioSynthWaveform    waveformR;
+
+AudioOutputI2S        i2s1;
+AudioConnection       patchCord1(waveformR, 0, i2s1, 0);
+AudioConnection       patchCord2(waveformL, 0, i2s1, 1);
+AudioControlSGTL5000  sgtl5000_1;
+
 
 }
 
@@ -71,7 +74,16 @@ namespace simulation{
 #define MODE_M3 3
 #define MODE_M4 4
 
+/************* ************* Heigth - ************* ********************/
+/************* ************* Height - ************* ********************/
+/************* ************* Height - ************* ********************/
 float h = 1.6; // subject height
+
+
+
+/************* *************  - ************* ********************/
+/************* *************  - ************* ********************/
+/************* *************  - ************* ********************/
 float step_length = h * h / (1.72 * 0.157 * 1.72 * 0.157); // WIP use 1.52 --GUDWIP using 0.157
 
 float Mode_L[2] = {1.0, 1.0}; // time predict each mode left
@@ -108,9 +120,9 @@ int a0 =0;
 
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
-void update_vibrate(int& vibrate_counter, int sensordata){
+void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& waveform ){
   if(vibrate_counter > 15){
-    vibrate(sensordata);
+    vibrate(sensordata, waveform);
     vibrate_counter = 0;
   }
 }
@@ -184,17 +196,20 @@ bool if_stop(float t, int pre_mode ) {
     pre_mode = MODE_M4;
     return false;
 }
-
+/************* ************* Setup - ************* ********************/
+/************* ************* Setup - ************* ********************/
+/************* ************* Setup - ************* ********************/
 void setup() {
-    Serial.begin(115200);
-    //vibration
+  Serial.begin(9600);
   using namespace augmentation;
+
+  AudioMemory(10);
+
   sgtl5000_1.enable();
-  sgtl5000_1.volume(1);
-  AudioMemory(20);
-  signal.begin(WAVEFORM_SINE);  
-  signal.frequency(40);
-  delay(20);
+  sgtl5000_1.volume(0.5);
+  waveformL.begin(WAVEFORM_SINE);
+  waveformR.begin(WAVEFORM_SINE);
+
 }
 
 int count = 0;
@@ -226,8 +241,8 @@ void loop() {
   }
 
 //vibrate when foot putting down
- update_vibrate(vibrate_counterL,a1);
- update_vibrate(vibrate_counterR,a0);
+ update_vibrate(vibrate_counterL,a1,waveformL);
+ update_vibrate(vibrate_counterR,a0, waveformR);
 
 
   float target_frequency;
@@ -262,7 +277,7 @@ void loop() {
   delay(time_interval);
 }
 
-void vibrate(int input){
+void vibrate(int input, AudioSynthWaveformSine& signal){
   using namespace augmentation;
   sensor_val_filtered = ((1.0 - kFilterWeight) * sensor_val_filtered)
                           + (kFilterWeight *  input) ;
