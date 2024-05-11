@@ -2,23 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Valve.VR;
+
+
 public class LearningTestTurn : MonoBehaviour
 {
-    float rotationSpeed = 45f; 
-    private bool isRotating = false; 
-    float targetRotation = 0f;
+
+
+    public SteamVR_Action_Boolean turnBackAction; // 定义一个 SteamVR_Action_Boolean 用于检测前进的输入动作
+
 
     public bool needMark = false;
 
-    int direction = -1;
+    public GameObject player;
+    public GameObject turnPreFab;
+
 
     void Update()
     {
 
-        //mouse right button pressed, leave a mark if need
-        if (Input.GetMouseButtonDown(1))
+        if (turnBackAction.GetState(SteamVR_Input_Sources.Any))
         {
-            direction = 1;
+            Turn();
+            if (needMark)
+            {
+                Instantiate(turnPreFab, transform.position, Quaternion.identity);
+            }
         }
 
         Turn();
@@ -27,29 +36,7 @@ public class LearningTestTurn : MonoBehaviour
     //  1 turn back
     void Turn()
     {
-        if (direction == 1 && !isRotating)
-        {
-            targetRotation += 180f;
-            isRotating = true;
-        }
-        else if (direction == 0 && !isRotating)
-        {
-            targetRotation -= 180f;
-            isRotating = true;
-        }
-
-        if (isRotating)
-        {
-            float step = rotationSpeed * Time.deltaTime;
-            //turn
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0f, targetRotation, 0f), step);
-            if (Quaternion.Angle(transform.rotation, Quaternion.Euler(0f, targetRotation, 0f)) < 0.1f)
-            {
-                transform.rotation = Quaternion.Euler(0f, targetRotation, 0f);
-                isRotating = false;
-                direction = -1;
-            }
-        }
+        player.transform.Rotate(0f, 180f, 0f); ;
     }
 }
 

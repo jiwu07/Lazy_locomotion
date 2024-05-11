@@ -16,12 +16,12 @@ public class TurnAction : MonoBehaviour
     void Update()
     {
         // 检测前进输入动作是否被触发
-        if (turnRightAction.GetState(SteamVR_Input_Sources.RightHand))
+        if (turnRightAction.GetState(SteamVR_Input_Sources.Any))
         {
             Turn(90);
             turnRightCount++;
         }
-        if (turnLeftAction.GetState(SteamVR_Input_Sources.LeftHand))
+        if (turnLeftAction.GetState(SteamVR_Input_Sources.Any))
         {
             Turn(-90);
         }

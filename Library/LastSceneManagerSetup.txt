@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/USD/Practice_Room10x10.unity
+- path: Assets/Scenes/LearningTest.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

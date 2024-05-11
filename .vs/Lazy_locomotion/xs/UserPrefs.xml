@@ -1,8 +1,13 @@
 ﻿<Properties StartupConfiguration="{B6939972-E572-22E7-D481-785238A2EAEF}|">
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/LearningTest/LearningTestTurn.cs">
+    <Files>
+      <File FileName="Assets/Script/TestSquareroom/TurnAction.cs" Line="29" Column="1" />
+      <File FileName="Assets/Script/LearningTest/LearningTestTurn.cs" Line="13" Column="24" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1030db87-94eb-460c-8cca-27a7fffed685" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ccbe7435-6157-4f65-bea8-548a43f9630a" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
