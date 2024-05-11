@@ -1696,9 +1696,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 601045120494967452, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath
       value: CSVData/ArduinoData/ArduinoPractice.csv
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Name
@@ -2861,15 +2869,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 620830860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1804166702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.3712158, y: 77}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 100.6, y: 43.8}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &620830862
@@ -2923,8 +2931,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 0.76
+  m_fontSizeBase: 0.76
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2959,7 +2967,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -88.42029, w: -72.076126}
+  m_margin: {x: 0, y: 72.63198, z: 178.02399, w: -29.801205}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -8696,7 +8704,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1804166701
 Canvas:
   m_ObjectHideFlags: 0
@@ -8706,7 +8714,7 @@ Canvas:
   m_GameObject: {fileID: 1804166698}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -8727,9 +8735,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804166698}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.000000010536712, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 7.51}
+  m_LocalScale: {x: 0.32405064, y: 0.32405064, z: 0.32405064}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 620830861}
@@ -8737,9 +8745,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 2.17, y: 0.77}
+  m_SizeDelta: {x: 21.183, y: 13.2118}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1813672376
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/lyingdown/Locomotion_lying.unity
+- path: Assets/Scenes/USD/Practice_Room10x10.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

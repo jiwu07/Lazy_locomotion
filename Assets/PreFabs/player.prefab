@@ -1884,11 +1884,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 3.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2167,7 +2167,13 @@ PrefabInstance:
       addedObject: {fileID: 6332045088535032978}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8480834816101752103}
+      addedObject: {fileID: 3364385369373283352}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 601045120494967452}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7970066768877203552}
   m_SourcePrefab: {fileID: 100100000, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}
 --- !u!1 &6961082274626998574 stripped
 GameObject:
@@ -2181,12 +2187,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6961082274626998574}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2582ce330efd14c3bb2dd3bdc9c0db59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filePath: CSVData/ArduinoData/Arduino4x4.csv
+  filePath: CSVData/ArduinoData/ArduinoPractice.csv
   V: 5
 --- !u!54 &5867154226613311669
 Rigidbody:
@@ -2236,7 +2242,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8301449, y: 1, z: 1.067879}
   m_Center: {x: -0.084927574, y: 1.12, z: 0.22658765}
---- !u!114 &8480834816101752103
+--- !u!143 &3364385369373283352
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6961082274626998574}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &601045120494967452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2245,11 +2277,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 6961082274626998574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c54f3100b4aa46e0a77101454946793, type: 3}
+  m_Script: {fileID: 11500000, guid: 11a143ae8fd8a440d83afa68cccc5d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnPreFab: {fileID: 1739494883196362820, guid: bb46bc76ff67a4820a99cd1f48ad68ae, type: 3}
-  needMark: 1
+  moveForwardAction:
+    actionPath: /actions/default/in/MoveFoward
+    needsReinit: 0
+  moveSpeed: 3
+--- !u!114 &7970066768877203552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6961082274626998574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c045287798bc941aaaefa060f87f9749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnRightAction:
+    actionPath: /actions/default/in/SnapTurnRight
+    needsReinit: 0
+  turnLeftAction:
+    actionPath: /actions/default/in/SnapTurnLeft
+    needsReinit: 0
+  moveSpeed: 3
 --- !u!4 &7769109433918507924 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 73ffbc06802a247cfb1b26f4ee67eba8, type: 3}

@@ -23,12 +23,15 @@ public class ControllerTest : MonoBehaviour
 
     bool isStart = false;
 
+    TurnAction turnAction;
+
 
 
     public string csvFilePath ; 
     //record correct path(point on each corner)
     void Start()
     {
+        turnAction = GetComponent<TurnAction>();
         //save the point data
         if (!File.Exists(csvFilePath))
         {
@@ -58,23 +61,19 @@ public class ControllerTest : MonoBehaviour
 
     void Update()
     {
-        //turn right, start counting after light off
-        if (Input.GetMouseButtonDown(1) && isStart)
-        {
 
+        int tempTurnCount = turnAction.GetTurnRightCount();
+
+        if ((tempTurnCount > turnCount)&& isStart)
+        {
             turnCount++;
             //record the turn point 
             Vector3 position = player.transform.position;
-            string positionData = string.Format("{0},{1},{2},{3}\n","turn "+ turnCount, (int) position.x, (int)position.y, (int)position.z);
+            string positionData = string.Format("{0},{1},{2},{3}\n", "turn " + turnCount, (int)position.x, (int)position.y, (int)position.z);
             File.AppendAllText(csvFilePath, positionData);
         }
-
-        //in case user press wrong button
-        if (Input.GetMouseButtonDown(0) && isStart)
-        {
-            turnCount--;
-        }
-
+        
+        
         //in total need to turn right 4 time to reach the start state
         if (turnCount >= 4)
         {

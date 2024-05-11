@@ -24,4 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/USD/Room20X20.unity
     guid: f48d365f8dc414d78ab9af2dca4ca5d9
   m_configObjects:
+    Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 4db000bcf836e46aba66db63b9ad8a5a, type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 3f5bf53bc55ff4045bbfe6a3d5c3984f, type: 2}

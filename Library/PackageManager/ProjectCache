@@ -5,20 +5,34 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638500182770000000
-    m_Hash: 4008866810
+      ticks: 638508672040000000
+    m_Hash: 2480970793
   m_LockFileStatus:
     m_FilePath: /Users/emma/Documents/GitHub/jiwu07/Lazy_locomotion/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638500182770000000
-    m_Hash: 1358074612
+      ticks: 638508672040000000
+    m_Hash: 1799950806
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
-  m_LocalFileStatus: []
+  m_LocalFileStatus:
+  - m_FilePath: /Users/emma/Documents/GitHub/jiwu07/Lazy_locomotion/Assets/SteamVR/OpenVRUnityXRPackage/Editor/com.valvesoftware.unity.openvr-1.2.1.tgz/package.json
+    m_PathExists: 0
+    m_ContentTrackingEnabled: 1
+    m_ModificationDate:
+      serializedVersion: 2
+      ticks: 0
+    m_Hash: 0
+  - m_FilePath: /Users/emma/Documents/GitHub/jiwu07/Lazy_locomotion/Assets/SteamVR/OpenVRUnityXRPackage/Editor/com.valvesoftware.unity.openvr-1.2.1.tgz
+    m_PathExists: 1
+    m_ContentTrackingEnabled: 1
+    m_ModificationDate:
+      serializedVersion: 2
+      ticks: 638411198350000000
+    m_Hash: 4235084898
 m_ProjectPath: /Users/emma/Documents/GitHub/jiwu07/Lazy_locomotion/Packages
 m_EditorVersion: 2022.3.12f1 (4fe6e059c7ef)
 m_ResolvedPackages:
@@ -1332,6 +1346,96 @@ m_ResolvedPackages:
     path: 
   unityLifecycle:
     version: 1.8.2
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+  isDeprecated: 0
+  deprecationMessage: 
+- packageId: com.valvesoftware.unity.openvr@file:/Users/emma/Documents/GitHub/jiwu07/Lazy_locomotion/Assets/SteamVR/OpenVRUnityXRPackage/Editor/com.valvesoftware.unity.openvr-1.2.1.tgz
+  testable: 0
+  isDirectDependency: 1
+  version: 1.2.1
+  source: 6
+  resolvedPath: /Users/emma/Documents/GitHub/jiwu07/Lazy_locomotion/Library/PackageCache/com.valvesoftware.unity.openvr@970ac47786c4
+  assetPath: Packages/com.valvesoftware.unity.openvr
+  name: com.valvesoftware.unity.openvr
+  displayName: OpenVR XR Plugin
+  author:
+    name: Valve Corporation
+    email: 
+    url: 
+  category: 
+  type: 
+  description: 'Provides rendering support for OpenVR devices in Unity XR. For input
+    please see: https://github.com/ValveSoftware/steamvr_unity_plugin'
+  status: 0
+  errors: []
+  versions:
+    all: []
+    compatible: []
+    recommended: 
+    deprecated: []
+  dependencies:
+  - name: com.unity.xr.management
+    version: 3.2.13
+  - name: com.unity.ugui
+    version: 1.0.0
+  - name: com.unity.xr.legacyinputhelpers
+    version: 2.1.4
+  resolvedDependencies:
+  - name: com.unity.xr.management
+    version: 4.4.1
+  - name: com.unity.modules.subsystems
+    version: 1.0.0
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.modules.vr
+    version: 1.0.0
+  - name: com.unity.modules.physics
+    version: 1.0.0
+  - name: com.unity.modules.xr
+    version: 1.0.0
+  - name: com.unity.xr.legacyinputhelpers
+    version: 2.1.10
+  - name: com.unity.ugui
+    version: 1.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  keywords:
+  - openvr
+  - xr
+  - virtual
+  - reality
+  - xreditorsubsystem
+  - xrsdk
+  - steamvr
+  - vr
+  - unity
+  - sdk
+  - valve
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+  hideInEditor: 0
+  isAssetStorePackage: 0
+  datePublishedTicks: 0
+  documentationUrl: 
+  hasRepository: 0
+  repository:
+    type: 
+    url: 
+    revision: 
+    path: 
+  unityLifecycle:
+    version: 
     nextVersion: 
     recommendedVersion: 
     isDeprecated: 0

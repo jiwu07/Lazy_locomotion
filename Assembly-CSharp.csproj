@@ -87,7 +87,9 @@
     <Compile Include="Assets/Model/TextMesh Pro/Examples &amp; Extras/Scripts/EnvMapAnimator.cs" />
     <Compile Include="Assets/Model/TextMesh Pro/Examples &amp; Extras/Scripts/Benchmark02.cs" />
     <Compile Include="Assets/Model/UnityTechnologies/StarterAssets/ThirdPersonController/Scripts/BasicRigidBodyPush.cs" />
+    <Compile Include="Assets/Script/PlayerMove/MoveForward.cs" />
     <Compile Include="Assets/Model/TextMesh Pro/Examples &amp; Extras/Scripts/ShaderPropAnimator.cs" />
+    <Compile Include="Assets/Script/TestSquareroom/TurnAction.cs" />
     <Compile Include="Assets/Model/UnityTechnologies/StarterAssets/Mobile/Scripts/CanvasInputs/UICanvasControllerInput.cs" />
     <Compile Include="Assets/Model/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets/Model/TextMesh Pro/Examples &amp; Extras/Scripts/SkewTextExample.cs" />
@@ -396,6 +398,9 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library/PackageCache/com.unity.visualscripting@1.9.1/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Valve.Newtonsoft.Json">
+      <HintPath>Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/mscorlib.dll</HintPath>
@@ -832,6 +837,9 @@
     <Reference Include="PPv2URPConverters">
       <HintPath>Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.XR.OpenVR">
+      <HintPath>Library/ScriptAssemblies/Unity.XR.OpenVR.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.XR.CoreUtils.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.XR.CoreUtils.Editor.dll</HintPath>
     </Reference>
@@ -916,6 +924,9 @@
     <Reference Include="Unity.InputSystem.ForUI">
       <HintPath>Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.XR.OpenVR.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.XR.OpenVR.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
     </Reference>
@@ -948,9 +959,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="SteamVR.csproj">
+      <Project>{336B61C1-F8CF-5CF8-F2C1-250403D29848}</Project>
+      <Name>SteamVR</Name>
+    </ProjectReference>
+    <ProjectReference Include="SteamVR_Actions.csproj">
+      <Project>{3EA43614-FD13-3C3E-C137-306AAFA4E99B}</Project>
+      <Name>SteamVR_Actions</Name>
+    </ProjectReference>
+    <ProjectReference Include="SteamVR_Windows_EditorHelper.csproj">
+      <Project>{98A40EC1-04AB-7063-3EC7-C1F324DFDE50}</Project>
+      <Name>SteamVR_Windows_EditorHelper</Name>
+    </ProjectReference>
     <ProjectReference Include="URPWizard.csproj">
       <Project>{8A021B0A-0B66-6BDA-2456-D9B886ED31C6}</Project>
       <Name>URPWizard</Name>
+    </ProjectReference>
+    <ProjectReference Include="SteamVR_Input_Editor.csproj">
+      <Project>{44580A07-3F31-7CB8-9612-85FE8928DAE5}</Project>
+      <Name>SteamVR_Input_Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="SteamVR_Editor.csproj">
+      <Project>{AFB54F59-76E3-F03D-E95C-3E97012707C8}</Project>
+      <Name>SteamVR_Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
