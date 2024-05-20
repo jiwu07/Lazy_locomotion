@@ -1,14 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 
 using TMPro;
-
-using Unity.VisualScripting;
-
-using UnityEditor.SearchService;
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
 
 
 public class MainSceneControll : MonoBehaviour
@@ -20,9 +14,12 @@ public class MainSceneControll : MonoBehaviour
 
     public TextMeshPro text;
 
+    public XRController Controller;
+    public InputHelpers.Button moveButton;
+
     private void Start()
     {
-        text.text = "Press any button to start the test";
+        text.text = "Press trigger button to start the test";
     }
 
 
@@ -30,9 +27,9 @@ public class MainSceneControll : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && !isCount)
+        if (Controller.inputDevice.IsPressed(moveButton, out bool pressed, Controller.axisToPressThreshold)) 
         {
-            isCount = true;
+            isCount = pressed;
         }
 
         if (isCount && count > 0)

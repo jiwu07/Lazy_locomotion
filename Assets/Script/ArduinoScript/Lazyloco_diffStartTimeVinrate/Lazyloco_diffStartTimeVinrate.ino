@@ -49,7 +49,7 @@ static int last_bin = 0;
 static float last_triggered_pos = 0;
 static const float kBinDebounceWidth = 100.0 / augmentation::kBins / 3.0;
 
-AAudioSynthWaveform    waveformL;
+AudioSynthWaveform    waveformL;
 AudioSynthWaveform    waveformR;
 
 AudioOutputI2S        i2s1;
@@ -108,6 +108,7 @@ float time_interval = 20;
 
 int vibrate_counterL = 0;
 int vibrate_counterR = 0;
+float vibrateDelay = 130;
 
 int isJump = 0;
 
@@ -119,19 +120,18 @@ int a0 =0;
 
 
 //checking vibration based on the string length/sensor data(0-255)
-//vibrate every 0.2s time after feet on the ground max. 0.8s
-void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal){
-  if(vibrate_counter < 0.8){
-    vibrate(sensordata, signal);
-    vibrate_counter = vibrate_counter +0.02;
-  }else{
-    vibrate_counter =0;
+//vibrate every constat distance
+void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal ){
+  if(vibrate_counter > 15){
+    vibrate(sensordata,signal);
+    //Serial.println("count");
+    vibrate_counter = 0;
   }
 }
 
 
 //check the string situation and update the current mode
-void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[]) { 
+void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter) { 
     float temp = 0.02;
     if (pre_height - height > 2) { // going up
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
@@ -160,6 +160,8 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         t += temp; // keep mode1 or 2
         return;
     } else if (height - pre_height >2) { // going down
+        //update vibrate counter
+        vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
             up = 1;
             pre_mode = MODE_M2;
@@ -196,20 +198,24 @@ bool if_stop(float t, int pre_mode ) {
     pre_mode = MODE_M4;
     return false;
 }
-
+/************* ************* Setup - ************* ********************/
+/************* ************* Setup - ************* ********************/
+/************* ************* Setup - ************* ********************/
 void setup() {
   Serial.begin(9600);
-    //vibration
-  using namespace augmentation;
-  Serial.begin(9600);
   using namespace augmentation;
 
-  AudioMemory(10);
+  AudioMemory(20);
 
   sgtl5000_1.enable();
-  sgtl5000_1.volume(0.5);
+  sgtl5000_1.volume(1);
   waveformL.begin(WAVEFORM_SINE);
+  waveformL.frequency(80);
+
   waveformR.begin(WAVEFORM_SINE);
+  waveformR.frequency(80);
+   // waveformL.amplitude(1);
+
 
 }
 
@@ -226,8 +232,8 @@ void loop() {
   a1 = map(analogValueA1, 0, 1023, 0, 255);
 
 
-  update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L);
-  update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R);
+  update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL);
+  update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR);
 
 
 
@@ -241,17 +247,14 @@ void loop() {
       Mode_R[1] = 1.0;
   }
 
-//vibrate when foot putting on the ground
-  if(pre_mode_L == MODE_M4){
-     update_vibrate(vibrate_counterL,a1, waveformL);
-  }else{
-     vibrate_counterL = 0;
-  }
-  if(pre_mode_R == MODE_M4){
-     update_vibrate(vibrate_counterR,a0, waveformR);
-  }else{
-     vibrate_counterR = 0;
-  }
+//vibrate when foot putting down with delay
+if(a1 < vibrateDelay){
+ update_vibrate(vibrate_counterL,a1,waveformL);
+}
+if(a0 < vibrateDelay){
+ update_vibrate(vibrate_counterR,a0, waveformR);
+
+}
 
 
   float target_frequency;
@@ -269,6 +272,10 @@ void loop() {
 
   int velocity = int(current_velocity);
 
+  //if(L_up && R_up){
+  //  isJump = 1;
+  //}elae{ isjump = 0;}
+ 
   // Send data to Unity
   Serial.print(a0);
   Serial.print(',');
@@ -282,8 +289,10 @@ void loop() {
   delay(time_interval);
 }
 
-void vibrate(int input, AudioSynthWaveformSine& signal){
+void vibrate(int input, AudioSynthWaveform& signal){
   using namespace augmentation;
+
+  //signal.amplitude(1);
   sensor_val_filtered = ((1.0 - kFilterWeight) * sensor_val_filtered)
                           + (kFilterWeight *  input) ;
 
@@ -323,6 +332,7 @@ void vibrate(int input, AudioSynthWaveformSine& signal){
     amp = (kFadeAmp) ? map(sensor_val_percent, 0.f, 100.f, kAmpMin, kAmpMax) : kAmplitude;
   }
   signal.amplitude(amp);
+  //waveformL.amplitude(amp);
 
   if (kRandDuration) {
     delay(random(kPulseDurationMin, kPulseDurationMax));
@@ -331,8 +341,11 @@ void vibrate(int input, AudioSynthWaveformSine& signal){
   }
 
   signal.amplitude(0.f);
-  
+  //waveformL.amplitude(0.f);
+  Serial.print(amp);
+
   last_bin = bin;
   last_triggered_pos = sensor_val_percent;
 
+//signal.amplitude(1);
 }

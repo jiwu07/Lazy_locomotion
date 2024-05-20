@@ -3,6 +3,8 @@ Library/Bee/artifacts/mvdfrm/Unity.Burst.ref.dll_1A4A396316C69723.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.EditorCoroutines.Editor.ref.dll_764466B3DE13E0F6.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.InputSystem.ForUI.ref.dll_59EB0A97FE8BA06B.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.InputSystem.ref.dll_E7D0D94F7033A25C.mvfrm
+Library/Bee/artifacts/mvdfrm/Unity.InternalAPIEditorBridge.007.ref.dll_FD4D81E4E7B6239F.mvfrm
+Library/Bee/artifacts/mvdfrm/Unity.InternalAPIEngineBridge.007.ref.dll_EFC83A8F4CC50AE4.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.Mathematics.Editor.ref.dll_4CCF507BB6B6D418.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.Mathematics.ref.dll_D391EBEEE8A3D929.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.Performance.Profile-Analyzer.Editor.ref.dll_B6524DA6EC08B586.mvfrm
@@ -25,6 +27,8 @@ Library/Bee/artifacts/mvdfrm/Unity.TextMeshPro.Editor.ref.dll_C84C86C4A296C05B.m
 Library/Bee/artifacts/mvdfrm/Unity.TextMeshPro.ref.dll_6F463A11191944B6.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.Timeline.Editor.ref.dll_BDBCE6C1B20356AD.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.Timeline.ref.dll_D8EFE25D4F12F144.mvfrm
+Library/Bee/artifacts/mvdfrm/Unity.Tutorials.Core.Editor.ref.dll_1587EC67D8214446.mvfrm
+Library/Bee/artifacts/mvdfrm/Unity.Tutorials.Core.ref.dll_77E878BAA274BE1B.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.VSCode.Editor.ref.dll_084509104EF3A754.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.VisualScripting.Core.Editor.ref.dll_535D6CC019801AD8.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.VisualScripting.Core.ref.dll_6CCD00D226452669.mvfrm
@@ -38,11 +42,13 @@ Library/Bee/artifacts/mvdfrm/Unity.VisualStudio.Editor.ref.dll_6E6C08999B715408.
 Library/Bee/artifacts/mvdfrm/Unity.XR.CoreUtils.Editor.ref.dll_DFD0AF7B8D5AAED0.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.XR.CoreUtils.ref.dll_AEED9BCF3F93B2F1.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.XR.Interaction.Toolkit.Editor.ref.dll_4CA39291CBF27750.mvfrm
+Library/Bee/artifacts/mvdfrm/Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.ref.dll_4E29620AC9461B71.mvfrm
+Library/Bee/artifacts/mvdfrm/Unity.XR.Interaction.Toolkit.Samples.StarterAssets.ref.dll_6B91237167D9B040.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.XR.Interaction.Toolkit.ref.dll_8E32920E5BF96271.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.XR.Management.Editor.ref.dll_1117D83C60380FC7.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.XR.Management.ref.dll_12689334EEAEEE8A.mvfrm
-Library/Bee/artifacts/mvdfrm/Unity.XR.OpenVR.Editor.ref.dll_8C1A01DAB3C21684.mvfrm
-Library/Bee/artifacts/mvdfrm/Unity.XR.OpenVR.ref.dll_FC10677C0C0C5FFD.mvfrm
+Library/Bee/artifacts/mvdfrm/Unity.XR.Oculus.Editor.ref.dll_C90202E53708D6E1.mvfrm
+Library/Bee/artifacts/mvdfrm/Unity.XR.Oculus.ref.dll_8EF39E93B7C5FDD0.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.XR.OpenXR.Editor.ref.dll_83EF08CAAD55CCC6.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.XR.OpenXR.Features.ConformanceAutomation.ref.dll_1E5BD504FDC408F4.mvfrm
 Library/Bee/artifacts/mvdfrm/Unity.XR.OpenXR.Features.MetaQuestSupport.Editor.ref.dll_60EEC5C99F415961.mvfrm

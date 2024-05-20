@@ -120,9 +120,10 @@ int a0 =0;
 
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
-void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& waveform ){
+void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal ){
   if(vibrate_counter > 15){
-    vibrate(sensordata, waveform);
+    vibrate(sensordata,signal);
+    //Serial.println("count");
     vibrate_counter = 0;
   }
 }
@@ -203,12 +204,17 @@ void setup() {
   Serial.begin(9600);
   using namespace augmentation;
 
-  AudioMemory(10);
+  AudioMemory(20);
 
   sgtl5000_1.enable();
-  sgtl5000_1.volume(0.5);
+  sgtl5000_1.volume(1);
   waveformL.begin(WAVEFORM_SINE);
+  waveformL.frequency(80);
+
   waveformR.begin(WAVEFORM_SINE);
+  waveformR.frequency(80);
+   // waveformL.amplitude(1);
+
 
 }
 
@@ -277,8 +283,10 @@ void loop() {
   delay(time_interval);
 }
 
-void vibrate(int input, AudioSynthWaveformSine& signal){
+void vibrate(int input, AudioSynthWaveform& signal){
   using namespace augmentation;
+
+  //signal.amplitude(1);
   sensor_val_filtered = ((1.0 - kFilterWeight) * sensor_val_filtered)
                           + (kFilterWeight *  input) ;
 
@@ -318,6 +326,7 @@ void vibrate(int input, AudioSynthWaveformSine& signal){
     amp = (kFadeAmp) ? map(sensor_val_percent, 0.f, 100.f, kAmpMin, kAmpMax) : kAmplitude;
   }
   signal.amplitude(amp);
+  //waveformL.amplitude(amp);
 
   if (kRandDuration) {
     delay(random(kPulseDurationMin, kPulseDurationMax));
@@ -326,8 +335,11 @@ void vibrate(int input, AudioSynthWaveformSine& signal){
   }
 
   signal.amplitude(0.f);
-  
+  //waveformL.amplitude(0.f);
+  Serial.print(amp);
+
   last_bin = bin;
   last_triggered_pos = sensor_val_percent;
 
+//signal.amplitude(1);
 }

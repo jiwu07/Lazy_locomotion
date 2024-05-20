@@ -113,11 +113,10 @@
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
 -define:ENABLE_INPUT_SYSTEM
--define:ENABLE_LEGACY_INPUT_MANAGER
 -define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
 -define:USE_INPUT_SYSTEM_POSE_CONTROL
 -define:USE_INPUT_SYSTEM_POSE_CONTROL
--define:USE_INPUT_SYSTEM_POSE_CONTROL
+-define:UNITY_POST_PROCESSING_STACK_V2
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
 -define:UNITY_EDITOR_ONLY_COMPILATION
@@ -332,7 +331,6 @@
 -r:"/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/System.Transactions.dll"
 -r:"/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/System.Xml.dll"
 -r:"/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/System.Xml.Linq.dll"
--r:"Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll"
 -r:"Library/PackageCache/com.unity.collab-proxy@2.3.1/Lib/Editor/PlasticSCM/log4netPlastic.dll"
 -r:"Library/PackageCache/com.unity.collab-proxy@2.3.1/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll"
 -r:"Library/PackageCache/com.unity.collab-proxy@2.3.1/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll"
@@ -345,16 +343,13 @@
 -r:"Library/PackageCache/com.unity.visualscripting@1.9.1/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Assembly-CSharp.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/PPv2URPConverters.ref.dll"
--r:"Library/Bee/artifacts/200b0aEDbg.dag/SteamVR.ref.dll"
--r:"Library/Bee/artifacts/200b0aEDbg.dag/SteamVR_Actions.ref.dll"
--r:"Library/Bee/artifacts/200b0aEDbg.dag/SteamVR_Editor.ref.dll"
--r:"Library/Bee/artifacts/200b0aEDbg.dag/SteamVR_Input_Editor.ref.dll"
--r:"Library/Bee/artifacts/200b0aEDbg.dag/SteamVR_Windows_EditorHelper.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.Burst.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.Burst.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.EditorCoroutines.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.InputSystem.ForUI.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.InputSystem.ref.dll"
+-r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.InternalAPIEditorBridge.007.ref.dll"
+-r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.InternalAPIEngineBridge.007.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.Mathematics.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.Mathematics.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.Performance.Profile-Analyzer.Editor.ref.dll"
@@ -377,6 +372,8 @@
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.TextMeshPro.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.Timeline.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.Timeline.ref.dll"
+-r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.Tutorials.Core.Editor.ref.dll"
+-r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.Tutorials.Core.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.VisualScripting.Core.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.VisualScripting.Core.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.VisualScripting.Flow.Editor.ref.dll"
@@ -391,10 +388,12 @@
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.CoreUtils.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.Interaction.Toolkit.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.Interaction.Toolkit.ref.dll"
+-r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.ref.dll"
+-r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.Interaction.Toolkit.Samples.StarterAssets.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.Management.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.Management.ref.dll"
--r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.OpenVR.Editor.ref.dll"
--r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.OpenVR.ref.dll"
+-r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.Oculus.Editor.ref.dll"
+-r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.Oculus.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.OpenXR.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.OpenXR.Features.ConformanceAutomation.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/Unity.XR.OpenXR.Features.MetaQuestSupport.Editor.ref.dll"
@@ -411,10 +410,10 @@
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/UnityEngine.TestRunner.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/UnityEngine.XR.LegacyInputHelpers.ref.dll"
--r:"Library/Bee/artifacts/200b0aEDbg.dag/URPWizard.ref.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Model/TutorialInfo/Scripts/Editor/ReadmeEditor.cs"
+"Assets/Model/UnityTechnologies/Editor/URPWizard.cs"
 -langversion:9.0
 
 /deterministic

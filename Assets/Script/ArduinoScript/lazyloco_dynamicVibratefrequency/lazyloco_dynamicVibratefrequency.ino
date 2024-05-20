@@ -204,13 +204,15 @@ bool if_stop(float t, int pre_mode ) {
 void setup() {
   Serial.begin(9600);
   using namespace augmentation;
-
-  AudioMemory(10);
+  AudioMemory(20);
 
   sgtl5000_1.enable();
-  sgtl5000_1.volume(0.5);
+  sgtl5000_1.volume(1);
   waveformL.begin(WAVEFORM_SINE);
+  waveformL.frequency(80);
+
   waveformR.begin(WAVEFORM_SINE);
+  waveformR.frequency(80);
 
 }
 

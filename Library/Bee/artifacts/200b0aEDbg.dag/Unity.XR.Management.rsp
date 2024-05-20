@@ -113,11 +113,10 @@
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
 -define:ENABLE_INPUT_SYSTEM
--define:ENABLE_LEGACY_INPUT_MANAGER
 -define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
 -define:USE_INPUT_SYSTEM_POSE_CONTROL
 -define:USE_INPUT_SYSTEM_POSE_CONTROL
--define:USE_INPUT_SYSTEM_POSE_CONTROL
+-define:UNITY_POST_PROCESSING_STACK_V2
 -define:UNITY_ANALYTICS
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
@@ -331,7 +330,6 @@
 -r:"/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/System.Transactions.dll"
 -r:"/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/System.Xml.dll"
 -r:"/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/System.Xml.Linq.dll"
--r:"Assets/SteamVR/Input/Plugins/JSON.NET/Valve.Newtonsoft.Json.dll"
 -r:"Library/PackageCache/com.unity.collab-proxy@2.3.1/Lib/Editor/PlasticSCM/log4netPlastic.dll"
 -r:"Library/PackageCache/com.unity.collab-proxy@2.3.1/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll"
 -r:"Library/PackageCache/com.unity.collab-proxy@2.3.1/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll"
@@ -345,13 +343,13 @@
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/UnityEngine.UI.ref.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.12f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
-"Library/PackageCache/com.unity.xr.management@4.4.1/Runtime/IXRLoaderPreInit.cs"
-"Library/PackageCache/com.unity.xr.management@4.4.1/Runtime/XRConfigurationData.cs"
-"Library/PackageCache/com.unity.xr.management@4.4.1/Runtime/XRGeneralSettings.cs"
-"Library/PackageCache/com.unity.xr.management@4.4.1/Runtime/XRLoader.cs"
-"Library/PackageCache/com.unity.xr.management@4.4.1/Runtime/XRLoaderHelper.cs"
-"Library/PackageCache/com.unity.xr.management@4.4.1/Runtime/XRManagementAnalytics.cs"
-"Library/PackageCache/com.unity.xr.management@4.4.1/Runtime/XRManagerSettings.cs"
+"Library/PackageCache/com.unity.xr.management@4.4.0/Runtime/IXRLoaderPreInit.cs"
+"Library/PackageCache/com.unity.xr.management@4.4.0/Runtime/XRConfigurationData.cs"
+"Library/PackageCache/com.unity.xr.management@4.4.0/Runtime/XRGeneralSettings.cs"
+"Library/PackageCache/com.unity.xr.management@4.4.0/Runtime/XRLoader.cs"
+"Library/PackageCache/com.unity.xr.management@4.4.0/Runtime/XRLoaderHelper.cs"
+"Library/PackageCache/com.unity.xr.management@4.4.0/Runtime/XRManagementAnalytics.cs"
+"Library/PackageCache/com.unity.xr.management@4.4.0/Runtime/XRManagerSettings.cs"
 -langversion:9.0
 
 /deterministic
