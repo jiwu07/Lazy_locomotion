@@ -15,7 +15,7 @@ public class LightControllKeyboard : MonoBehaviour
     public LayerMask LightOffMask;
 
     string text = "Light off in ";
-    float count = 10.0f;
+    float count = 9.0f;
     public bool isControll = true;
 
 
@@ -29,15 +29,15 @@ public class LightControllKeyboard : MonoBehaviour
             lightText.text = text +  t.ToString() + "s";
             count -= Time.deltaTime;
             //freez player movement
-            player.GetComponent<KeyBoardControll>().enabled = false;
-            player.GetComponent<Turn>().enabled = false;
+            player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = false;
+            player.transform.Find("Camera").GetComponent<Turn>().enabled = false;
 
         }
         else if(isControll)
         {
             //Player can start move
-            player.GetComponent<KeyBoardControll>().enabled = true;
-            player.GetComponent<Turn>().enabled = true;
+            player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = true;
+            player.transform.Find("Camera").GetComponent<Turn>().enabled = true;
             //no need stuff off
             roomOFFObject.SetActive(false);
             //ui text off

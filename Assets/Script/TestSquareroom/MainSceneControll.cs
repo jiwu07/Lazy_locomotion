@@ -8,7 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class MainSceneControll : MonoBehaviour
 {
     public string nextSceneName = "Room4x4";
-    float count = 5.0f;
+    float count = 3.0f;
     bool isCount = false;
     public GameObject room;
 
@@ -27,7 +27,7 @@ public class MainSceneControll : MonoBehaviour
 
     void Update()
     {
-        if (Controller.inputDevice.IsPressed(moveButton, out bool pressed, Controller.axisToPressThreshold)) 
+        if (Controller.inputDevice.IsPressed(moveButton, out bool pressed, Controller.axisToPressThreshold)&& !isCount) 
         {
             isCount = pressed;
         }

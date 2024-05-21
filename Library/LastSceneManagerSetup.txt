@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room4x4.unity
+- path: Assets/Scenes/MSQTest/LyingdownTest/Locomotion_lying.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

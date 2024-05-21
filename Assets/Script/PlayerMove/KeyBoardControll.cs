@@ -23,17 +23,18 @@ public class KeyBoardControll : MonoBehaviour
             // turn 
             if (pressed)
             {
-                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                player.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
                 animator.SetFloat("Speed", moveSpeed);
                 animator.SetFloat("f", 1);
+                return;
             }
             // move
+            animator.SetFloat("Speed", 0f);
+
+
             
-
-            return;
         }
-        animator.SetFloat("Speed", 0f);
-
+        
     }
 
 

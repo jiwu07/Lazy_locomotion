@@ -26,7 +26,7 @@ public class Turn : MonoBehaviour
         if (turnController.inputDevice.IsPressed(turnButton, out bool pressed, turnController.axisToPressThreshold)) // mouse left button pressing
         {
             // turn 
-            if (pressed && isPressed)
+            if (pressed && !isPressed)
             {
                 player.transform.Rotate(0, 90, 0);
                 isPressed = true;

@@ -11,8 +11,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ControllerTestKeyboard : MonoBehaviour
 {
 
-    int turnCount = 0;
-    public string nextSceneName = "MainTestScene";
+     public int turnCount = 0;
+    public string nextSceneName ;
     float count = 5.0f;
     public TextMeshProUGUI text;
 
@@ -26,6 +26,7 @@ public class ControllerTestKeyboard : MonoBehaviour
 
     public XRController turnController;
     public InputHelpers.Button turnButton;
+    bool isPressed = false;
 
     public string csvFilePath ; 
     //record correct path(point on each corner)
@@ -53,25 +54,31 @@ public class ControllerTestKeyboard : MonoBehaviour
          pointData = string.Format("{0},{1},{2},{3}\n", "point 4", position.x, position.y, position.z);
         File.AppendAllText(csvFilePath, pointData);
 
-        //if lightoff
-        isStart = !GetComponent<LightControllKeyboard>().isControll;
+      
+
     }
 
 
     void Update()
     {
+        //if lightoff
+        isStart = !GetComponent<LightControllKeyboard>().isControll;
         //turn right, start counting after light off
         if (turnController.inputDevice.IsPressed(turnButton, out bool pressed, turnController.axisToPressThreshold) && isStart)
         {
-            if (pressed)
+            if (pressed && !isPressed)
             {
                 turnCount++;
             //record the turn point 
                 Vector3 position = player.transform.position;
                 string positionData = string.Format("{0},{1},{2},{3}\n","turn "+ turnCount, (int) position.x, (int)position.y, (int)position.z);
                 File.AppendAllText(csvFilePath, positionData);
+                isPressed = true;
             }
-            
+            if (!pressed) {
+                isPressed = false;
+            }
+
         }
 
 

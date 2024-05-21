@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class ControllerTest : MonoBehaviour
+public class ControllerTestLoco : MonoBehaviour
 {
 
     int turnCount = 0;
@@ -26,6 +26,7 @@ public class ControllerTest : MonoBehaviour
 
     public XRController turnController;
     public InputHelpers.Button turnButton;
+    bool isPressed = false;
 
 
     public string csvFilePath ; 
@@ -54,28 +55,31 @@ public class ControllerTest : MonoBehaviour
          pointData = string.Format("{0},{1},{2},{3}\n", "point 4", position.x, position.y, position.z);
         File.AppendAllText(csvFilePath, pointData);
 
-        //if lightoff
-        isStart = GetComponent<LightControllLoco>().isControll;
+      
     }
 
 
     void Update()
     {
+        //if lightoff
+        isStart = GetComponent<LightControllLoco>().isControll;
         //turn right, start counting after light off
-        if (Input.GetMouseButtonDown(1) && isStart)
+        if (turnController.inputDevice.IsPressed(turnButton, out bool pressed, turnController.axisToPressThreshold) && isStart)
         {
+            if (pressed && !isPressed)
+            {
+                turnCount++;
+                //record the turn point 
+                Vector3 position = player.transform.position;
+                string positionData = string.Format("{0},{1},{2},{3}\n", "turn " + turnCount, (int)position.x, (int)position.y, (int)position.z);
+                File.AppendAllText(csvFilePath, positionData);
+                isPressed = true;
+            }
+            if (!pressed)
+            {
+                isPressed = false;
+            }
 
-            turnCount++;
-            //record the turn point 
-            Vector3 position = player.transform.position;
-            string positionData = string.Format("{0},{1},{2},{3}\n","turn "+ turnCount, (int) position.x, (int)position.y, (int)position.z);
-            File.AppendAllText(csvFilePath, positionData);
-        }
-
-        //in case user press wrong button
-        if (Input.GetMouseButtonDown(0) && isStart)
-        {
-            turnCount--;
         }
 
         //in total need to turn right 4 time to reach the start state
