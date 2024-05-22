@@ -123,7 +123,7 @@ int a0 =0;
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
 void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& waveform ){
-  if(vibrate_counter > 15){
+  if(vibrate_counter > 4){
     vibrate(sensordata, waveform);
     vibrate_counter = 0;
   }

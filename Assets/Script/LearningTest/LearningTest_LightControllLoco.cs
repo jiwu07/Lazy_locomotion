@@ -25,7 +25,7 @@ public class LearningTest_LightControllLoco : MonoBehaviour
     int count = 2;
 
     int distance;
-    public bool lightOn = false;
+    bool lightOn = true;
 
     Transform targetTransform;
     public GameObject taskObject;
