@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class LearningTest_LightControll : MonoBehaviour
+public class LearningTest_LightControllKeyboard : MonoBehaviour
 {
     public TextMeshProUGUI distanceText;
     public GameObject roomOFFObject;
@@ -30,6 +30,7 @@ public class LearningTest_LightControll : MonoBehaviour
     Transform targetTransform;
     public GameObject taskObject;
 
+    bool isPressed = false;
     void Start()
     {
         targetTransform = taskObject.transform;
@@ -42,10 +43,16 @@ public class LearningTest_LightControll : MonoBehaviour
         //left mouse click turn light on/off
         if (Controller.inputDevice.IsPressed(Button, out bool pressed, Controller.axisToPressThreshold)) 
         {
-            if (pressed)
+            if (pressed && !isPressed)
             {
                 lightOn = !lightOn;
                 count++;
+                isPressed = true;
+            }
+
+            if (!pressed)
+            {
+                isPressed = false;
             }
             
         }

@@ -2517,7 +2517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331031346}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 11.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2656,7 +2656,7 @@ Transform:
   - {fileID: 1441667323}
   - {fileID: 1797664807}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &363291728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6387,13 +6387,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208438685}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.69, y: 0.593, z: 12.150576}
   m_LocalScale: {x: 0.5, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1219920501
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10742,7 +10742,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath
-      value: CSVData/ArduinoData/ArduinoSeated.csv
+      value: CSVData/ArduinoData/ArduinoLyingdownLoco.csv
       objectReference: {fileID: 0}
     - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
@@ -10926,15 +10926,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -10995,6 +10995,18 @@ PrefabInstance:
     - target: {fileID: 8454212268281439400, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454212268281439403, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454212268281439403, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454212268281439403, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8480834816101752103, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled

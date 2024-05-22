@@ -29,6 +29,7 @@ public class LearningTest_LightControllLoco : MonoBehaviour
 
     Transform targetTransform;
     public GameObject taskObject;
+    bool isPressed = false;
 
     void Start()
     {
@@ -42,12 +43,18 @@ public class LearningTest_LightControllLoco : MonoBehaviour
         //left mouse click turn light on/off
         if (Controller.inputDevice.IsPressed(Button, out bool pressed, Controller.axisToPressThreshold)) 
         {
-            if (pressed)
+            if (pressed && !isPressed)
             {
                 lightOn = !lightOn;
                 count++;
+                isPressed = true;
             }
-            
+
+            if (!pressed)
+            {
+                isPressed = false;
+            }
+
         }
 
 

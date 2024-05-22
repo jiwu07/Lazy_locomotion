@@ -2277,6 +2277,10 @@ PrefabInstance:
       propertyPath: moveController
       value: 
       objectReference: {fileID: 322543696}
+    - target: {fileID: 8454212268281439400, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Name
+      value: Camera
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

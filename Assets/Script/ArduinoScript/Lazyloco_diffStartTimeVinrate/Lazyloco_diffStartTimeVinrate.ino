@@ -248,10 +248,10 @@ void loop() {
   }
 
 //vibrate when foot putting down with delay
-if(a1 < vibrateDelay){
+if(a1 > vibrateDelay){
  update_vibrate(vibrate_counterL,a1,waveformL);
 }
-if(a0 < vibrateDelay){
+if(a0 > vibrateDelay){
  update_vibrate(vibrate_counterR,a0, waveformR);
 
 }

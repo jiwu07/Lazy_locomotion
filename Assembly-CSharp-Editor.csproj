@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{181F27E3-60E6-E6EB-04D4-D4261782421A}</ProjectGuid>
+    <ProjectGuid>{124DEA63-02A8-77AA-ACF3-3BC16475A636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -939,15 +939,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{5E31DCAB-0889-AA50-0B12-8C4FC3B9F097}</Project>
+      <Project>{B6939972-E572-22E7-D481-785238A2EAEF}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.csproj">
-      <Project>{DA83BB35-BE27-E142-0E48-E5C9819F5249}</Project>
+      <Project>{0019B653-9F92-6551-7726-6304F4ACF9DD}</Project>
       <Name>Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.csproj">
-      <Project>{902E40B5-BCFA-FD06-A5E6-E63000997EF5}</Project>
+      <Project>{34D695D5-8BA9-CE55-1970-59F715C263C0}</Project>
       <Name>Unity.XR.Interaction.Toolkit.Samples.StarterAssets</Name>
     </ProjectReference>
   </ItemGroup>

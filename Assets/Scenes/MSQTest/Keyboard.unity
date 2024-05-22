@@ -10742,7 +10742,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath
-      value: CSVData/ArduinoData/ArduinoSeated.csv
+      value: CSVData/ArduinoData/ArduinoSeatedkeyboard.csv
       objectReference: {fileID: 0}
     - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled

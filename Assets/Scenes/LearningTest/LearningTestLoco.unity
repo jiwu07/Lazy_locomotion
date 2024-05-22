@@ -1722,6 +1722,7 @@ GameObject:
   - component: {fileID: 322543693}
   - component: {fileID: 322543694}
   - component: {fileID: 322543695}
+  - component: {fileID: 322543696}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -1756,7 +1757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c526e1502204f8cbcf7dbe794d604a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceText: {fileID: 620830862}
+  distanceText: {fileID: 389275172}
   roomOFFObject: {fileID: 56534150}
   player: {fileID: 17480253}
   LightOffMask:
@@ -1765,7 +1766,7 @@ MonoBehaviour:
   All:
     serializedVersion: 2
     m_Bits: 4294967295
-  Controller: {fileID: 322543695}
+  Controller: {fileID: 333593776}
   Button: 2
   taskObject: {fileID: 857474435}
 --- !u!114 &322543695
@@ -1800,6 +1801,31 @@ MonoBehaviour:
   m_MoveObjectOut: 15
   m_DirectionalAnchorRotation: 1
   m_PoseProvider: {fileID: 0}
+--- !u!114 &322543696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322543692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 403936353e5d347f6bc2cfb40e885bad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceText: {fileID: 389275172}
+  roomOFFObject: {fileID: 56534150}
+  player: {fileID: 17480253}
+  LightOffMask:
+    serializedVersion: 2
+    m_Bits: 0
+  All:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  Controller: {fileID: 333593776}
+  Button: 2
+  lightOn: 0
+  taskObject: {fileID: 857474435}
 --- !u!1 &326648444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1905,6 +1931,70 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326648444}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &333593775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 333593777}
+  - component: {fileID: 333593776}
+  m_Layer: 0
+  m_Name: lightControll
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &333593776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333593775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae26e19cd956134bbdf3c6f65bf393a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UpdateTrackingType: 0
+  m_EnableInputTracking: 1
+  m_EnableInputActions: 1
+  m_ModelPrefab: {fileID: 0}
+  m_ModelParent: {fileID: 0}
+  m_Model: {fileID: 0}
+  m_AnimateModel: 0
+  m_ModelSelectTransition: 
+  m_ModelDeSelectTransition: 
+  m_ControllerNode: 4
+  m_SelectUsage: 3
+  m_ActivateUsage: 2
+  m_UIPressUsage: 2
+  m_AxisToPressThreshold: 0.1
+  m_RotateAnchorLeft: 16
+  m_RotateAnchorRight: 17
+  m_MoveObjectIn: 14
+  m_MoveObjectOut: 15
+  m_DirectionalAnchorRotation: 1
+  m_PoseProvider: {fileID: 0}
+--- !u!4 &333593777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333593775}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.18, z: 0.08}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &348961253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2174,11 +2264,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath
-      value: CSVData/ArduinoData/Arduino20x20.csv
+      value: CSVData/ArduinoData/ArduinoLearningdelay.csv
       objectReference: {fileID: 0}
     - target: {fileID: 2297720484843064326, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2897699100114021698, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_RenderPostProcessing
@@ -2306,6 +2396,17 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 7098803130400669170, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
   m_PrefabInstance: {fileID: 389275168}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &389275172 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6280654997721643082, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+  m_PrefabInstance: {fileID: 389275168}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &407202878
 GameObject:
   m_ObjectHideFlags: 0
@@ -6455,7 +6556,7 @@ Transform:
   m_GameObject: {fileID: 1460952911}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8557,7 +8658,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1804166699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10908,3 +11009,4 @@ SceneRoots:
   - {fileID: 48822818}
   - {fileID: 1804166702}
   - {fileID: 322543693}
+  - {fileID: 333593777}
