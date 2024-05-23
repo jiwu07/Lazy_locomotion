@@ -86,8 +86,8 @@ float h = 1.6; // subject height
 /************* *************  - ************* ********************/
 float step_length = h * h / (1.72 * 0.157 * 1.72 * 0.157); // WIP use 1.52 --GUDWIP using 0.157
 
-float Mode_L[2] = {1.000, 1.000}; // time predict each mode left
-float Mode_R[2] = {1.000, 1.000}; // time predict each mode right
+float Mode_L[2] = {1.0, 1.0}; // time predict each mode left
+float Mode_R[2] = {1.0, 1.0}; // time predict each mode right
 
 bool L_up = false;
 bool R_up = false;
@@ -108,8 +108,6 @@ int pre_height1 = 255;
 
 int vibrate_counterL = 0;
 int vibrate_counterR = 0;
-
-int isJump = 0;
 
 unsigned long previousMillis = 0;  //last time
 const long time_interval = 20;
@@ -133,7 +131,7 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 
 //check the string situation and update the current mode
 void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter) { 
-    float temp = 0.02;
+    float temp = ((float)simulation::time_interval)/1000.000f;
     if (pre_height - height > 2) { // going up
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
@@ -234,14 +232,15 @@ void loop() {
 
 unsigned long currentMillis = millis();  // current time
   
- // if (currentMillis - previousMillis >= time_interval) {
-//    previousMillis = currentMillis;   
+  //if the time interval is reached
+  if (currentMillis - previousMillis >= time_interval) {
+    previousMillis = currentMillis;  //update the pprevious time
+   // check the update 
   update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL);
   update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR);
 
- // }
-
-//////// if stopping for too long time then consider it as stop walking
+  //check stop
+  //////// if stopping for too long time then consider it as stop walking
   if (if_stop(delta_tl, pre_mode_L)) {
       Mode_L[0] = 1.000;
       Mode_L[1] = 1.000;
@@ -251,10 +250,7 @@ unsigned long currentMillis = millis();  // current time
       Mode_R[1] = 1.000;
   }
 
-//vibrate when foot putting down
- update_vibrate(vibrate_counterL,a1,waveformL);
- update_vibrate(vibrate_counterR,a0, waveformR);
-
+  //calculate velocity
 
   float target_frequency;
   if (Mode_R[0] + Mode_R[1] == 2.000 && Mode_L[0] + Mode_L[1] == 2.000) {
@@ -271,21 +267,26 @@ unsigned long currentMillis = millis();  // current time
 
   int velocity = int(current_velocity);
 
-//unsigned long currentMillis = millis();  // current time
-  
- // if (currentMillis - previousMillis >= time_interval) {
- //   previousMillis = currentMillis;        // update last time
-     // Send data to Unity
+  //send to unity //todo
   Serial.print(a0);
   Serial.print(',');
   Serial.print(a1);
   Serial.print(',');
   Serial.println(velocity);
-  
- 
 
+
+  /********************Vibration - start **********************/
+  //vibrate when foot putting down
+ update_vibrate(vibrate_counterL,a1,waveformL);
+ update_vibrate(vibrate_counterR,a0, waveformR);
+
+//update value
   pre_height1 = a1;
   pre_height0 = a0;
+
+ }
+
+
 
 
 }
