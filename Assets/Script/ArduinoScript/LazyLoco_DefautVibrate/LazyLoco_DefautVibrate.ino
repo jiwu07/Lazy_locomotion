@@ -104,13 +104,15 @@ float target_velocity = 0;
 int pre_height0 = 255;
 int pre_height1 = 255;
 
-float time_interval = 20;
+
 
 int vibrate_counterL = 0;
 int vibrate_counterR = 0;
 
 int isJump = 0;
 
+unsigned long previousMillis = 0;  //last timr
+const long time_interval = 20;
 }
 int analogValueA0 =0;
 int a1 =0;
@@ -121,7 +123,7 @@ int a0 =0;
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
 void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal ){
-  if(vibrate_counter > 15){
+  if(vibrate_counter > 5){
     vibrate(sensordata,signal);
     //Serial.println("count");
     vibrate_counter = 0;
@@ -266,21 +268,23 @@ void loop() {
 
   int velocity = int(current_velocity);
 
-  //if(L_up && R_up){
-  //  isJump = 1;
-  //}elae{ isjump = 0;}
- 
-  // Send data to Unity
+//unsigned long currentMillis = millis();  // current time
+  
+ // if (currentMillis - previousMillis >= time_interval) {
+ //   previousMillis = currentMillis;        // update last time
+     // Send data to Unity
   Serial.print(a0);
   Serial.print(',');
   Serial.print(a1);
   Serial.print(',');
   Serial.println(velocity);
+ // }
+ 
 
   pre_height1 = a1;
   pre_height0 = a0;
 
-  delay(time_interval);
+
 }
 
 void vibrate(int input, AudioSynthWaveform& signal){

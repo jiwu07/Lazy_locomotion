@@ -106,11 +106,23 @@ int pre_height1 = 255;
 
 float time_interval = 20;
 
-int vibrate_counterL = 0;
-int vibrate_counterR = 0;
-float vibrateDelay = 130;
 
 int isJump = 0;
+
+/************* Delay PARAMETERS -  ********************/
+const int bufferSize = 480;       // 1秒内的最大输入数量
+int inputsL[bufferSize];           // 存储输入的数组
+int inputsR[bufferSize];           // 存储输入的数组
+int inputCountL = 0;               // 当前输入的数量
+int inputCountR= 0;               // 当前输入的数量
+unsigned long previousMillisL =0;          // 记录开始时间
+unsigned long previousMillisR =0;          // 记录开始时间
+const unsigned long interval = 300; // 1秒的时间间隔（单位：毫秒）
+
+
+bool isVibrateL = 0;
+bool isVibrateR = 0;
+float vibrateDelay = 130;
 
 }
 int analogValueA0 =0;
@@ -131,9 +143,10 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 
 
 //check the string situation and update the current mode
-void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter) { 
+void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],bool& isVibrate) { 
     float temp = 0.02;
     if (pre_height - height > 2) { // going up
+        isVibrate = false;
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
             pre_mode = MODE_M4;
@@ -160,8 +173,8 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         t += temp; // keep mode1 or 2
         return;
     } else if (height - pre_height >2) { // going down
-        //update vibrate counter
-        vibrate_counter  = vibrate_counter + height - pre_height;
+        //update vibrate 
+        isVibrate  = true;
         if (pre_mode == MODE_M1) {
             up = 1;
             pre_mode = MODE_M2;
@@ -217,6 +230,7 @@ void setup() {
    // waveformL.amplitude(1);
 
 
+
 }
 
 int count = 0;
@@ -232,8 +246,8 @@ void loop() {
   a1 = map(analogValueA1, 0, 1023, 0, 255);
 
 
-  update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL);
-  update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR);
+  update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,isVibrateL);
+  update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,isVibrateR);
 
 
 
@@ -247,14 +261,71 @@ void loop() {
       Mode_R[1] = 1.0;
   }
 
-//vibrate when foot putting down with delay
-if(a1 > vibrateDelay){
- update_vibrate(vibrate_counterL,a1,waveformL);
-}
-if(a0 > vibrateDelay){
- update_vibrate(vibrate_counterR,a0, waveformR);
 
+/************* VIBRATION  - Start ********************/
+//vibrate when foot putting down with delay
+if(isVibrateL){
+  if(previousMillisL == 0){
+    previousMillisL = millis();
+  }
+  ///delay
+  if (inputCountL < bufferSize) {
+    inputsL[inputCountL] = a1;   // 将输入存储在数组中
+    inputCountL++;                    // 更新输入数量
+  }
+  
 }
+
+unsigned long currentMillisL = millis();
+
+  // 检查是否经过了delay
+  if (currentMillisL - previousMillisL >= interval ) {
+    if(inputCountL > 0){
+      vibrate(inputsL[sizeof(inputsL) - inputCountL +1],waveformL);
+
+      inputCountL--;
+    }else{
+     // 清空输入数组
+    memset(inputsL, 0, sizeof(inputsL));
+    
+    // 重置计数器和开始时间
+    inputCountL = 0;
+    }
+
+  }
+
+
+//vibrate when foot putting down with delay
+if(isVibrateR){
+  if(previousMillisR == 0){
+    previousMillisR = millis();
+  }
+  ///delay
+  if (inputCountR < bufferSize) {
+    inputsL[inputCountR] = a0;   // 将输入存储在数组中
+    inputCountR++;                    // 更新输入数量
+  }
+  
+}
+
+unsigned long currentMillisR = millis();
+
+  // 检查是否经过了delay
+  if (currentMillisR - previousMillisR >= interval ) {
+    if(inputCountR > 0){
+      vibrate(inputsR[sizeof(inputsR) - inputCountR +1],waveformR);
+
+      inputCountR--;
+    }else{
+     // 清空输入数组
+    memset(inputsR, 0, sizeof(inputsR));
+    
+    // 重置计数器和开始时间
+    inputCountR = 0;
+    }
+
+  }
+/************* VIBRATION  - END ********************/
 
 
   float target_frequency;
