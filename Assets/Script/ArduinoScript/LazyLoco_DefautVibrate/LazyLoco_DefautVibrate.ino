@@ -230,7 +230,7 @@ void loop() {
   a1 = analogRead(A1);
   //a1 = map(analogValueA1, 0, 1023, 0, 255);
 
-unsigned long currentMillis = millis();  // current time
+  unsigned long currentMillis = millis();  // current time
   
   //if the time interval is reached
   if (currentMillis - previousMillis >= time_interval) {
