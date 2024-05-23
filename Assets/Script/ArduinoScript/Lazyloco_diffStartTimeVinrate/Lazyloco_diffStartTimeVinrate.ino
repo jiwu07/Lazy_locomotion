@@ -104,7 +104,8 @@ float target_velocity = 0;
 int pre_height0 = 255;
 int pre_height1 = 255;
 
-float time_interval = 20;
+unsigned long previousMillis = 0;  //last time
+const long time_interval = 1;
 
 
 int isJump = 0;
@@ -117,25 +118,26 @@ int inputCountL = 0;               // 当前输入的数量
 int inputCountR= 0;               // 当前输入的数量
 unsigned long previousMillisL =0;          // 记录开始时间
 unsigned long previousMillisR =0;          // 记录开始时间
-const unsigned long interval = 300; // 1秒的时间间隔（单位：毫秒）
-
+const unsigned long interval = 20; //0.2秒的时间间隔（单位：毫秒）
+int outputCountL =0;
+int outputCountR = 0;
 
 bool isVibrateL = 0;
 bool isVibrateR = 0;
-float vibrateDelay = 130;
+
 
 }
 int analogValueA0 =0;
 int a1 =0;
 int analogValueA1 =0;
 int a0 =0;
-
+float temp  =0.001;
 
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
 void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal ){
   if(vibrate_counter > 15){
-    vibrate(sensordata,signal);
+   // vibrate(sensordata,signal);
     //Serial.println("count");
     vibrate_counter = 0;
   }
@@ -144,8 +146,7 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 
 //check the string situation and update the current mode
 void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],bool& isVibrate) { 
-    float temp = 0.02;
-    if (pre_height - height > 2) { // going up
+    if (pre_height - height >3) { // going up
         isVibrate = false;
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
@@ -204,8 +205,9 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
 }
 
 //if the feet position is not changing until 0.8s then consider it stop moving
-bool if_stop(float t, int pre_mode ) {
+bool if_stop(float t, int pre_mode, bool& isVibrate ) {
     if (t > 0.8) { // too long time not move feet then stop
+      isVibrate = false;
         return true;
     }
     pre_mode = MODE_M4;
@@ -244,90 +246,28 @@ void loop() {
   // Read analog input from A1
   analogValueA1 = analogRead(A1);
   a1 = map(analogValueA1, 0, 1023, 0, 255);
+  
+unsigned long currentMillis = millis();  // current time
 
-
+if (currentMillis - previousMillis >= time_interval) {
+    previousMillis = currentMillis;
   update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,isVibrateL);
   update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,isVibrateR);
 
-
-
+  previousMillis = millis();
+//Serial.print(millis());
 //////// if stopping for too long time then consider it as stop walking
-  if (if_stop(delta_tl, pre_mode_L)) {
+  if (if_stop(delta_tl, pre_mode_L,isVibrateL)) {
       Mode_L[0] = 1.0;
       Mode_L[1] = 1.0;
   }
-  if (if_stop(delta_tr, pre_mode_R)) {
+  if (if_stop(delta_tr, pre_mode_R,isVibrateR)) {
       Mode_R[0] = 1.0;
       Mode_R[1] = 1.0;
   }
 
 
-/************* VIBRATION  - Start ********************/
-//vibrate when foot putting down with delay
-if(isVibrateL){
-  if(previousMillisL == 0){
-    previousMillisL = millis();
-  }
-  ///delay
-  if (inputCountL < bufferSize) {
-    inputsL[inputCountL] = a1;   // 将输入存储在数组中
-    inputCountL++;                    // 更新输入数量
-  }
   
-}
-
-unsigned long currentMillisL = millis();
-
-  // 检查是否经过了delay
-  if (currentMillisL - previousMillisL >= interval ) {
-    if(inputCountL > 0){
-      vibrate(inputsL[sizeof(inputsL) - inputCountL +1],waveformL);
-
-      inputCountL--;
-    }else{
-     // 清空输入数组
-    memset(inputsL, 0, sizeof(inputsL));
-    
-    // 重置计数器和开始时间
-    inputCountL = 0;
-    }
-
-  }
-
-
-//vibrate when foot putting down with delay
-if(isVibrateR){
-  if(previousMillisR == 0){
-    previousMillisR = millis();
-  }
-  ///delay
-  if (inputCountR < bufferSize) {
-    inputsL[inputCountR] = a0;   // 将输入存储在数组中
-    inputCountR++;                    // 更新输入数量
-  }
-  
-}
-
-unsigned long currentMillisR = millis();
-
-  // 检查是否经过了delay
-  if (currentMillisR - previousMillisR >= interval ) {
-    if(inputCountR > 0){
-      vibrate(inputsR[sizeof(inputsR) - inputCountR +1],waveformR);
-
-      inputCountR--;
-    }else{
-     // 清空输入数组
-    memset(inputsR, 0, sizeof(inputsR));
-    
-    // 重置计数器和开始时间
-    inputCountR = 0;
-    }
-
-  }
-/************* VIBRATION  - END ********************/
-
-
   float target_frequency;
   if (Mode_R[0] + Mode_R[1] == 2.0 && Mode_L[0] + Mode_L[1] == 2.0) {
       target_frequency = 0;
@@ -347,7 +287,7 @@ unsigned long currentMillisR = millis();
   //  isJump = 1;
   //}elae{ isjump = 0;}
  
-  // Send data to Unity
+  // Send data to Unity todo here
   Serial.print(a0);
   Serial.print(',');
   Serial.print(a1);
@@ -356,8 +296,81 @@ unsigned long currentMillisR = millis();
 
   pre_height1 = a1;
   pre_height0 = a0;
+}
 
-  delay(time_interval);
+/************* VIBRATION  - Start ********************/
+//vibrate when foot putting down with delay
+if(isVibrateL){
+  if(previousMillisL == 0){
+    previousMillisL = millis();
+  }
+  ///delay
+  if (inputCountL < bufferSize) {
+    inputsL[inputCountL] = a1;   // storage input
+    inputCountL++;                    // update amount
+  }
+unsigned long currentMillisL = millis();
+   if (currentMillisL - previousMillisL >= interval ) {
+    if(outputCountL < inputCountL && pre_mode_L != MODE_M1 && pre_mode_L != MODE_M2){
+      vibrate(inputsL[outputCountL],waveformL);
+      outputCountL++;
+    }else{
+     // 清空输入数组
+    memset(inputsL, 0, sizeof(inputsL));
+    
+    // 重置计数器和开始时间
+    outputCountL = 0;
+    inputCountL =0;
+    }
+
+   }
+}else{
+  previousMillisL = 0;
+}
+
+
+
+
+//vibrate when foot putting down with delay
+if(isVibrateR){
+  if(previousMillisR == 0){
+    previousMillisR = millis();
+  }
+  ///delay
+  if (inputCountR < bufferSize) {
+    inputsR[inputCountR] = a0;   // 将输入存储在数组中
+    inputCountR++;                    // 更新输入数量
+  }
+
+  
+unsigned long currentMillisR = millis();
+
+  // 检查是否经过了delay
+  if (currentMillisR - previousMillisR >= interval&& pre_mode_R != MODE_M1 && pre_mode_R != MODE_M2 ) {
+    if(outputCountR < inputCountR){
+      vibrate(inputsR[outputCountR],waveformR);
+
+      outputCountR++;
+    }else{
+     // 清空输入数组
+    memset(inputsR, 0, sizeof(inputsR));
+    
+    // 重置计数器和开始时间
+    outputCountR = 0;
+    inputCountR =0;
+
+    }
+
+  }
+  
+}else{
+  previousMillisR = 0;
+}
+ 
+/************* VIBRATION  - END ********************/
+
+
+
 }
 
 void vibrate(int input, AudioSynthWaveform& signal){
@@ -413,7 +426,7 @@ void vibrate(int input, AudioSynthWaveform& signal){
 
   signal.amplitude(0.f);
   //waveformL.amplitude(0.f);
-  Serial.print(amp);
+  //Serial.print(amp);
 
   last_bin = bin;
   last_triggered_pos = sensor_val_percent;

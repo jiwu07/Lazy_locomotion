@@ -86,14 +86,14 @@ float h = 1.6; // subject height
 /************* *************  - ************* ********************/
 float step_length = h * h / (1.72 * 0.157 * 1.72 * 0.157); // WIP use 1.52 --GUDWIP using 0.157
 
-float Mode_L[2] = {1.0, 1.0}; // time predict each mode left
-float Mode_R[2] = {1.0, 1.0}; // time predict each mode right
+float Mode_L[2] = {1.000, 1.000}; // time predict each mode left
+float Mode_R[2] = {1.000, 1.000}; // time predict each mode right
 
 bool L_up = false;
 bool R_up = false;
 
-float delta_tl = 0;
-float delta_tr = 0;
+float delta_tl = 0.000f;
+float delta_tr = 0.000f;
 
 int pre_mode_L = MODE_M4;
 int pre_mode_R = MODE_M4;
@@ -111,7 +111,7 @@ int vibrate_counterR = 0;
 
 int isJump = 0;
 
-unsigned long previousMillis = 0;  //last timr
+unsigned long previousMillis = 0;  //last time
 const long time_interval = 20;
 }
 int analogValueA0 =0;
@@ -123,9 +123,9 @@ int a0 =0;
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
 void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal ){
-  if(vibrate_counter > 5){
+  if(vibrate_counter > 20){
     vibrate(sensordata,signal);
-    //Serial.println("count");
+    Serial.println("count");
     vibrate_counter = 0;
   }
 }
@@ -156,7 +156,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
             }
             
         }
-        up = 1;
+        up = true;
         pre_mode = MODE_M1;
         t += temp; // keep mode1 or 2
         return;
@@ -164,7 +164,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         //update vibrate counter
         vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
-            up = 1;
+            up = true;
             pre_mode = MODE_M2;
             t += temp;
             return;
@@ -225,27 +225,30 @@ int count = 0;
 void loop() {
   using namespace simulation;
   // Read analog input from A0
-  analogValueA0 = analogRead(A0);
-  a0 = map(analogValueA0, 0, 1023, 0, 255);
+  a0 = analogRead(A0);
+ // a0 = map(analogValueA0, 0, 1023, 0, 255);
 
   // Read analog input from A1
-  analogValueA1 = analogRead(A1);
-  a1 = map(analogValueA1, 0, 1023, 0, 255);
+  a1 = analogRead(A1);
+  //a1 = map(analogValueA1, 0, 1023, 0, 255);
 
-
+unsigned long currentMillis = millis();  // current time
+  
+ // if (currentMillis - previousMillis >= time_interval) {
+//    previousMillis = currentMillis;   
   update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL);
   update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR);
 
-
+ // }
 
 //////// if stopping for too long time then consider it as stop walking
   if (if_stop(delta_tl, pre_mode_L)) {
-      Mode_L[0] = 1.0;
-      Mode_L[1] = 1.0;
+      Mode_L[0] = 1.000;
+      Mode_L[1] = 1.000;
   }
   if (if_stop(delta_tr, pre_mode_R)) {
-      Mode_R[0] = 1.0;
-      Mode_R[1] = 1.0;
+      Mode_R[0] = 1.000;
+      Mode_R[1] = 1.000;
   }
 
 //vibrate when foot putting down
@@ -254,16 +257,16 @@ void loop() {
 
 
   float target_frequency;
-  if (Mode_R[0] + Mode_R[1] == 2.0 && Mode_L[0] + Mode_L[1] == 2.0) {
+  if (Mode_R[0] + Mode_R[1] == 2.000 && Mode_L[0] + Mode_L[1] == 2.000) {
       target_frequency = 0;
   } else {
-      target_frequency = (1.0 / (Mode_R[0] + Mode_R[1]) + 1.0 / (Mode_L[0] + Mode_L[1])) / 2.0;
+      target_frequency = (1.000 / (Mode_R[0] + Mode_R[1]) + 1.000 / (Mode_L[0] + Mode_L[1])) / 2.000;
   }
 
   target_velocity = target_frequency * target_frequency * step_length;
    
   if (current_velocity != target_velocity) {
-        current_velocity = 0.85 * target_velocity + 0.15 * current_velocity;
+        current_velocity = 0.850 * target_velocity + 0.150 * current_velocity;
   }
 
   int velocity = int(current_velocity);
@@ -278,7 +281,7 @@ void loop() {
   Serial.print(a1);
   Serial.print(',');
   Serial.println(velocity);
- // }
+  
  
 
   pre_height1 = a1;
