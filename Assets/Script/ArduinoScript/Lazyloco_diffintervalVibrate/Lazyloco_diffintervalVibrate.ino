@@ -92,8 +92,8 @@ float Mode_R[2] = {1.0, 1.0}; // time predict each mode right
 bool L_up = false;
 bool R_up = false;
 
-float delta_tl = 0;
-float delta_tr = 0;
+float delta_tl = 0.000f;
+float delta_tr = 0.000f;
 
 int pre_mode_L = MODE_M4;
 int pre_mode_R = MODE_M4;
@@ -104,51 +104,45 @@ float target_velocity = 0;
 int pre_height0 = 255;
 int pre_height1 = 255;
 
+
+int vibrate_interval[3] = {200,100,1};
+int vibrate_counterL = 0;
+int interval_counterL =0;
+int vibrate_counterR = 0;
+int interval_counterR =0;
+
 unsigned long previousMillis = 0;  //last time
 const long time_interval = 5;
-
-
-int isJump = 0;
-
-/************* Delay PARAMETERS -  ********************/
-const int bufferSize = 1000;       //delay amount
-int inputsL[bufferSize];           // saved input left
-int inputsR[bufferSize];           // saved input right
-int inputCountL = 0;               // current amount left
-int inputCountR= 0;               // current amount right
-unsigned long previousMillisL =0;          //Delay start Left
-unsigned long previousMillisR =0;          // Delay start right
-const unsigned long interval =100; //time delay ms
-int outputCountL =0;
-int outputCountR = 0;
-
-bool isVibrateL = 0;
-bool isVibrateR = 0;
-
-
 }
 int analogValueA0 =0;
 int a1 =0;
 int analogValueA1 =0;
 int a0 =0;
-float temp  =0.01;
+
 
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
-void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal ){
-  if(vibrate_counter > 15){
-   // vibrate(sensordata,signal);
-    //Serial.println("count");
+void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal, int& interval_counter ){
+  if(interval_counter >= sizeof(simulation::vibrate_interval)){
+      interval_counter =  sizeof(simulation::vibrate_interval) -1;
+    }
+  if(vibrate_counter > simulation::vibrate_interval[interval_counter]){
+    Serial.println(vibrate_counter);
+
+    vibrate(sensordata,signal);
+   // Serial.println("count");
     vibrate_counter = 0;
+    interval_counter++; 
+    
   }
 }
 
 
 //check the string situation and update the current mode
-void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],bool& isVibrate) { 
-     float temp = ((float)simulation::time_interval)/1000.000f;
-    if (pre_height - height >5) { // going up
-        isVibrate = false;
+void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter,int& interval_counter) { 
+    float temp = ((float)simulation::time_interval)/1000.000f;
+    if (pre_height - height > 2) { // going up
+      interval_counter =0;
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
             pre_mode = MODE_M4;
@@ -170,15 +164,15 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
             }
             
         }
-        up = 1;
+        up = true;
         pre_mode = MODE_M1;
         t += temp; // keep mode1 or 2
         return;
-    } else if (height - pre_height >5) { // going down
-        //update vibrate 
-        isVibrate  = true;
+    } else if (height - pre_height >2) { // going down
+        //update vibrate counter
+        vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
-            up = 1;
+            up = true;
             pre_mode = MODE_M2;
             t += temp;
             return;
@@ -206,9 +200,8 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
 }
 
 //if the feet position is not changing until 0.8s then consider it stop moving
-bool if_stop(float t, int pre_mode, bool& isVibrate ) {
+bool if_stop(float t, int pre_mode ) {
     if (t > 0.8) { // too long time not move feet then stop
-      isVibrate = false;
         return true;
     }
     pre_mode = MODE_M4;
@@ -233,7 +226,6 @@ void setup() {
    // waveformL.amplitude(1);
 
 
-
 }
 
 int count = 0;
@@ -241,131 +233,74 @@ int count = 0;
 void loop() {
   using namespace simulation;
   // Read analog input from A0
-  a0 = analogRead(A0);
- // a0 = map(analogValueA0, 0, 1023, 0, 255);
+  analogValueA0 = analogRead(A0);
+  a0 = map(analogValueA0, 0, 1023, 0, 1000);
 
   // Read analog input from A1
-  a1 = analogRead(A1);
-  //a1 = map(analogValueA1, 0, 1023, 0, 255);
-  
-unsigned long currentMillis = millis();  // current time
+ analogValueA1 = analogRead(A1);
+  a1 = map(analogValueA1, 0, 1023, 0, 1000);
 
-if (currentMillis - previousMillis >= time_interval) {
-  previousMillis = currentMillis;//update the previous time
-  update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,isVibrateL);
-  update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,isVibrateR);
-
+  unsigned long currentMillis = millis();  // current time
   
-//Serial.print(millis());
-//////// if stopping for too long time then consider it as stop walking
-  if (if_stop(delta_tl, pre_mode_L,isVibrateL)) {
-      Mode_L[0] = 1.0;
-      Mode_L[1] = 1.0;
+  //if the time interval is reached
+  if (currentMillis - previousMillis >= time_interval) {
+    previousMillis = currentMillis;  //update the previous time
+   // check the update 
+  update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL, interval_counterL);
+  update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR, interval_counterR);
+
+  //check stop
+  //////// if stopping for too long time then consider it as stop walking
+  if (if_stop(delta_tl, pre_mode_L)) {
+      Mode_L[0] = 1.000;
+      Mode_L[1] = 1.000;
   }
-  if (if_stop(delta_tr, pre_mode_R,isVibrateR)) {
-      Mode_R[0] = 1.0;
-      Mode_R[1] = 1.0;
+  if (if_stop(delta_tr, pre_mode_R)) {
+      Mode_R[0] = 1.000;
+      Mode_R[1] = 1.000;
   }
 
+  //calculate velocity
 
-  
   float target_frequency;
-  if (Mode_R[0] + Mode_R[1] == 2.0 && Mode_L[0] + Mode_L[1] == 2.0) {
+  if (Mode_R[0] + Mode_R[1] == 2.000 && Mode_L[0] + Mode_L[1] == 2.000) {
       target_frequency = 0;
   } else {
-      target_frequency = (1.0 / (Mode_R[0] + Mode_R[1]) + 1.0 / (Mode_L[0] + Mode_L[1])) / 2.0;
+      target_frequency = (1.000 / (Mode_R[0] + Mode_R[1]) + 1.000 / (Mode_L[0] + Mode_L[1])) / 2.000;
   }
 
   target_velocity = target_frequency * target_frequency * step_length;
    
   if (current_velocity != target_velocity) {
-        current_velocity = 0.85 * target_velocity + 0.15 * current_velocity;
+        current_velocity = 0.850 * target_velocity + 0.150 * current_velocity;
   }
 
   int velocity = int(current_velocity);
- 
-  // Send data to Unity todo here
-  Serial.print(a0);
-  Serial.print(',');
-  Serial.print(a1);
-  Serial.print(',');
-  Serial.println(velocity);
 
+  //send to unity //todo
+  //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
+ //   previousMillisUnity = currentMillis;
+  //Serial.print(a0);
+  //Serial.print(',');
+  //Serial.print(a1);
+ // Serial.print(',');
+ // Serial.println(velocity);
+ // }
+
+  /********************Vibration - start **********************/
+  //vibrate when foot putting down
+ update_vibrate(vibrate_counterL,a1,waveformL,interval_counterL);
+ update_vibrate(vibrate_counterR,a0, waveformR,interval_counterR);
+
+//update value
   pre_height1 = a1;
   pre_height0 = a0;
 
-
-/************* VIBRATION  - Start ********************/
-//vibrate when foot putting down with delay
-if(isVibrateL){
-  if(previousMillisL == 0){
-    previousMillisL = millis();
-  }
-  ///delay
-  if (inputCountL < bufferSize) {
-    inputsL[inputCountL] = a1;   // storage input
-    inputCountL++;                    // update amount
-  }
-unsigned long currentMillisL = millis();
-   if (currentMillisL - previousMillisL >= interval ) {
-    if(outputCountL < inputCountL && pre_mode_L != MODE_M1 && pre_mode_L != MODE_M2){
-      vibrate(inputsL[outputCountL],waveformL);
-      outputCountL++;
-    }else{
-     // 清空输入数组
-    memset(inputsL, 0, sizeof(inputsL));
-    
-    // 重置计数器和开始时间
-    outputCountL = 0;
-    inputCountL =0;
-    previousMillisL = 0;
-    }
-
-   }
-  }else{
-  previousMillisL = 0;
-  }
+ }
 
 
 
 
-//vibrate when foot putting down with delay
-if(isVibrateR){
-  if(previousMillisR == 0){
-    previousMillisR = millis();
-  }
-  ///delay
-  if (inputCountR < bufferSize) {
-    inputsR[inputCountR] = a0;   // 将输入存储在数组中
-    inputCountR++;                    // 更新输入数量
-  }
-
-  
-unsigned long currentMillisR = millis();
-
-  // 检查是否经过了delay
-  if (currentMillisR - previousMillisR >= interval&& pre_mode_R != MODE_M1 && pre_mode_R != MODE_M2 ) {
-    if(outputCountR < inputCountR){
-      vibrate(inputsR[outputCountR],waveformR);
-      outputCountR++;
-    }else{
-     // 清空输入数组
-    memset(inputsR, 0, sizeof(inputsR));
-    
-    // 重置计数器和开始时间
-    outputCountR = 0;
-    inputCountR =0;
-  previousMillisR = 0;
-    }
-
-  }
-  
-  }else{
-  previousMillisR = 0;
-  }
- 
-/************* VIBRATION  - END ********************/
-  }
 }
 
 void vibrate(int input, AudioSynthWaveform& signal){

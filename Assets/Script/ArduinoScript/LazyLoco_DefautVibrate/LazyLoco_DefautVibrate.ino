@@ -110,7 +110,7 @@ int vibrate_counterL = 0;
 int vibrate_counterR = 0;
 
 unsigned long previousMillis = 0;  //last time
-const long time_interval = 20;
+const long time_interval = 5;
 }
 int analogValueA0 =0;
 int a1 =0;
@@ -121,7 +121,7 @@ int a0 =0;
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
 void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal ){
-  if(vibrate_counter > 20){
+  if(vibrate_counter > 10){
     vibrate(sensordata,signal);
    // Serial.println("count");
     vibrate_counter = 0;
@@ -234,7 +234,7 @@ void loop() {
   
   //if the time interval is reached
   if (currentMillis - previousMillis >= time_interval) {
-    previousMillis = currentMillis;  //update the pprevious time
+    previousMillis = currentMillis;  //update the previous time
    // check the update 
   update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL);
   update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR);
@@ -346,7 +346,7 @@ void vibrate(int input, AudioSynthWaveform& signal){
 
   signal.amplitude(0.f);
   //waveformL.amplitude(0.f);
-  Serial.print(amp);
+ // Serial.print(amp);
 
   last_bin = bin;
   last_triggered_pos = sensor_val_percent;
