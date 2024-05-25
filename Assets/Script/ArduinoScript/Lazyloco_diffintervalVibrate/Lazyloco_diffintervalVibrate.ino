@@ -105,11 +105,11 @@ int pre_height0 = 255;
 int pre_height1 = 255;
 
 
-int vibrate_interval[3] = {200,100,1};
+int vibrate_interval[25] = {100,100,100,100,50,50,50,50,50,10,10,5,5,5,5,5,5,5,5,5,5,5,5,5,5};
 int vibrate_counterL = 0;
-int interval_counterL =0;
+unsigned int interval_counterL =0;
 int vibrate_counterR = 0;
-int interval_counterR =0;
+unsigned int interval_counterR =0;
 
 unsigned long previousMillis = 0;  //last time
 const long time_interval = 5;
@@ -122,24 +122,24 @@ int a0 =0;
 
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
-void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal, int& interval_counter ){
-  if(interval_counter >= sizeof(simulation::vibrate_interval)){
-      interval_counter =  sizeof(simulation::vibrate_interval) -1;
-    }
+void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal, unsigned int& interval_counter ){
+
+  //Serial.println(interval_counter);
   if(vibrate_counter > simulation::vibrate_interval[interval_counter]){
-    Serial.println(vibrate_counter);
+   // Serial.println(vibrate_counter);
 
     vibrate(sensordata,signal);
-   // Serial.println("count");
+
     vibrate_counter = 0;
     interval_counter++; 
-    
+    return;
   }
+
 }
 
 
 //check the string situation and update the current mode
-void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter,int& interval_counter) { 
+void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter,unsigned int& interval_counter) { 
     float temp = ((float)simulation::time_interval)/1000.000f;
     if (pre_height - height > 2) { // going up
       interval_counter =0;
@@ -280,11 +280,13 @@ void loop() {
   //send to unity //todo
   //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
  //   previousMillisUnity = currentMillis;
-  //Serial.print(a0);
-  //Serial.print(',');
-  //Serial.print(a1);
- // Serial.print(',');
- // Serial.println(velocity);
+  Serial.print(previousMillis/1000.00);
+  Serial.print(',');
+  Serial.print(a0);
+  Serial.print(',');
+  Serial.print(a1);
+  Serial.print(',');
+  Serial.println(velocity);
  // }
 
   /********************Vibration - start **********************/

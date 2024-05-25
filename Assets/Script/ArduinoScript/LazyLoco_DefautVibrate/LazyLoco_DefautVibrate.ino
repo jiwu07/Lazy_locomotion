@@ -270,6 +270,8 @@ void loop() {
   //send to unity //todo
   //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
  //   previousMillisUnity = currentMillis;
+  Serial.print(previousMillis/1000.00);
+  Serial.print(',');
   Serial.print(a0);
   Serial.print(',');
   Serial.print(a1);
