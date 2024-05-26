@@ -13,10 +13,13 @@ public class LightControllKeyboard : MonoBehaviour
     public GameObject player;
 
     public LayerMask LightOffMask;
+    public LayerMask LightOnMask;
+
 
     string text = "Light off in ";
     float count = 9.0f;
     public bool isControll = true;
+    public bool isCalibrate = false;
 
 
     // Update is called once per frame
@@ -25,13 +28,19 @@ public class LightControllKeyboard : MonoBehaviour
        
         if (count > 0 && isControll)
         {
-        
+            if (!isCalibrate)
+            {
+                lightText.text = "wait for calibrate the camera position";
+                Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;
+                return;
+            }
 
             //freez player movement
             player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = false;
             player.transform.Find("Camera").GetComponent<Turn>().enabled = false;
 
             //light off count down
+            Camera.main.GetComponent<Camera>().cullingMask = LightOnMask;
             int t = (int)count;
             lightText.text = text + t.ToString() + "s";
             count -= Time.deltaTime;
