@@ -83,7 +83,6 @@
     <Compile Include="Assets\Model\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Script\PlayerMove\KeyBoardControll.cs" />
     <Compile Include="Assets\Model\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
-    <Compile Include="Assets\Script\CameraMovement.cs" />
     <Compile Include="Assets\Script\PlayerMove\SpeedControll.cs" />
     <Compile Include="Assets\Model\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\Callout.cs" />
@@ -97,6 +96,7 @@
     <Compile Include="Assets\Model\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Model\UnityTechnologies\StarterAssets\ThirdPersonController\Scripts\BasicRigidBodyPush.cs" />
     <Compile Include="Assets\Model\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\Script\VRHeadsetPositionAdjuster.cs" />
     <Compile Include="Assets\Model\UnityTechnologies\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
     <Compile Include="Assets\Model\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Model\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />

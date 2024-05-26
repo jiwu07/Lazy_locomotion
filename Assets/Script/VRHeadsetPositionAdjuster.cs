@@ -1,37 +1,45 @@
 using UnityEngine;
 using System.Collections;
+using Unity.XR.CoreUtils;
 
 public class VRHeadsetPositionAdjuster : MonoBehaviour
 {
-    public Transform targetObject;  // 拖动要参考的对象到这里
-    private Vector3 initialOffset;  // 初始偏移量
+    public XROrigin xROrigin;
+    public Vector3 offset;
+    public GameObject avatarHead;
+    public Transform headPosition;
+
+    public bool isCalibrate;
+     Vector3 offsetZ = new Vector3(0,0,0.08f);
+
+
 
     void Start()
     {
-        if (targetObject != null)
-        {
-            // 启动协程等待一帧
-            StartCoroutine(CalculateInitialOffset());
-        }
-        else
-        {
-            Debug.LogError("Target Object is not assigned.");
-        }
-    }
+        headPosition = avatarHead.transform;
+        offset = headPosition.position - Camera.main.transform.position;
+        //transform.position = headPosition.position - offset;
 
-    IEnumerator CalculateInitialOffset()
+    }
+    void Calibrate()
     {
-        // 等待一帧以确保VR头显初始化完成
-        yield return null;
+        //xROrigin.CameraYOffset += offset.y;
+        transform.position += offset;
+        transform.position += offsetZ;
 
-        // 抓取当前头显的位置
-        Transform cameraTransform = Camera.main.transform;
-        initialOffset = cameraTransform.position - targetObject.position;
-
-        // 设置摄像头的位置
-        cameraTransform.position = targetObject.position + initialOffset;
-
-        // 使摄像头面向目标对象
-        cameraTransform.LookAt(targetObject);
     }
+
+    void Update()
+    {
+        offset = headPosition.position - Camera.main.transform.position;
+        if (isCalibrate)
+        {
+            Calibrate();
+            isCalibrate = false;
+        }
+
+    }
+
+
+
 }
