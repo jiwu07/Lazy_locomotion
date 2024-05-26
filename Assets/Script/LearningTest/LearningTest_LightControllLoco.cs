@@ -40,7 +40,7 @@ public class LearningTest_LightControllLoco : MonoBehaviour
         // Create CSV file and add headers if the file doesn't exist
         if (!File.Exists(filePath))
         {
-            File.WriteAllText(filePath, "Timestamp,trial,LightOn,PlayerPositionZ,TargetPositionZ,DistanceDifference\n");
+            File.WriteAllText(filePath, "Timestamp,Trial,LightOn,PlayerPositionZ,TargetPositionZ,DistanceDifference\n");
         }
 
     }

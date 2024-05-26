@@ -22,16 +22,19 @@ public class LightControllKeyboard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         if (count > 0 && isControll)
         {
-            //light off count down
-            int t = (int)count;
-            lightText.text = text +  t.ToString() + "s";
-            count -= Time.deltaTime;
+        
+
             //freez player movement
             player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = false;
             player.transform.Find("Camera").GetComponent<Turn>().enabled = false;
 
+            //light off count down
+            int t = (int)count;
+            lightText.text = text + t.ToString() + "s";
+            count -= Time.deltaTime;
         }
         else if(isControll)
         {

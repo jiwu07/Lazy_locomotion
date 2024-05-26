@@ -86,6 +86,9 @@ public class ControllerTestKeyboard : MonoBehaviour
         //in total need to turn right 4 time to reach the start state
         if (turnCount >= 4)
         {
+            //lock player movement
+            player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = false;
+            player.transform.Find("Camera").GetComponent<Turn>().enabled = false;
             //this turn end go to next room
             //count down to next room
             if (count > 0)

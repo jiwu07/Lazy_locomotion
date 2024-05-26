@@ -19,6 +19,7 @@ public class VRHeadsetPositionAdjuster : MonoBehaviour
         headPosition = avatarHead.transform;
         offset = headPosition.position - Camera.main.transform.position;
         //transform.position = headPosition.position - offset;
+        Calibrate();
 
     }
     void Calibrate()

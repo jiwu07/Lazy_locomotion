@@ -32,7 +32,7 @@ public class Turn : MonoBehaviour
                 isPressed = true;
                 if (needMark)
                 {
-                    Instantiate(turnPreFab, transform.position, Quaternion.identity);
+                    Instantiate(turnPreFab, player.transform.position, Quaternion.identity);
                 }
             }
 

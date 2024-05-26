@@ -19,7 +19,7 @@ public class MainSceneControll : MonoBehaviour
 
     private void Start()
     {
-        text.text = "Press trigger button to start the test";
+        text.text = "";
     }
 
 
