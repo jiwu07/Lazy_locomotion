@@ -86,8 +86,8 @@ float h = 1.6; // subject height
 /************* *************  - ************* ********************/
 float step_length = h * h / (1.72 * 0.157 * 1.72 * 0.157); // WIP use 1.52 --GUDWIP using 0.157
 
-float Mode_L[2] = {3.0, 3.0}; // time predict each mode left
-float Mode_R[2] = {3.0, 3.0}; // time predict each mode right
+float Mode_L[2] = {0, 0}; // time predict each mode left
+float Mode_R[2] = {0, 0}; // time predict each mode right
 
 bool L_up = false;
 bool R_up = false;
@@ -101,8 +101,8 @@ int pre_mode_R = MODE_M4;
 float current_velocity = 0;
 float target_velocity = 0;
 
-int pre_height0 = 255;
-int pre_height1 = 255;
+int pre_height0 = 1023;
+int pre_height1 = 1023;
 
 
 
@@ -241,20 +241,20 @@ void loop() {
   //check stop
   //////// if stopping for too long time then consider it as stop walking
   if (if_stop(delta_tl, pre_mode_L)) {
-      Mode_L[0] = Mode_L[0] * 0.9;
-      Mode_L[1] = Mode_L[1] * 0.9;
+      Mode_L[0] = Mode_L[0] * 0.5;
+      Mode_L[1] = Mode_L[1] * 0.5;
   }
   if (if_stop(delta_tr, pre_mode_R)) {
-      Mode_R[0] = Mode_R[0] *0.9;
-      Mode_R[1] = Mode_R[0] *0.9;
+      Mode_R[0] = Mode_R[0] *0.5;
+      Mode_R[1] = Mode_R[1] *0.5;
   }
 
   //calculate velocity
   float target_frequency;
 
-  if (Mode_R[0] + Mode_R[1] == 0 || Mode_L[0] + Mode_L[1] == 0) {
-    if(Mode_R[0] + Mode_R[1] == 0){
-      if(Mode_L[0] + Mode_L[1] == 0){
+  if (Mode_R[0] + Mode_R[1] <= 0.01 || Mode_L[0] + Mode_L[1]<= 0.01) {
+    if(Mode_R[0] + Mode_R[1] <= 0.01){
+      if(Mode_L[0] + Mode_L[1] <= 0.01){
         target_frequency = 0;
       }else{
         target_frequency = 1.000 / (Mode_L[0] + Mode_L[1])/2;
