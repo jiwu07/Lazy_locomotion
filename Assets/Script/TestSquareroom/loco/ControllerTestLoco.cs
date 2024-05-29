@@ -94,6 +94,9 @@ public class ControllerTestLoco : MonoBehaviour
                 int temp = (int)count;
                 text.transform.gameObject.SetActive(true);
                 text.text = temp.ToString() + " s to get start the next test";
+                //freez player
+                player.GetComponent<SpeedControll>().enabled = false;
+                player.transform.Find("Camera").GetComponent<Turn>().enabled = false;
 
             }
             else

@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using System.IO;
 using TMPro;
 
 using UnityEngine;
@@ -31,9 +31,17 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
     public GameObject taskObject;
 
     bool isPressed = false;
+
+    public string filePath;
     void Start()
     {
         targetTransform = taskObject.transform;
+
+        // Create CSV file and add headers if the file doesn't exist
+        if (!File.Exists(filePath))
+        {
+            File.WriteAllText(filePath, "Timestamp,Trial,LightOn,PlayerPositionZ,TargetPositionZ,DistanceDifference\n");
+        }
     }
 
 
@@ -48,6 +56,8 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
                 lightOn = !lightOn;
                 count++;
                 isPressed = true;
+                // Log the time, player position, and distance difference
+                LogLightSwitch();
             }
 
             if (!pressed)
@@ -95,6 +105,7 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
         if (distance == 0)
         {
             distanceText.text = " Congratulation! You arrived target point in " + ((count-2) / 2).ToString() + " trials";
+            player.GetComponent<SpeedControll>().enabled = true;
             //todo
         }
         else
@@ -102,5 +113,15 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
             //show distance and trials number
             distanceText.text = distance.ToString() + text + text2 + (count / 2).ToString();
         }
+    }
+
+    void LogLightSwitch()
+    {
+        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        Vector3 playerPosition = player.transform.position;
+        float distanceDifference = (int)(targetTransform.position.z - player.transform.position.z);
+        string logEntry = string.Format("{0},{1},{2},{3},{4},{5}\n", timestamp, count / 2, lightOn, playerPosition.z, targetTransform.position.z, distanceDifference);
+
+        File.AppendAllText(filePath, logEntry);
     }
 }

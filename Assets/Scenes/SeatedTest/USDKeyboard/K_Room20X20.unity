@@ -1821,7 +1821,11 @@ MonoBehaviour:
   LightOffMask:
     serializedVersion: 2
     m_Bits: 32
+  LightOnMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   isControll: 1
+  isCalibrate: 1
 --- !u!1 &326648444
 GameObject:
   m_ObjectHideFlags: 0
@@ -2146,6 +2150,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 379446332715793688, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: needMark
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 379446332715793688, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: turnController
       value: 
@@ -4116,7 +4124,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &857474436
 Transform:
   m_ObjectHideFlags: 0

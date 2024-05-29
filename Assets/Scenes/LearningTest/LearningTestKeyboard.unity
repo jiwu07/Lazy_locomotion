@@ -1768,6 +1768,7 @@ MonoBehaviour:
   Controller: {fileID: 1367003811}
   Button: 2
   taskObject: {fileID: 857474435}
+  filePath: CSVData/LearningTestDataKeyboard.csv
 --- !u!114 &322543695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8577,7 +8578,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1795860363
 Transform:
   m_ObjectHideFlags: 0

@@ -1112,7 +1112,7 @@ MonoBehaviour:
   player: {fileID: 17480253}
   turnController: {fileID: 322543696}
   turnButton: 3
-  csvFilePath: CSVData/MovePathData/8x8x1PathData.csv
+  csvFilePath: CSVData/MovePathData/8x8x1PathDataLoco.csv
 --- !u!114 &322543696
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1769,7 +1769,7 @@ MonoBehaviour:
   player: {fileID: 17480253}
   turnController: {fileID: 322543696}
   turnButton: 3
-  csvFilePath: CSVData/MovePathData/20x20PathData.csv
+  csvFilePath: CSVData/MovePathData/20x20PathDataLoco.csv
 --- !u!114 &322543696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8461,7 +8461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1795860363
 Transform:
   m_ObjectHideFlags: 0

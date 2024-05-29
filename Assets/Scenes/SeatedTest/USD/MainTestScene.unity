@@ -292,8 +292,8 @@ MonoBehaviour:
     you reach a corner of the room, you need to press button to turn right. \nAfter
     you arrived the start point, you need to press the button again and  you will
     be transfered to next room and do the same task.\nThere is in total 4 room. \nIf
-    you have any questions you can ask anytime. If you ready you can press button
-    to start the test. ;)"
+    you have any questions you can ask anytime. If you ready you, you can tell reseacher
+    that you are ready. ;)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -406,6 +406,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2855253337611190012, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817692584818730522, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944517683728468128, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Name
       value: player
@@ -462,6 +474,14 @@ PrefabInstance:
       propertyPath: moveController
       value: 
       objectReference: {fileID: 924189826}
+    - target: {fileID: 8367970446703217278, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454212268281439400, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Name
+      value: Camera
+      objectReference: {fileID: 0}
     - target: {fileID: 8480834816101752103, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -687,7 +707,7 @@ MonoBehaviour:
   m_AnimateModel: 0
   m_ModelSelectTransition: 
   m_ModelDeSelectTransition: 
-  m_ControllerNode: 5
+  m_ControllerNode: 4
   m_SelectUsage: 3
   m_ActivateUsage: 2
   m_UIPressUsage: 2
@@ -833,9 +853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'press any button to
-
-    start the test'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

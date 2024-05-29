@@ -22,6 +22,7 @@ public class LightControllKeyboard : MonoBehaviour
     public bool isCalibrate = false;
 
 
+
     // Update is called once per frame
     void Update()
     {
@@ -34,13 +35,14 @@ public class LightControllKeyboard : MonoBehaviour
                 Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;
                 return;
             }
+            Camera.main.GetComponent<Camera>().cullingMask = LightOnMask;
+
 
             //freez player movement
             player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = false;
             player.transform.Find("Camera").GetComponent<Turn>().enabled = false;
 
             //light off count down
-            Camera.main.GetComponent<Camera>().cullingMask = LightOnMask;
             int t = (int)count;
             lightText.text = text + t.ToString() + "s";
             count -= Time.deltaTime;
