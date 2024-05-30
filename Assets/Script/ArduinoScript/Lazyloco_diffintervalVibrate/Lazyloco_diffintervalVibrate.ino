@@ -141,7 +141,7 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 //check the string situation and update the current mode
 void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter,unsigned int& interval_counter) { 
     float temp = ((float)simulation::time_interval)/1000.000f;
-    if (pre_height - height > 2) { // going up
+    if (pre_height - height > 5) { // going up
       interval_counter =0;
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
@@ -168,7 +168,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         pre_mode = MODE_M1;
         t += temp; // keep mode1 or 2
         return;
-    } else if (height - pre_height >2) { // going down
+    } else if (height - pre_height >5) { // going down
         //update vibrate counter
         vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
