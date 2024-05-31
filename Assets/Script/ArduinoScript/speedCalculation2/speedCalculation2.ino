@@ -157,8 +157,8 @@ void loop() {
   if (currentMillis - previousMillis >= time_interval) {
     previousMillis = currentMillis;  //update the previous time
 
-    float frequency_Right = RealTimeDistinguishAndCalculate(a0, PrevModeR, ModeInitR, TimeAfterLastR, AbsStepPaceR, ExpAbsPhaseR, NextAbsPhaseR,waveformR);
-    float frequency_Left = RealTimeDistinguishAndCalculate(a1, PrevModeL, ModeInitL, TimeAfterLastL, AbsStepPaceL, ExpAbsPhaseL, NextAbsPhaseL,waveformL);
+    float frequency_Right = RealTimeDistinguishAndCalculate(a0, PrevModeR, ModeInitR, TimeAfterLastR, AbsStepPaceR, ExpAbsPhaseR , waveformL);
+    float frequency_Left = RealTimeDistinguishAndCalculate(a1, PrevModeL, ModeInitL, TimeAfterLastL, AbsStepPaceL, ExpAbsPhaseL,waveformL);
 
   float frequency = 0.5* frequency_Right + 0.5*frequency_Left;
   //calculate velocity  
@@ -185,11 +185,13 @@ void loop() {
 
 
 
-float RealTimeDistinguishAndCalculate(int a0, int& PrevMode, float ModeInit[], float& TimeAfterLast, float& AbsStepPace, float& ExpAbsPhase,AudioSynthWaveform& signal) {
+float RealTimeDistinguishAndCalculate(int a, int& PrevMode, float ModeInit[], float& TimeAfterLast, float& AbsStepPace, float& ExpAbsPhase,AudioSynthWaveform& signal) {
   using namespace simulation;
 
-  float Vel = (a0 - pre_height0)/ dt;
-  int NewMode = DistinguishRegions(a0, Vel, PosTreshold, VelTreshold, PrevMode,signal);
+  float data = 1023- a;
+  float Vel = -(data - pre_height0)/ dt;
+
+  int NewMode = DistinguishRegions(data, Vel, PosTreshold, VelTreshold, PrevMode,signal);
 
   if (NewMode != PrevMode) {
     TimeAfterLast = 0;

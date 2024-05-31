@@ -33,7 +33,7 @@ public class SpeedControll : MonoBehaviour
 
         //data writing
         fileWriter = new StreamWriter(filePath);
-        fileWriter.WriteLine("Time,A0,A1,V, isJump"); // Adjust column headers as needed
+        fileWriter.WriteLine("Time,A0,A1,V"); // Adjust column headers as needed
 
         //animation
         animator = GetComponent<Animator>();
@@ -65,7 +65,7 @@ public class SpeedControll : MonoBehaviour
        //playwith the animation of avatar
        float speed = V /6.0f ; //map the speed to normal speed
        animator.SetFloat("Speed", speed);
-        float f = V /20f; //map the speed to normal speed,normal walking as speed 4
+        float f = V /100f; //map the speed to normal speed,
        animator.SetFloat("f", f);
 
 

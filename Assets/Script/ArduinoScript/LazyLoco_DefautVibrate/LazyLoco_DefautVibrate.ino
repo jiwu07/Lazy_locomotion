@@ -110,7 +110,9 @@ int vibrate_counterL = 0;
 int vibrate_counterR = 0;
 
 unsigned long previousMillis = 0;  //last time
+unsigned long previousMillisUnity =0;
 const long time_interval = 5;
+const long time_interval_Unity = 20;
 }
 int analogValueA0 =0;
 int a1 =0;
@@ -132,7 +134,7 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 //check the string situation and update the current mode
 void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter) { 
     float temp = ((float)simulation::time_interval)/1000.000f;
-    if (pre_height - height > 4) { // going up
+    if (pre_height - height > 2) { // going up
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
             pre_mode = MODE_M4;
@@ -158,7 +160,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         pre_mode = MODE_M1;
         t += temp; // keep mode1 or 2
         return;
-    } else if (height - pre_height >4) { // going down
+    } else if (height - pre_height >2) { // going down
         //update vibrate counter
         vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
@@ -191,7 +193,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
 
 //if the feet position is not changing until 0.8s then consider it stop moving
 bool if_stop(float t, int pre_mode ) {
-    if (t > 1.0) { // too long time not move feet then stop
+    if (t > 2.0) { // too long time not move feet then stop
         pre_mode = MODE_M4;
         return true;
     }
@@ -252,17 +254,17 @@ void loop() {
   //calculate velocity
   float target_frequency;
 
-  if(Mode_R[0] >= 4){
-    Mode_R[0] = 0;
+  if(Mode_R[0] >= 5){
+   // Mode_R[0] = 0;
   }
-   if(Mode_R[1] >= 4){
-    Mode_R[1] = 0;
+   if(Mode_R[1] >=5){
+   // Mode_R[1] = 0;
   }
-   if(Mode_L[0] >= 4){
-    Mode_L[0] = 0;
+   if(Mode_L[0] >= 5){
+    //Mode_L[0] = 0;
   }
-   if(Mode_L[1] >= 4){
-    Mode_L[1] = 0;
+   if(Mode_L[1] >= 5){
+   // Mode_L[1] = 0;
   }
 // too fast wakling threshold  
 //here walking frequenzy threshold reference https://www.researchgate.net/publication/291793625_Frequency_and_velocity_of_people_walking
@@ -300,6 +302,10 @@ void loop() {
   Serial.print(a0);
   Serial.print(',');
   Serial.print(a1);
+  Serial.print(',');
+  Serial.print(pre_mode_R);
+  Serial.print(',');
+  Serial.print(pre_mode_L);
   Serial.print(',');
   Serial.println(velocity);
  // }
