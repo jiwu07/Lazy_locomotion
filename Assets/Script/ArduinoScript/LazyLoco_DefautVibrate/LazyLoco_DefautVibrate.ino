@@ -86,8 +86,8 @@ float h = 1.6; // subject height
 /************* *************  - ************* ********************/
 float step_length = h * h / (1.72 * 0.157 * 1.72 * 0.157); // WIP use 1.52 --GUDWIP using 0.157
 
-float Mode_L[2] = {0, 0}; // time predict each mode left
-float Mode_R[2] = {0, 0}; // time predict each mode right
+float Mode_L[2] = {5, 5}; // time predict each mode left
+float Mode_R[2] = {5, 5}; // time predict each mode right
 
 bool L_up = false;
 bool R_up = false;
@@ -270,11 +270,11 @@ void loop() {
 //here walking frequenzy threshold reference https://www.researchgate.net/publication/291793625_Frequency_and_velocity_of_people_walking
   if (Mode_R[0] + Mode_R[1] <= 0.15 || Mode_L[0] + Mode_L[1] <= 0.15) {
     if(Mode_R[0] + Mode_R[1] <= 0.15){
-      Mode_R[0]=0;
-      Mode_R[1] = 0;
+      Mode_R[0]=5;
+      Mode_R[1] = 5;
       if(Mode_L[0] + Mode_L[1] <= 0.15){
-        Mode_L[0]=0;
-      Mode_L[1] = 0;
+        Mode_L[0]=5;
+      Mode_L[1] = 5;
         target_frequency = 0;
       }else{
         target_frequency = (1.000 / (Mode_L[0] + Mode_L[1]))/2;
