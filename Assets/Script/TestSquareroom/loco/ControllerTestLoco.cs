@@ -11,7 +11,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ControllerTestLoco : MonoBehaviour
 {
 
-    int turnCount = 0;
+    public int turnCount = 0;
     public string nextSceneName = "MainTestScene";
     float count = 5.0f;
     public TextMeshProUGUI text;
@@ -62,7 +62,7 @@ public class ControllerTestLoco : MonoBehaviour
     void Update()
     {
         //if lightoff
-        isStart = GetComponent<LightControllLoco>().isControll;
+        isStart = !GetComponent<LightControllLoco>().isControll;
         //turn right, start counting after light off
         if (turnController.inputDevice.IsPressed(turnButton, out bool pressed, turnController.axisToPressThreshold) && isStart)
         {

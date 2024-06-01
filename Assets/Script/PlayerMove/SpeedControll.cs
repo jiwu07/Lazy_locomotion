@@ -19,7 +19,7 @@ public class SpeedControll : MonoBehaviour
     public int V = 0;
     //public int isJump = 0;
     private Animator animator;
-    float stepLength = 0.8F;
+    float offset = 0.6F;
     int  count = 0;
 
     //UI
@@ -63,15 +63,15 @@ public class SpeedControll : MonoBehaviour
 
         
        //playwith the animation of avatar
-       float speed = V /6.0f ; //map the speed to normal speed
+       float speed = V  ; //map the speed to normal speed
        animator.SetFloat("Speed", speed);
-        float f = V /100f; //map the speed to normal speed,
+        float f = 1;// V /40f; //map the speed to normal speed,
        animator.SetFloat("f", f);
 
 
         
       //controll the move speed of avatar
-      transform.Translate(Vector3.forward * speed * stepLength* Time.deltaTime );
+      transform.Translate(Vector3.forward * speed/5 * offset  * Time.deltaTime );
 
         //show on the UI
        // speedText.text = "Speed: " + speed.ToString();

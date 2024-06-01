@@ -77,7 +77,7 @@ namespace simulation{
 /************* ************* Heigth - ************* ********************/
 /************* ************* Height - ************* ********************/
 /************* ************* Height - ************* ********************/
-float h = 1.6; // subject height
+float h = 1.7; // subject height
 
 
 
@@ -86,21 +86,25 @@ float h = 1.6; // subject height
 /************* *************  - ************* ********************/
 float step_length = h * h / (1.72 * 0.157 * 1.72 * 0.157); // WIP use 1.52 --GUDWIP using 0.157
 
-float Mode_L[2] = {5, 5}; // time predict each mode left
-float Mode_R[2] = {5, 5}; // time predict each mode right
+float maxTime = 3.5;
+float Mode_L[2] = {maxTime, maxTime}; // time predict each mode left
+float Mode_R[2] = {maxTime, maxTime}; // time predict each mode right
 
 bool L_up = false;
 bool R_up = false;
 
 float delta_tl = 0.000f;
 float delta_tr = 0.000f;
+float Threshold_timeChanging = 0.08;
+
 
 int pre_mode_L = MODE_M4;
 int pre_mode_R = MODE_M4;
 
 float current_velocity = 0;
 float target_velocity = 0;
-
+float Threshold_VelChanging = 100;
+float Threshold_VelChanging2 = 300;
 int pre_height0 = 1023;
 int pre_height1 = 1023;
 
@@ -134,7 +138,7 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 //check the string situation and update the current mode
 void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter) { 
     float temp = ((float)simulation::time_interval)/1000.000f;
-    if (pre_height - height > 2) { // going up
+    if (pre_height - height > 4) { // going up
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
             pre_mode = MODE_M4;
@@ -142,25 +146,32 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
             return;
         }
         if (pre_mode == MODE_M4) { // switch mode from 4-1
-            if (mode_list[0] == 0) { // if feet was stopped 
+            if (mode_list[0] >= 5) { // if feet was stopped 
                 up = true; //go up
                 pre_mode = MODE_M1;
                 t = temp;
                 return; // means won't have time when mode put down
             }else{
+              if(t > simulation::Threshold_timeChanging){ //swtich not too fast
               mode_list[1] = t; // update time
               up = true;
               pre_mode = MODE_M1;
               t = temp;
-              return;
-            }
-            
+              return; 
+              }             
+             
+            // if too fast this time not count
+              up = true;
+              pre_mode = MODE_M1;
+              t = temp;
+              return; 
+             }
         }
         up = true;
         pre_mode = MODE_M1;
         t += temp; // keep mode1 or 2
         return;
-    } else if (height - pre_height >2) { // going down
+    } else if (height - pre_height >4) { // going down
         //update vibrate counter
         vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
@@ -170,11 +181,19 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
             return;
         }
         if (pre_mode == MODE_M2) { // switch mode  from 2-3
+          if(t > simulation::Threshold_timeChanging){ //swtich not too fast
             mode_list[0] = t; // update time
             up = false;
             pre_mode = MODE_M3;
             t = temp;
             return;
+          }
+          // too fast then not update the time
+           up = false;
+            pre_mode = MODE_M3;
+            t = temp;
+            return;
+            
         }
         up = false;
         pre_mode = MODE_M3;
@@ -193,7 +212,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
 
 //if the feet position is not changing until 0.8s then consider it stop moving
 bool if_stop(float t, int pre_mode ) {
-    if (t > 2.0) { // too long time not move feet then stop
+    if (t > 1.4) { // too long time not move feet then stop
         pre_mode = MODE_M4;
         return true;
     }
@@ -243,38 +262,26 @@ void loop() {
   //check stop
   //////// if stopping for too long time then consider it as stop walking
   if (if_stop(delta_tl, pre_mode_L)) {
-      Mode_L[0] = Mode_L[0] * 1.5;
-      Mode_L[1] = Mode_L[1] * 1.5;
+      Mode_L[0] = min(Mode_L[0] * 2,maxTime);
+      Mode_L[1] = min(Mode_L[1] *2,maxTime);
   }
   if (if_stop(delta_tr, pre_mode_R)) {
-      Mode_R[0] = Mode_R[0] *1.5;
-      Mode_R[1] = Mode_R[1] *1.5;
+      Mode_R[0] = min(Mode_R[0] *2,maxTime);
+      Mode_R[1] = min(Mode_R[1] *2,maxTime);
   }
 
   //calculate velocity
   float target_frequency;
 
-  if(Mode_R[0] >= 5){
-   // Mode_R[0] = 0;
-  }
-   if(Mode_R[1] >=5){
-   // Mode_R[1] = 0;
-  }
-   if(Mode_L[0] >= 5){
-    //Mode_L[0] = 0;
-  }
-   if(Mode_L[1] >= 5){
-   // Mode_L[1] = 0;
-  }
 // too fast wakling threshold  
 //here walking frequenzy threshold reference https://www.researchgate.net/publication/291793625_Frequency_and_velocity_of_people_walking
-  if (Mode_R[0] + Mode_R[1] <= 0.15 || Mode_L[0] + Mode_L[1] <= 0.15) {
-    if(Mode_R[0] + Mode_R[1] <= 0.15){
-      Mode_R[0]=5;
-      Mode_R[1] = 5;
-      if(Mode_L[0] + Mode_L[1] <= 0.15){
-        Mode_L[0]=5;
-      Mode_L[1] = 5;
+  if (Mode_R[0] + Mode_R[1] <= 0.25 || Mode_L[0] + Mode_L[1] <= 0.25) {
+    if(Mode_R[0] + Mode_R[1] <= 0.25){
+      Mode_R[0]=maxTime;
+      Mode_R[1] = maxTime;
+      if(Mode_L[0] + Mode_L[1] <= 0.25){
+        Mode_L[0]=maxTime;
+      Mode_L[1] = maxTime;
         target_frequency = 0;
       }else{
         target_frequency = (1.000 / (Mode_L[0] + Mode_L[1]))/2;
@@ -289,26 +296,41 @@ void loop() {
   target_velocity = target_frequency * target_frequency * step_length;
    
   if (current_velocity != target_velocity) {
-        current_velocity = 0.85 * target_velocity + 0.15 * current_velocity;
+    if( abs(target_velocity - current_velocity)> Threshold_VelChanging){
+      if( abs(target_velocity - current_velocity)> Threshold_VelChanging2){
+          target_velocity /= 2;
+         // current_velocity = 0.1 * target_velocity + 0.9 * current_velocity;
+      }
+      current_velocity = 0.15 * target_velocity + 0.85 * current_velocity;
+
+      }else{
+      current_velocity = 0.85 * target_velocity + 0.15 * current_velocity;
+
+      }
   }
 
   int velocity = int(current_velocity);
 
   //send to unity //todo
-  //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
- //   previousMillisUnity = currentMillis;
-  Serial.print(previousMillis/1000.00);
-  Serial.print(',');
+  if (currentMillis - previousMillisUnity >= time_interval_Unity) {
+    previousMillisUnity = currentMillis;
+  //Serial.print(previousMillis/1000.00);
+ // Serial.print(',');
   Serial.print(a0);
   Serial.print(',');
   Serial.print(a1);
   Serial.print(',');
-  Serial.print(pre_mode_R);
-  Serial.print(',');
-  Serial.print(pre_mode_L);
-  Serial.print(',');
+  //Serial.print(Mode_L[0]);
+  //Serial.print(',');
+ // Serial.print(Mode_L[1]);
+ // Serial.print(',');
+ //   Serial.print(',');
+ // Serial.print(Mode_R[0]);
+ // Serial.print(',');
+//  Serial.print(Mode_R[1]);
+ // Serial.print(',');
   Serial.println(velocity);
- // }
+  }
 
   /********************Vibration - start **********************/
   //vibrate when foot putting down

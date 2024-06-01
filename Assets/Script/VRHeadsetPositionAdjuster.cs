@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Unity.XR.CoreUtils;
+using Unity.VisualScripting;
 
 public class VRHeadsetPositionAdjuster : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class VRHeadsetPositionAdjuster : MonoBehaviour
             Calibrate();
             isCalibrate = false;
         }
+
+       // transform.position =new Vector3( transform.position.x, headPosition.position.y, transform.position.z);
 
     }
 
