@@ -108,6 +108,12 @@ float Threshold_VelChanging2 = 300;
 int pre_height0 = 1023;
 int pre_height1 = 1023;
 
+float Threshold_up = 1000;
+float Threshold_down = 500;
+bool allowedUpL = true;
+bool allowedDownL = false;
+bool allowedUpR = true;
+bool allowedDownR = false;
 
 
 int vibrate_counterL = 0;
@@ -136,9 +142,19 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 
 
 //check the string situation and update the current mode
-void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter) { 
+void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter, bool& allowedUp, bool& allowedDown) { 
+
+    if(height > simulation::Threshold_up){
+      allowedUp = true; 
+      allowedDown = false;
+    }else if(height < simulation::Threshold_down){
+      allowedDown =true;
+      allowedUp = false;
+    }
+    
+   
     float temp = ((float)simulation::time_interval)/1000.000f;
-    if (pre_height - height > 4) { // going up
+    if (pre_height - height > 4 &&   allowedUp) { // going up
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
             pre_mode = MODE_M4;
@@ -171,7 +187,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         pre_mode = MODE_M1;
         t += temp; // keep mode1 or 2
         return;
-    } else if (height - pre_height >4) { // going down
+    } else if (height - pre_height >4 && allowedDown) { // going down
         //update vibrate counter
         vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
@@ -256,8 +272,8 @@ void loop() {
   if (currentMillis - previousMillis >= time_interval) {
     previousMillis = currentMillis;  //update the previous time
    // check the update 
-  update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL);
-  update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR);
+  update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL,allowedUpL,allowedDownL);
+  update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR,allowedUpR,allowedDownR);
 
   //check stop
   //////// if stopping for too long time then consider it as stop walking
