@@ -156,9 +156,11 @@ void loop() {
   //if the time interval is reached, then do the calculation
   if (currentMillis - previousMillis >= time_interval) {
     previousMillis = currentMillis;  //update the previous time
+    float Vel0 = -(a0 - pre_height0)/ dt;
+    float Vel1 = -(a1 - pre_height1)/ dt;
 
-    float frequency_Right = RealTimeDistinguishAndCalculate(a0, PrevModeR, ModeInitR, TimeAfterLastR, AbsStepPaceR, ExpAbsPhaseR , waveformL);
-    float frequency_Left = RealTimeDistinguishAndCalculate(a1, PrevModeL, ModeInitL, TimeAfterLastL, AbsStepPaceL, ExpAbsPhaseL,waveformL);
+    float frequency_Right = RealTimeDistinguishAndCalculate(1023-a0,Vel0, PrevModeR, ModeInitR, TimeAfterLastR, AbsStepPaceR, ExpAbsPhaseR, waveformR);
+    float frequency_Left =  RealTimeDistinguishAndCalculate(1023-a1,Vel1, PrevModeL, ModeInitL, TimeAfterLastL, AbsStepPaceL, ExpAbsPhaseL,  waveformL);
 
   float frequency = 0.5* frequency_Right + 0.5*frequency_Left;
   //calculate velocity  
@@ -176,6 +178,10 @@ void loop() {
   Serial.print(',');
   Serial.print(a1);
   Serial.print(',');
+  Serial.print(PrevModeR);
+  Serial.print(',');
+  Serial.print(PrevModeL);
+  Serial.print(',');
   Serial.println(velocity);
  // }
   }
@@ -185,11 +191,8 @@ void loop() {
 
 
 
-float RealTimeDistinguishAndCalculate(int a, int& PrevMode, float ModeInit[], float& TimeAfterLast, float& AbsStepPace, float& ExpAbsPhase,AudioSynthWaveform& signal) {
+float RealTimeDistinguishAndCalculate(int data,int Vel, int& PrevMode, float ModeInit[], float& TimeAfterLast, float& AbsStepPace, float& ExpAbsPhase,AudioSynthWaveform& signal) {
   using namespace simulation;
-
-  float data = 1023- a;
-  float Vel = -(data - pre_height0)/ dt;
 
   int NewMode = DistinguishRegions(data, Vel, PosTreshold, VelTreshold, PrevMode,signal);
 
