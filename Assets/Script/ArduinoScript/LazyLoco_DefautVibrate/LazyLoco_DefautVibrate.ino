@@ -86,7 +86,7 @@ float h = 1.7; // subject height
 /************* *************  - ************* ********************/
 float step_length = h * h / (1.72 * 0.157 * 1.72 * 0.157); // WIP use 1.52 --GUDWIP using 0.157
 
-float maxTime = 3.5;
+float maxTime = 3;
 float Mode_L[2] = {maxTime, maxTime}; // time predict each mode left
 float Mode_R[2] = {maxTime, maxTime}; // time predict each mode right
 
@@ -109,7 +109,7 @@ int pre_height0 = 1023;
 int pre_height1 = 1023;
 
 float Threshold_up = 1000;
-float Threshold_down = 500;
+float Threshold_down = 850;
 bool allowedUpL = true;
 bool allowedDownL = false;
 bool allowedUpR = true;
@@ -154,7 +154,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
     
    
     float temp = ((float)simulation::time_interval)/1000.000f;
-    if (pre_height - height > 4 &&   allowedUp) { // going up
+    if (pre_height - height > 2 &&   allowedUp) { // going up
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
             pre_mode = MODE_M4;
@@ -162,7 +162,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
             return;
         }
         if (pre_mode == MODE_M4) { // switch mode from 4-1
-            if (mode_list[0] >= 5) { // if feet was stopped 
+            if (mode_list[0] >= 3) { // if feet was stopped 
                 up = true; //go up
                 pre_mode = MODE_M1;
                 t = temp;
@@ -187,7 +187,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         pre_mode = MODE_M1;
         t += temp; // keep mode1 or 2
         return;
-    } else if (height - pre_height >4 && allowedDown) { // going down
+    } else if (height - pre_height >2 && allowedDown) { // going down
         //update vibrate counter
         vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
@@ -228,7 +228,7 @@ void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
 
 //if the feet position is not changing until 0.8s then consider it stop moving
 bool if_stop(float t, int pre_mode ) {
-    if (t > 1.4) { // too long time not move feet then stop
+    if (t > 1) { // too long time not move feet then stop
         pre_mode = MODE_M4;
         return true;
     }
@@ -278,12 +278,12 @@ void loop() {
   //check stop
   //////// if stopping for too long time then consider it as stop walking
   if (if_stop(delta_tl, pre_mode_L)) {
-      Mode_L[0] = min(Mode_L[0] * 2,maxTime);
-      Mode_L[1] = min(Mode_L[1] *2,maxTime);
+      Mode_L[0] = min(Mode_L[0] * 1.5,maxTime);
+      Mode_L[1] = min(Mode_L[1] *1.5,maxTime);
   }
   if (if_stop(delta_tr, pre_mode_R)) {
-      Mode_R[0] = min(Mode_R[0] *2,maxTime);
-      Mode_R[1] = min(Mode_R[1] *2,maxTime);
+      Mode_R[0] = min(Mode_R[0] *1.5,maxTime);
+      Mode_R[1] = min(Mode_R[1] *1.5,maxTime);
   }
 
   //calculate velocity
@@ -291,13 +291,13 @@ void loop() {
 
 // too fast wakling threshold  
 //here walking frequenzy threshold reference https://www.researchgate.net/publication/291793625_Frequency_and_velocity_of_people_walking
-  if (Mode_R[0] + Mode_R[1] <= 0.25 || Mode_L[0] + Mode_L[1] <= 0.25) {
-    if(Mode_R[0] + Mode_R[1] <= 0.25){
-      Mode_R[0]=maxTime;
-      Mode_R[1] = maxTime;
-      if(Mode_L[0] + Mode_L[1] <= 0.25){
-        Mode_L[0]=maxTime;
-      Mode_L[1] = maxTime;
+  if (Mode_R[0] + Mode_R[1] >6 || Mode_L[0] + Mode_L[1] >6) {
+    if(Mode_R[0] + Mode_R[1] >6){
+      //Mode_R[0]=maxTime;
+      //Mode_R[1] = maxTime;
+      if(Mode_L[0] + Mode_L[1] >6 ){
+        //Mode_L[0]=maxTime;
+     // Mode_L[1] = maxTime;
         target_frequency = 0;
       }else{
         target_frequency = (1.000 / (Mode_L[0] + Mode_L[1]))/2;
@@ -328,13 +328,17 @@ void loop() {
   int velocity = int(current_velocity);
 
   //send to unity //todo
-  if (currentMillis - previousMillisUnity >= time_interval_Unity) {
-    previousMillisUnity = currentMillis;
-  //Serial.print(previousMillis/1000.00);
- // Serial.print(',');
+ // if (currentMillis - previousMillisUnity >= time_interval_Unity) {
+//    previousMillisUnity = currentMillis;
+  Serial.print(previousMillis/1000.00);
+  Serial.print(',');
   Serial.print(a0);
   Serial.print(',');
   Serial.print(a1);
+  Serial.print(',');
+  Serial.print(pre_mode_L);
+  Serial.print(',');
+  Serial.print(pre_mode_R);
   Serial.print(',');
   //Serial.print(Mode_L[0]);
   //Serial.print(',');
@@ -346,7 +350,7 @@ void loop() {
 //  Serial.print(Mode_R[1]);
  // Serial.print(',');
   Serial.println(velocity);
-  }
+ // }
 
   /********************Vibration - start **********************/
   //vibrate when foot putting down

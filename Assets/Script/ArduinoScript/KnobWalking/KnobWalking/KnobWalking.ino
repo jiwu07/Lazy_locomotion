@@ -85,8 +85,8 @@ void loop() {
   // read the analog in value:
   PrintEvery++;
   CurTime = CurTime + dt;
-  LeftFootPos = (float)analogRead(analog1InPin) * SignalGain;
-  RightFootPos = (float)analogRead(analog2InPin) * SignalGain;
+  LeftFootPos =(1023- (float)analogRead(analog1InPin)) * SignalGain;
+  RightFootPos = (1023-(float)analogRead(analog2InPin)) * SignalGain;
 
   LeftFootVel = Derivative(LeftFootPos, PrevLeftFootPos, PrevLeftFootVel, dt, w);
   RightFootVel = Derivative(RightFootPos, PrevRightFootPos, PrevRightFootVel, dt, w);
@@ -375,4 +375,3 @@ void KalmanFilter(float ExpAbsPhase, float AbsStepPace, float* xhat,float dt, fl
   float Km[2][2] = {{1-Kl[0]*Kr,0},{-Kl[1]*Kr,1}};
   MatrixMultiply((float*)Km, (float*)P_apri, 2, 2, 2, (float*)P_apost);
 }
-
