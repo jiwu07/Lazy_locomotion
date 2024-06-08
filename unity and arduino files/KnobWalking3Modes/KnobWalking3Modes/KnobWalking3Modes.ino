@@ -163,6 +163,8 @@ void loop() {
   // print the results to the Serial Monitor:
   if (currentMillis - previousMillisUnity >= time_interval_Unity) {
     previousMillisUnity = currentMillis;
+        Serial.print(CurTime);
+Serial.print(" , ");
     /* Serial.print("Current Time= ");
     Serial.print(CurTime);
    Serial.print(" , ");

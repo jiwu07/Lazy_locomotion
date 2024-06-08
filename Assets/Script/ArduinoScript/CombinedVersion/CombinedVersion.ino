@@ -86,7 +86,7 @@ float h = 1.7; // subject height
 /************* *************  - ************* ********************/
 float step_length = h * h / (1.72 * 0.157 * 1.72 * 0.157); // WIP use 1.52 --GUDWIP using 0.157
 
-float maxTime = 1000;
+float maxTime = -1;
 
 
 
@@ -163,19 +163,20 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 
 //check the string situation and update the current mode
 bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter, bool& allowedUp, bool& allowedDown,float PhaseWidths[], float& ExpAbsPhase, float& NextAbsPhase) { 
- 
+ /*
     if(height > simulation::Threshold_up){
       allowedUp = true; 
       allowedDown = false;
     }else if(height < simulation::Threshold_down){
       allowedDown =true;
-      allowedUp = false;
+      //allowedUp = false;
     }
-    
+    */
    
     t += dt;//update time;
 
-    if (pre_height - height > 2 &&   allowedUp) { // going up
+   // if (pre_height - height > 2 &&   allowedUp) { // going up
+    if (pre_height - height > 2 ) {
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
             pre_mode = MODE_M4;
@@ -199,7 +200,8 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         up = true;
         pre_mode = MODE_M1;
         return false;
-    } else if (height - pre_height >2 && allowedDown && height < simulation::Threshold_mode4) { // going down
+    //} else if (height - pre_height >2 && allowedDown && height < simulation::Threshold_mode4) { // going down
+     } else if (height - pre_height >2  && height < simulation::Threshold_mode4) { // going down
         //update vibrate counter
         vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
@@ -244,24 +246,7 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
     }
 }
 
-//if the feet position is not changing until 0.8s then consider it stop moving
-bool if_stop(float t, int pre_mode , float mode_list[]) {
-
-  if(pre_mode == MODE_M4 && t > 1){
-      mode_list[1] = min(mode_list[1] *1.1,simulation::maxTime);
-      mode_list[2] = min(mode_list[2] *1.1,simulation::maxTime);
-      mode_list[0] = min(mode_list[0] *1.1,simulation::maxTime);
-      return true;
-    
-  }
-   if(pre_mode == MODE_M2 && t > 0.8){
-      mode_list[0] = min(mode_list[0] *1.1,simulation::maxTime);
-      mode_list[1] = min(mode_list[1] *1.1,simulation::maxTime);
-      mode_list[2] = min(mode_list[2] *1.1,simulation::maxTime); 
-      return true;    
-  }
-  return false;
-}
+/
 /************* ************* Setup - ************* ********************/
 /************* ************* Setup - ************* ********************/
 /************* ************* Setup - ************* ********************/
@@ -304,33 +289,6 @@ void loop() {
   bool isChangeR = update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR,allowedUpR,allowedDownR,PhaseWidthsR,  ExpAbsPhaseR,  NextAbsPhaseR);
 
 
- //check stop
-  //////// if stopping for too long time then consider it as stop walking
- // bool isStopL =if_stop(delta_tl, pre_mode_L, Mode_L) ;
- // bool isStopR =if_stop(delta_tr, pre_mode_R, Mode_R) ;
-
-  //float target_frequency;
-
-// too fast wakling threshold  
-//here walking frequenzy threshold reference https://www.researchgate.net/publication/291793625_Frequency_and_velocity_of_people_walking
- /* if (Mode_R[0] + Mode_R[1] > 0.05 || Mode_L[0] + Mode_L[1] <0.05) {
-    if(Mode_R[0] + Mode_R[1] <0.05){
-      //Mode_R[0]=maxTime;
-      //Mode_R[1] = maxTime;
-      if(Mode_L[0] + Mode_L[1] <0.05 ){
-        //Mode_L[0]=maxTime;
-     // Mode_L[1] = maxTime;
-        target_frequency = 0;
-      }else{
-        target_frequency = (1.000 / (Mode_L[0] + Mode_L[1]))/2;
-      }
-    }else{
-        target_frequency = (1.000 / (Mode_R[0] + Mode_R[1]))/2;
-    }
-  } else {
-      target_frequency = (1.000 / (Mode_R[0] + Mode_R[1]) + 1.000 / (Mode_L[0] + Mode_L[1])) / 2.000;
-  }
-*/
 
   if( isChangeL  || isChangeR){
     //Serial.print("update abssteppace");
@@ -361,8 +319,8 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
   //send to unity //todo
  if (currentMillis - previousMillisUnity >= time_interval_Unity) {
     previousMillisUnity = currentMillis;
-  //Serial.print(previousMillis/1000.00);
-  //Serial.print(',');
+  Serial.print(previousMillis/1000.00);
+  Serial.print(',');
   Serial.print(a0);
   Serial.print(',');
   Serial.print(a1);
