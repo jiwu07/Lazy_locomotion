@@ -23,8 +23,12 @@
 // These constants won't change. They're used to give names to the pins used:
 const int analog1InPin = A0;  // Analog input pin that the potentiometer is attached to
 const int analog2InPin = A1;  // Analog input pin that the potentiometer is attached to
-const float dt = 0.001;
-int DelayMs = int(dt * 1000);
+const float dt = 0.005;
+float time_interval = dt * 1000;
+float time_interval_Unity = 20;
+
+float previousMillisUnity =0;
+float previousMillis=0;
 
 float PosTreshold = 0.1;
 float VelTreshold = 0.1;
@@ -86,6 +90,11 @@ void setup() {
 
 void loop() {
   // read the analog in value:
+    unsigned long currentMillis = millis();  // current time
+  
+  //if the time interval is reached
+  if (currentMillis - previousMillis >= time_interval) {
+    previousMillis = currentMillis;  //update the previous time
   PrintEvery++;
   CurTime = CurTime + dt;
   LeftFootPos = (1023-(float)analogRead(analog1InPin)) * SignalGain;
@@ -152,7 +161,8 @@ void loop() {
   KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
 
   // print the results to the Serial Monitor:
-  if (PrintEvery == 20) {
+  if (currentMillis - previousMillisUnity >= time_interval_Unity) {
+    previousMillisUnity = currentMillis;
     Serial.print("Current Time= ");
     Serial.print(CurTime);
     /*Serial.print(" , ");
@@ -191,7 +201,7 @@ void loop() {
   // wait 2 milliseconds before the next loop for the analog-to-digital
   // converter to settle after the last reading:
   //delay(DelayMs);
-  delayMicroseconds(700);
+}
 }
 
 int DistinguishRegions(int Data, float dData, float PosTreshold, float VelTreshold, int PrevMode) {
