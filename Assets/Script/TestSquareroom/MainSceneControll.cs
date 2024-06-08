@@ -11,6 +11,7 @@ public class MainSceneControll : MonoBehaviour
     float count = 3.0f;
     bool isCount = false;
     public GameObject room;
+   // public GameObject player;
 
     public TextMeshPro text;
 
@@ -44,6 +45,7 @@ public class MainSceneControll : MonoBehaviour
         }
         else if(isCount && count < 0)
         {
+           // player.GetComponent<ArduinoComPort>().OnApplicationQuit();
             SceneManager.LoadScene(nextSceneName);
         }
     }

@@ -9,6 +9,7 @@ public class Controllerpractise : MonoBehaviour
     public GameObject text;
     public string nextSceneName = "MainTestScene";
     float count = 5.0f;
+    public GameObject player;
     
 
     void Update()
@@ -36,7 +37,7 @@ public class Controllerpractise : MonoBehaviour
 
     void LoadNextScene()
     {
-
+        player.GetComponent<ArduinoComPort>().OnApplicationQuit();
         SceneManager.LoadScene(nextSceneName);
     }
 
