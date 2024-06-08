@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.XR.Interaction.Toolkit;
+using System.Runtime.InteropServices.ComTypes;
 
 public class ControllerTestLoco : MonoBehaviour
 {
@@ -95,12 +96,13 @@ public class ControllerTestLoco : MonoBehaviour
                 text.transform.gameObject.SetActive(true);
                 text.text = temp.ToString() + " s to get start the next test";
                 //freez player
-                player.GetComponent<SpeedControll>().enabled = false;
+                player.GetComponent<SimplePlayerArduino>().enabled = false;
                 player.transform.Find("Camera").GetComponent<Turn>().enabled = false;
 
             }
             else
             {
+                player.GetComponent<ArduinoComPort>().OnApplicationQuit();
                 SceneManager.LoadScene(nextSceneName);
             }
         }

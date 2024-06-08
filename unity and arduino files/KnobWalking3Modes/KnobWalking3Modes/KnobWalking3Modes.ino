@@ -163,9 +163,9 @@ void loop() {
   // print the results to the Serial Monitor:
   if (currentMillis - previousMillisUnity >= time_interval_Unity) {
     previousMillisUnity = currentMillis;
-    Serial.print("Current Time= ");
+    /* Serial.print("Current Time= ");
     Serial.print(CurTime);
-    /*Serial.print(" , ");
+   Serial.print(" , ");
     Serial.print(LFMode);
     Serial.print(" , ");
 
@@ -176,8 +176,12 @@ void loop() {
     Serial.print("ExpStepPace= ");
     Serial.print(" , ");*/
 
-    //Serial.print(AbsStepPace);
-    Serial.print((xhatL[1]+xhatR[1])/2);
+    Serial.print(LeftFootPos);
+    Serial.print(" , ");
+    Serial.print(RightFootPos);
+    Serial.print(" , ");
+    Serial.print(AbsStepPace);
+    //Serial.print((xhatL[1]+xhatR[1])/2);
     Serial.print(" , ");
     Serial.print((xhatL[0]+xhatR[0])/2);
 

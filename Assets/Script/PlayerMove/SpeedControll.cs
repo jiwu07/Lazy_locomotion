@@ -10,10 +10,10 @@ public class SpeedControll : MonoBehaviour
     
     SerialPort serialPort;
     StreamWriter fileWriter;
+    public string filePath;
 
     string portName = "COM4"; // Adjust the port name accordingly
     int baudRate = 9600; // Match with the baud rate set in Arduino
-    public string filePath ;
 
     float timeInterval = 0.02f;
     public int V = 0;

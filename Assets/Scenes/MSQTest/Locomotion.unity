@@ -887,6 +887,10 @@ PrefabInstance:
       value: CSVData/ArduinoData/ArduinoSeatedLocodofferenttimevibe.csv
       objectReference: {fileID: 0}
     - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: speedText
       value: 
       objectReference: {fileID: 241188345}
@@ -1033,6 +1037,10 @@ PrefabInstance:
     - target: {fileID: 6439010530757685363, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: filePath
+      value: CSVData/ArduinoData/ArduinoSeatedLoco.csv
       objectReference: {fileID: 0}
     - target: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Name

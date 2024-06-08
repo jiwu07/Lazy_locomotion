@@ -29,14 +29,14 @@ public class LightControllLoco : MonoBehaviour
             lightText.text = text +  t.ToString() + "s";
             count -= Time.deltaTime;
             //freez player movement
-            player.GetComponent<SpeedControll>().enabled = false;
+            player.GetComponent<SimplePlayerArduino>().enabled = false;
             player.transform.Find("Camera").GetComponent<Turn>().enabled = false;
 
         }
         else if(isControll)
         {
             //Player can start move
-            player.GetComponent<SpeedControll>().enabled = true;
+            player.GetComponent<SimplePlayerArduino>().enabled = true;
             player.transform.Find("Camera").GetComponent<Turn>().enabled = true;
             //no need stuff off
             roomOFFObject.SetActive(false);
