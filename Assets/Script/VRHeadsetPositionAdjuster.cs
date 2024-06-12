@@ -6,12 +6,12 @@ using Unity.VisualScripting;
 public class VRHeadsetPositionAdjuster : MonoBehaviour
 {
     public XROrigin xROrigin;
-    public Vector3 offset;
+     Vector3 offset;
     public GameObject avatarHead;
     public Transform headPosition;
 
     public bool isCalibrate;
-     Vector3 offsetZ = new Vector3(0,0.02f,0.12f);
+     Vector3 offsetZ = new Vector3(0,0.02f,0.15f);
 
 
 

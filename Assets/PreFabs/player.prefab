@@ -544,7 +544,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xROrigin: {fileID: 8277593310158546217}
-  offset: {x: 0, y: 0, z: 0}
   avatarHead: {fileID: 5236409352113680557}
   headPosition: {fileID: 1942246135590659534}
   isCalibrate: 1
@@ -932,6 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f525d0adbf114c1499aec53f6833a2e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filePath: 
 --- !u!114 &9192555568693791163
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -281,6 +281,15 @@ void loop() {
 
   unsigned long currentMillis = millis();  // current time
   
+  // Make delay for good sampling
+  int time=micros();
+  float t2=(float)time/1000000;
+  float TimeBtw=CurTime-t2-0.05;
+  if(TimeBtw>0)
+  {
+    delayMicroseconds((int)(TimeBtw*900));//1000));
+  }
+  
   //if the time interval is reached
   if (currentMillis - previousMillis >= time_interval) {
     previousMillis = currentMillis;  //update the previous time
@@ -320,7 +329,7 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
 currentMillis = millis();
  if (currentMillis - previousMillisUnity >= time_interval_Unity) {
     previousMillisUnity = currentMillis;
-  //Serial.print(currentMillis/1000);
+  Serial.print(currentMillis);
   //Serial.print(',');
   Serial.print(a0);
   Serial.print(',');

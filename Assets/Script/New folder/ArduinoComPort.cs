@@ -41,20 +41,26 @@ public class ArduinoComPort : MonoBehaviour
         if (stream.BytesToRead > 8)
         {
             Debug.Log("Stream Flushed!");
-           // stream.ReadExisting();
+            stream.ReadExisting();
         }
         string data = stream.ReadLine();
         string[] DataArr = data.Split(",");
         Debug.Log("Data: " + data);
         count++;
-        time = count * dt;
-        a0 = float.Parse(DataArr[0]);
+        float timeUpdate = count * dt;
+        time = Time.time;
+        //a0 = float.Parse(DataArr[0]);
+
         a1 = float.Parse(DataArr[1]);
         Pace = float.Parse(DataArr[2]);
         Phase = float.Parse(DataArr[3]);
+        float timeRead = float.Parse(DataArr[0]);
+
         string line = $"{time},{a0},{a1},{Pace},{Phase}";
         fileWriter.WriteLine(line);
         //Debug.Log("Pace: " + Pace.ToString("N2") + ", Phase: " + Phase.ToString("N2"));
+       Debug.Log("time update: " + timeUpdate.ToString("N2") + ", Time read: " + timeRead.ToString("N2") + "time update: " + Time.time.ToString("N2"));
+
     }
 
 
