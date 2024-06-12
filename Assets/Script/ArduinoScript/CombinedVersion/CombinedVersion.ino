@@ -163,15 +163,15 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 
 //check the string situation and update the current mode
 bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter, bool& allowedUp, bool& allowedDown,float PhaseWidths[], float& ExpAbsPhase, float& NextAbsPhase) { 
- /*
+ 
     if(height > simulation::Threshold_up){
       allowedUp = true; 
-      allowedDown = false;
+     // allowedDown = false;
     }else if(height < simulation::Threshold_down){
       allowedDown =true;
       //allowedUp = false;
     }
-    */
+    
    
     t += dt;//update time;
 
@@ -246,7 +246,7 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
     }
 }
 
-/
+
 /************* ************* Setup - ************* ********************/
 /************* ************* Setup - ************* ********************/
 /************* ************* Setup - ************* ********************/
@@ -316,11 +316,12 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
 
 
 
-  //send to unity //todo
+  //send to unity 
+currentMillis = millis();
  if (currentMillis - previousMillisUnity >= time_interval_Unity) {
     previousMillisUnity = currentMillis;
-  Serial.print(previousMillis/1000.00);
-  Serial.print(',');
+  //Serial.print(currentMillis/1000);
+  //Serial.print(',');
   Serial.print(a0);
   Serial.print(',');
   Serial.print(a1);

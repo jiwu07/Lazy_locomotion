@@ -41,7 +41,7 @@ public class ArduinoComPort : MonoBehaviour
         if (stream.BytesToRead > 8)
         {
             Debug.Log("Stream Flushed!");
-            stream.ReadExisting();
+           // stream.ReadExisting();
         }
         string data = stream.ReadLine();
         string[] DataArr = data.Split(",");
