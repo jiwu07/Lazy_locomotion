@@ -149,6 +149,8 @@ int a0 =0;
 int a1 =0;
 float dt = ((float)simulation::time_interval)/1000.000f;
 float stepPaceUpdate = 0;
+int PrintEvery = 0;
+
 
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
@@ -281,18 +283,12 @@ void loop() {
 
   unsigned long currentMillis = millis();  // current time
   
-  // Make delay for good sampling
-  int time=micros();
-  float t2=(float)time/1000000;
-  float TimeBtw=CurTime-t2-0.05;
-  if(TimeBtw>0)
-  {
-    delayMicroseconds((int)(TimeBtw*900));//1000));
-  }
+
   
   //if the time interval is reached
   if (currentMillis - previousMillis >= time_interval) {
     previousMillis = currentMillis;  //update the previous time
+      PrintEvery++;
    // check the update 
   bool isChangeL = update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL,allowedUpL,allowedDownL,PhaseWidthsL,  ExpAbsPhaseL,  NextAbsPhaseL);
   bool isChangeR = update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR,allowedUpR,allowedDownR,PhaseWidthsR,  ExpAbsPhaseR,  NextAbsPhaseR);
@@ -322,13 +318,21 @@ if (delta_tl > 0.5 && delta_tr > 0.5) {
 KalmanFilter(ExpAbsPhaseL, AbsStepPace, (float*) xhatL, dt, (float*)P_apostL);
 KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
 
-
-
-
+  // Make delay for good sampling
+  int time=micros();
+  float t2=(float)time/1000000;
+  float TimeBtw=CurTime-t2-0.05;
+  if(TimeBtw>0)
+  {
+    delayMicroseconds((int)(TimeBtw*900));//1000));
+  }
+  
   //send to unity 
-currentMillis = millis();
- if (currentMillis - previousMillisUnity >= time_interval_Unity) {
-    previousMillisUnity = currentMillis;
+//currentMillis = millis();
+ //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
+  if (PrintEvery == 10) {
+
+  //  previousMillisUnity = currentMillis;
   Serial.print(currentMillis);
   //Serial.print(',');
   Serial.print(a0);
@@ -355,6 +359,7 @@ currentMillis = millis();
  //Serial.print(delta_tr);
         Serial.print(" , ");
     Serial.println((xhatL[0]+xhatR[0])/2);
+    PrintEvery =0;
   }
 
   /********************Vibration - start **********************/
