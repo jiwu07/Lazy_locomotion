@@ -103,6 +103,7 @@ public class ControllerTestLoco : MonoBehaviour
             else
             {
                 player.GetComponent<ArduinoComPort>().OnApplicationQuit();
+
                 SceneManager.LoadScene(nextSceneName);
             }
         }

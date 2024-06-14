@@ -130,7 +130,7 @@ int pre_height0 = 1023;
 int pre_height1 = 1023;
 
 float Threshold_up = 1000; //threshold up changing 
-float Threshold_mode4 = 1000; //consider is mode 4 if the sensor data is more than this
+float Threshold_mode4 = 950; //consider is mode 4 if the sensor data is more than this
 float Threshold_down = 900; // threshold min distance
 bool allowedUpL = true; //allowed moving up
 bool allowedDownL = false; // allowed moving down
@@ -150,6 +150,8 @@ int a1 =0;
 float dt = ((float)simulation::time_interval)/1000.000f;
 float stepPaceUpdate = 0;
 int PrintEvery = 0;
+float CurTime = 0;
+
 
 
 //checking vibration based on the string length/sensor data(0-255)
@@ -165,20 +167,20 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 
 //check the string situation and update the current mode
 bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter, bool& allowedUp, bool& allowedDown,float PhaseWidths[], float& ExpAbsPhase, float& NextAbsPhase) { 
- 
+ /*
     if(height > simulation::Threshold_up){
       allowedUp = true; 
      // allowedDown = false;
     }else if(height < simulation::Threshold_down){
-      allowedDown =true;
+      //allowedDown =true;
       //allowedUp = false;
     }
-    
+    */
    
     t += dt;//update time;
 
    // if (pre_height - height > 2 &&   allowedUp) { // going up
-    if (pre_height - height > 2 ) {
+    if (pre_height - height > 2 && height < simulation::Threshold_mode4) {
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
             up = false;
             pre_mode = MODE_M4;
@@ -289,6 +291,8 @@ void loop() {
   if (currentMillis - previousMillis >= time_interval) {
     previousMillis = currentMillis;  //update the previous time
       PrintEvery++;
+      CurTime = CurTime + dt;
+
    // check the update 
   bool isChangeL = update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL,allowedUpL,allowedDownL,PhaseWidthsL,  ExpAbsPhaseL,  NextAbsPhaseL);
   bool isChangeR = update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR,allowedUpR,allowedDownR,PhaseWidthsR,  ExpAbsPhaseR,  NextAbsPhaseR);
@@ -321,7 +325,7 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
   // Make delay for good sampling
   int time=micros();
   float t2=(float)time/1000000;
-  float TimeBtw=CurTime-t2-0.05;
+  float TimeBtw=CurTime-t2-0.051;
   if(TimeBtw>0)
   {
     delayMicroseconds((int)(TimeBtw*900));//1000));
@@ -330,10 +334,10 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
   //send to unity 
 //currentMillis = millis();
  //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
-  if (PrintEvery == 10) {
+  if (PrintEvery == 4) {
 
   //  previousMillisUnity = currentMillis;
-  Serial.print(currentMillis);
+  //Serial.print(currentMillis);
   //Serial.print(',');
   Serial.print(a0);
   Serial.print(',');
@@ -351,8 +355,8 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
   //Serial.print(',');
   //Serial.print(Mode_R[1]);
   //Serial.print(',');
-   Serial.print(AbsStepPace);
-   // Serial.print((xhatL[1]+xhatR[1])/2);
+   //Serial.print(AbsStepPace);
+    Serial.print((xhatL[1]+xhatR[1])/2);
   //  Serial.print(" , ");
     //Serial.print(delta_tl);
       //  Serial.print(" , ");

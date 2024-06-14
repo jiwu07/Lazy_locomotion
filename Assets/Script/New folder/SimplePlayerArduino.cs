@@ -5,12 +5,12 @@ using UnityEngine;
 public class SimplePlayerArduino : MonoBehaviour
 {
     Animator animator;
-    float spd;
+    //float spd;
     float phase;
     float offset;
-    GameObject CamCarr;
-    Vector3 CamPos;
-    int Mode = 0;
+    //GameObject CamCarr;
+   // Vector3 CamPos;
+    //int Mode = 0;
     public bool UsingComPort = false;
     float w = 1f;
     float forw = 0f;
@@ -18,7 +18,7 @@ public class SimplePlayerArduino : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        spd = 0;
+       // spd = 0;
         phase = 0;
         offset = -0.4f;
         animator = GetComponent<Animator>();

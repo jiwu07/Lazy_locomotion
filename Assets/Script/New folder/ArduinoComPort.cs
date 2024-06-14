@@ -11,6 +11,8 @@ public class ArduinoComPort : MonoBehaviour
     StreamWriter fileWriter;
     public string filePath;
 
+
+
     public static int ComPortNum = 4; // Should match the Com Port of the microcontroller
     SerialPort stream = new SerialPort("COM" + ComPortNum.ToString(), 115200);
 
@@ -48,18 +50,18 @@ public class ArduinoComPort : MonoBehaviour
         Debug.Log("Data: " + data);
         count++;
         float timeUpdate = count * dt;
-        time = Time.time;
-        //a0 = float.Parse(DataArr[0]);
+        //time = Time.time;
+        a0 = float.Parse(DataArr[0]);
 
         a1 = float.Parse(DataArr[1]);
         Pace = float.Parse(DataArr[2]);
         Phase = float.Parse(DataArr[3]);
-        float timeRead = float.Parse(DataArr[0]);
+        //float timeRead = float.Parse(DataArr[0]);
 
-        string line = $"{time},{a0},{a1},{Pace},{Phase}";
+        string line = $"{timeUpdate},{a0},{a1},{Pace},{Phase}";
         fileWriter.WriteLine(line);
         //Debug.Log("Pace: " + Pace.ToString("N2") + ", Phase: " + Phase.ToString("N2"));
-       Debug.Log("time update: " + timeUpdate.ToString("N2") + ", Time read: " + timeRead.ToString("N2") + "time update: " + Time.time.ToString("N2"));
+       //Debug.Log("time update: " + timeUpdate.ToString("N2") + ", Time read: " + timeRead.ToString("N2") + "time update: " + Time.time.ToString("N2"));
 
     }
 
