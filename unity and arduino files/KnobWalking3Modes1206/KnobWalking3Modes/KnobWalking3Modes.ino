@@ -92,8 +92,8 @@ void loop() {
   CurTime = CurTime + dt;
 
   
-  LeftFootPos = (float)analogRead(analog1InPin) * SignalGain;
-  RightFootPos = (float)analogRead(analog2InPin) * SignalGain;
+  LeftFootPos = (1023-(float)analogRead(analog1InPin)) * SignalGain;
+  RightFootPos =(1023- (float)analogRead(analog2InPin)) * SignalGain;
 
   LeftFootVel = Derivative(LeftFootPos, PrevLeftFootPos, PrevLeftFootVel, dt, w);
   RightFootVel = Derivative(RightFootPos, PrevRightFootPos, PrevRightFootVel, dt, w);
@@ -163,14 +163,14 @@ void loop() {
   {
     delayMicroseconds((int)(TimeBtw*1000));
   }
-
+ //here
 // print the results to the Serial Monitor:
   if (PrintEvery == 10) {
-    /*Serial.print("Current Time= ");
-    Serial.print(CurTime);
-    Serial.print(" Time 2= ");
+   // Serial.print("Current Time= ");
+    //Serial.print(CurTime);
+    /* Serial.print(" Time 2= ");
     
-    
+   
     Serial.print(t2);
     
     Serial.print(" Time 3= ");
@@ -189,12 +189,18 @@ void loop() {
     Serial.print(" , ");
 
     Serial.print(AbsStepPace);*/
-
-    Serial.print((xhatL[1]+xhatR[1])/2);
+    Serial.print(LeftFootPos);
     Serial.print(" , ");
-    Serial.print((xhatL[0]+xhatR[0])/2);
+    Serial.print(RightFootPos);
     Serial.print(" , ");
-    Serial.print((PhaseWidthsL[0]+PhaseWidthsR[0])/2);
+    //Serial.print((xhatL[1]);//+xhatR[1])/2);
+    Serial.print(LFMode);//+xhatR[1])/2);
+    Serial.print(" , ");
+    Serial.print(RFMode);//+xhatR[1])/2);
+    //Serial.print((xhatL[0]+xhatR[0])/2);
+    Serial.print(" , ");
+    //Serial.print((PhaseWidthsL[0]+PhaseWidthsR[0])/2);
+    Serial.print(CurTime);
 
     Serial.println();
 
@@ -404,6 +410,3 @@ void PrintPhaseWidths(float* PhaseWidths)
   }
   Serial.println();
 }
-
-
-

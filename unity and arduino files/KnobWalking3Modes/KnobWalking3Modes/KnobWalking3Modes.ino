@@ -23,7 +23,7 @@
 // These constants won't change. They're used to give names to the pins used:
 const int analog1InPin = A0;  // Analog input pin that the potentiometer is attached to
 const int analog2InPin = A1;  // Analog input pin that the potentiometer is attached to
-const float dt = 0.005;
+const float dt = 0.002;
 float time_interval = dt * 1000;
 float time_interval_Unity = 20;
 
@@ -160,14 +160,24 @@ void loop() {
   KalmanFilter(ExpAbsPhaseL, AbsStepPace, (float*) xhatL, dt, (float*)P_apostL);
   KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
 
+  // Make delay for good sampling
+  int time=micros();
+  float t2=(float)time/1000000;
+  float TimeBtw=CurTime-t2-0.05;
+  if(TimeBtw>0)
+  {
+    delayMicroseconds((int)(TimeBtw*900));//1000));
+  }
+  
   // print the results to the Serial Monitor:
-  if (currentMillis - previousMillisUnity >= time_interval_Unity) {
-    previousMillisUnity = currentMillis;
-        Serial.print(CurTime);
-Serial.print(" , ");
-    /* Serial.print("Current Time= ");
+  //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
+    //previousMillisUnity = currentMillis;
+    if (PrintEvery == 10) {
+     //   Serial.print(CurTime);
+//Serial.print(" , ");
+    // Serial.print("Current Time= ");
     Serial.print(CurTime);
-   Serial.print(" , ");
+   /*Serial.print(" , ");
     Serial.print(LFMode);
     Serial.print(" , ");
 
@@ -178,12 +188,12 @@ Serial.print(" , ");
     Serial.print("ExpStepPace= ");
     Serial.print(" , ");*/
 
-    Serial.print(LeftFootPos);
+    //Serial.print(LeftFootPos);
     Serial.print(" , ");
     Serial.print(RightFootPos);
     Serial.print(" , ");
-    Serial.print(AbsStepPace);
-    //Serial.print((xhatL[1]+xhatR[1])/2);
+    //Serial.print(AbsStepPace);
+    Serial.print((xhatL[1]+xhatR[1])/2);
     Serial.print(" , ");
     Serial.print((xhatL[0]+xhatR[0])/2);
 
