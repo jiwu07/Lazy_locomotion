@@ -190,7 +190,7 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
             //pre mode 4 then update phase width
             UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
            ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidths[0];
+            NextAbsPhase = NextAbsPhase + PhaseWidths[1];
       
               mode_list[0] = t; // update time
               stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
@@ -210,7 +210,7 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
             ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidths[1];
+            NextAbsPhase = NextAbsPhase + PhaseWidths[2];
             up = true;
             pre_mode = MODE_M2;
             return false;
@@ -232,6 +232,8 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
     } else {
         if(height > simulation::Threshold_mode4){
           if(pre_mode == MODE_M3){
+            ExpAbsPhase = NextAbsPhase;
+            NextAbsPhase = NextAbsPhase + PhaseWidths[0];
             mode_list[2] = t;
             t=0;
             stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
