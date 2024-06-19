@@ -1044,7 +1044,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath
-      value: CSVData/ArduinoData/ArduinoSeatedLocoDefautVib.csv
+      value: CSVData/ArduinoData/ArduinoSeatedLocoDefautVibk.csv
       objectReference: {fileID: 0}
     - target: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Name
@@ -1080,7 +1080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 60
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalRotation.w

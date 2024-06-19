@@ -40,7 +40,7 @@ public class LearningTest_LightControllLoco : MonoBehaviour
     public string nextSceneName = "EndScene";
     Animator animator;
 
-
+    int[] distanceList = {20,6,50,15 };
 
     void Start()
     {
@@ -49,7 +49,7 @@ public class LearningTest_LightControllLoco : MonoBehaviour
         // Create CSV file and add headers if the file doesn't exist
         if (!File.Exists(filePath))
         {
-            File.WriteAllText(filePath, "TestCount ,Timestamp,Trial,LightOn,PlayerPositionZ,TargetPositionZ,DistanceDifference\n");
+            File.WriteAllText(filePath, "TestCount,Timestamp,Trial,LightOn,PlayerPositionZ,TargetPositionZ,DistanceDifference\n");
         }
 
         animator = player.GetComponent<Animator>();
@@ -137,7 +137,7 @@ public class LearningTest_LightControllLoco : MonoBehaviour
         string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         Vector3 playerPosition = player.transform.position;
         float distanceDifference = targetTransform.position.z - player.transform.position.z;
-        string logEntry = string.Format("{0},{1},{2},{3},{4},{5}.{6}\n", testCount.ToString(), timestamp, count / 2, lightOn, playerPosition.z, targetTransform.position.z, distanceDifference);
+        string logEntry = string.Format("{0},{1},{2},{3},{4},{5},{6}\n", testCount.ToString(), timestamp, count / 2, lightOn, playerPosition.z, targetTransform.position.z, distanceDifference);
 
         File.AppendAllText(filePath, logEntry);
     }
@@ -166,6 +166,8 @@ public class LearningTest_LightControllLoco : MonoBehaviour
 
             count = 2;
 
+            //change target distance
+            taskObject.transform.position = new Vector3(targetTransform.position.x, targetTransform.position.y, distanceList[testCount]);
         }
     }
 

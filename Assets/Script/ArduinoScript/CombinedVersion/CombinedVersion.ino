@@ -225,6 +225,7 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
           
  
         }
+        
         up = false;
         pre_mode = MODE_M3;
         return false;
@@ -245,7 +246,7 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
             pre_mode = MODE_M2;
             return false;
         }
-        pre_mode = MODE_M4;
+        pre_mode = MODE_M3;
         return false;
     }
 }

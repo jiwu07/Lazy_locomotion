@@ -461,6 +461,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2008579561}
   m_SourcePrefab: {fileID: 100100000, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+--- !u!1 &389275169 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+  m_PrefabInstance: {fileID: 389275168}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &443790720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1567,6 +1572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 620830860}
   nextSceneName: K_MainTestScene
+  player: {fileID: 0}
 --- !u!20 &2008579556 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 7098803130400669170, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
@@ -1835,6 +1841,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3877558964272671576, guid: bfb59090fe793cb42b90ea157870d3c4, type: 3}
+      propertyPath: text
+      value: 
+      objectReference: {fileID: 620830860}
+    - target: {fileID: 3877558964272671576, guid: bfb59090fe793cb42b90ea157870d3c4, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 389275169}
     - target: {fileID: 3877558964272671576, guid: bfb59090fe793cb42b90ea157870d3c4, type: 3}
       propertyPath: nextSceneName
       value: K_MainTestScene

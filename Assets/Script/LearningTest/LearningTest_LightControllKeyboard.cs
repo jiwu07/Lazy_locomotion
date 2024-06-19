@@ -36,6 +36,7 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
     int maxTestCount = 5;
     float nextTestCount = 0;
     public string nextSceneName = "EndScene";
+    int[] distanceList = { 20, 6, 50, 15 };
 
 
     public string filePath;
@@ -46,7 +47,7 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
         // Create CSV file and add headers if the file doesn't exist
         if (!File.Exists(filePath))
         {
-            File.WriteAllText(filePath, "TestCount ,Timestamp,Trial,LightOn,PlayerPositionZ,TargetPositionZ,DistanceDifference\n");
+            File.WriteAllText(filePath, "TestCount,Timestamp,Trial,LightOn,PlayerPositionZ,TargetPositionZ,DistanceDifference\n");
         }
     }
 
@@ -141,7 +142,7 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
         string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         Vector3 playerPosition = player.transform.position;
         float distanceDifference = targetTransform.position.z - player.transform.position.z;
-        string logEntry = string.Format("{0},{1},{2},{3},{4},{5}.{6}\n", testCount.ToString(), timestamp, count / 2, lightOn, playerPosition.z, targetTransform.position.z, distanceDifference);
+        string logEntry = string.Format("{0},{1},{2},{3},{4},{5},{6}\n", testCount.ToString(), timestamp, count / 2, lightOn, playerPosition.z, targetTransform.position.z, distanceDifference);
 
         File.AppendAllText(filePath, logEntry);
     }
@@ -171,7 +172,8 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
             Camera.main.GetComponent<Camera>().cullingMask = All;  // camera mask on
 
             count = 2;
-
+            //change target distance
+            taskObject.transform.position = new Vector3(targetTransform.position.x, targetTransform.position.y, distanceList[testCount]);
         }
     }
 }

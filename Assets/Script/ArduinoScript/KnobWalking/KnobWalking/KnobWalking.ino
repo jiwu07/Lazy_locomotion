@@ -150,6 +150,10 @@ void loop() {
 
   // print the results to the Serial Monitor:
   if (PrintEvery == 10) {
+     Serial.print(LeftFootPos);
+      Serial.print(",");
+       Serial.print(RightFootPos);
+        Serial.print(",");
     /*Serial.print("Current Time= ");
     Serial.print(CurTime);
     Serial.print(" , ");
