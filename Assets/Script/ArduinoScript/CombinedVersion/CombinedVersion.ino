@@ -328,7 +328,7 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
   // Make delay for good sampling
   int time=micros();
   float t2=(float)time/1000000;
-  float TimeBtw=CurTime-t2-0.051;
+  float TimeBtw=CurTime-t2-0.048;
   if(TimeBtw>0)
   {
     delayMicroseconds((int)(TimeBtw*900));//1000));
