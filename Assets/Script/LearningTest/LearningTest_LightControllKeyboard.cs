@@ -140,7 +140,7 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
     {
         string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         Vector3 playerPosition = player.transform.position;
-        float distanceDifference = (int)(targetTransform.position.z - player.transform.position.z);
+        float distanceDifference = targetTransform.position.z - player.transform.position.z;
         string logEntry = string.Format("{0},{1},{2},{3},{4},{5}.{6}\n", testCount.ToString(), timestamp, count / 2, lightOn, playerPosition.z, targetTransform.position.z, distanceDifference);
 
         File.AppendAllText(filePath, logEntry);
