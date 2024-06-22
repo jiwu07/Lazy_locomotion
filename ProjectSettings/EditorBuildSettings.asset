@@ -9,22 +9,22 @@ EditorBuildSettings:
     path: Assets/Scenes/MSQTest/SampleScene.unity
     guid: 55daccc09a3b69647bbab145b54a3ab3
   - enabled: 1
-    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Practice_Room10x10.unity
+    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Practice_Room.unity
     guid: 958366851be9e4fe983e9bab0706040a
   - enabled: 1
-    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room4x4.unity
+    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room12.unity
     guid: 1c00b95c8cf534102b485f5845505f6d
   - enabled: 1
     path: Assets/Scenes/SeatedTest/USDKeyboard/K_MainTestScene.unity
     guid: ac4172a7134c743cd92194657a779f72
   - enabled: 1
-    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room8x8x1.unity
+    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room45x1.unity
     guid: 46ad56cd6cc3a48cf8a794244e13c703
   - enabled: 1
-    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room8x8x2.unity
+    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room45x2.unity
     guid: a3395444004234bd0913eae8cdf21cf5
   - enabled: 1
-    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room20X20.unity
+    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room25.unity
     guid: 2e36934d1f9ad4d9ea68d9fc5a371326
   - enabled: 1
     path: Assets/Scenes/SeatedTest/USD/MainTestScene.unity
