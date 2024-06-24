@@ -142,7 +142,7 @@ int vibrate_counterR = 0;
 
 unsigned long previousMillis = 0;  //last time
 unsigned long previousMillisUnity =0;
-const long time_interval = 5; // update time
+const long time_interval =2; // update time
 const long time_interval_Unity = 20; // send to unity time
 }
 int a0 =0;
@@ -167,39 +167,32 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 
 //check the string situation and update the current mode
 bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter, bool& allowedUp, bool& allowedDown,float PhaseWidths[], float& ExpAbsPhase, float& NextAbsPhase) { 
- /*
-    if(height > simulation::Threshold_up){
-      allowedUp = true; 
-     // allowedDown = false;
-    }else if(height < simulation::Threshold_down){
-      //allowedDown =true;
-      //allowedUp = false;
-    }
-    */
-   
     t += dt;//update time;
 
    // if (pre_height - height > 2 &&   allowedUp) { // going up
     if (pre_height - height > 2 && height < simulation::Threshold_mode4) {
-        if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
+        if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1 update time m3, reset the time
             up = false;
             pre_mode = MODE_M4;
-            return false;
+            t=0;
+            mode_list[2] =t;
+            ExpAbsPhase = NextAbsPhase;
+            NextAbsPhase = NextAbsPhase + PhaseWidths[2];
+            stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace
+            return true;
         }
         if (pre_mode == MODE_M4) { // switch mode from 4-1
             //pre mode 4 then update phase width
             UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
-           ExpAbsPhase = NextAbsPhase;
+            ExpAbsPhase = NextAbsPhase;
             NextAbsPhase = NextAbsPhase + PhaseWidths[1];
       
               mode_list[0] = t; // update time
-              stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
+              stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace
               up = true;
               pre_mode = MODE_M1;
               t = 0;
-              return true; 
-                       
-             
+              return true;     
         }
         up = true;
         pre_mode = MODE_M1;
@@ -209,13 +202,13 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         //update vibrate counter
         vibrate_counter  = vibrate_counter + height - pre_height;
         if (pre_mode == MODE_M1) {
-            ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidths[2];
             up = true;
             pre_mode = MODE_M2;
             return false;
         }
         if (pre_mode == MODE_M2) { // switch mode  from 2-3
+            ExpAbsPhase = NextAbsPhase;
+            NextAbsPhase = NextAbsPhase + PhaseWidths[2];
             mode_list[1] = t; // update time
             stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
             up = false;
@@ -337,7 +330,7 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
   //send to unity 
 //currentMillis = millis();
  //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
-  if (PrintEvery == 4) {
+  if (PrintEvery == 10) {
 
   //  previousMillisUnity = currentMillis;
   //Serial.print(currentMillis);
