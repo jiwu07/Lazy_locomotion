@@ -38,6 +38,7 @@ public class LearningTest_LightControllLoco : MonoBehaviour
     float nextTestCount = 0;
 
     public string nextSceneName = "EndScene";
+    FadeToBlack FadeToBlack;
     Animator animator;
 
     int[] distanceList = {20,6,50,15 };
@@ -53,6 +54,8 @@ public class LearningTest_LightControllLoco : MonoBehaviour
         }
 
         animator = player.GetComponent<Animator>();
+        FadeToBlack = GetComponent<FadeToBlack>();
+        
 
     }
 
@@ -75,17 +78,30 @@ public class LearningTest_LightControllLoco : MonoBehaviour
         // let controller click turn light on/off
         if (Controller.inputDevice.IsPressed(Button, out bool pressed, Controller.axisToPressThreshold))
         {
-            if (pressed && !isPressed)
+            // Log the time, player position, and distance difference
+
+            if (lightOn)
             {
                 lightOn = !lightOn;
                 count++;
                 isPressed = true;
-
-                // Log the time, player position, and distance difference
+                FadeToBlack.StartFade();
                 LogLightSwitch();
             }
+            else
+            {
+                if (FadeToBlack.isFinish)
+                {
+                    lightOn = !lightOn;
+                    count++;
+                    isPressed = true;
+                    FadeToBlack.ResetFade();
+                }
 
-            if (!pressed)
+            }
+        
+
+        if (!pressed)
             {
                 isPressed = false;
             }
@@ -93,10 +109,18 @@ public class LearningTest_LightControllLoco : MonoBehaviour
 
         if (!lightOn)
         {  // light off
-            roomOFFObject.SetActive(false);  // no need stuff off
-            distanceText.transform.gameObject.SetActive(false);  // ui text off
-            Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;  // camera mask on
-            player.GetComponent<SimplePlayerArduino>().UsingComPort = true;  // player cannot move
+            if (FadeToBlack.isFinish)
+            {
+                roomOFFObject.SetActive(false);  // no need stuff off
+                distanceText.transform.gameObject.SetActive(false);  // ui text off
+                Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;  // camera mask on
+                player.GetComponent<SimplePlayerArduino>().UsingComPort = true;  // player cannot move
+
+            }
+            else
+            {
+                return;
+            }
         }
         else
         {  // light on
@@ -106,7 +130,7 @@ public class LearningTest_LightControllLoco : MonoBehaviour
             player.GetComponent<SimplePlayerArduino>().UsingComPort = false;  // player cannot move
             animator.SetFloat("Forward", 0);
             animator.SetFloat("Pace", 0);
-
+         
             CheckArrive();
         }
 
@@ -153,7 +177,8 @@ public class LearningTest_LightControllLoco : MonoBehaviour
         
         if(nextTestCount < 1 && nextTestCount > 0)
         {
-            Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;  
+            // Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;  
+            FadeToBlack.StartFade();
         }
         if (nextTestCount <= 0) {
             // move player to origin
@@ -165,9 +190,10 @@ public class LearningTest_LightControllLoco : MonoBehaviour
             Camera.main.GetComponent<Camera>().cullingMask = All;  // camera mask on
 
             count = 2;
-
+            //reset the fade
+            FadeToBlack.ResetFade();
             //change target distance
-            taskObject.transform.position = new Vector3(targetTransform.position.x, targetTransform.position.y, distanceList[testCount]);
+            taskObject.transform.position = new Vector3(targetTransform.position.x, targetTransform.position.y, distanceList[testCount-2]);
         }
     }
 

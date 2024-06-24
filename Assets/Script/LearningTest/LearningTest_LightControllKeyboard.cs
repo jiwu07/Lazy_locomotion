@@ -37,7 +37,7 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
     float nextTestCount = 0;
     public string nextSceneName = "EndScene";
     int[] distanceList = { 20, 6, 50, 15 };
-
+    FadeToBlack FadeToBlack;
 
     public string filePath;
     void Start()
@@ -49,6 +49,7 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
         {
             File.WriteAllText(filePath, "TestCount,Timestamp,Trial,LightOn,PlayerPositionZ,TargetPositionZ,DistanceDifference\n");
         }
+        FadeToBlack = GetComponent<FadeToBlack>();
     }
 
 
@@ -73,11 +74,28 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
         {
             if (pressed && !isPressed)
             {
-                lightOn = !lightOn;
-                count++;
-                isPressed = true;
+                             
                 // Log the time, player position, and distance difference
-                LogLightSwitch();
+                
+                if (lightOn)
+                {
+                    lightOn = !lightOn;
+                    count++;
+                    isPressed = true;
+                    FadeToBlack.StartFade();
+                    LogLightSwitch();
+                }
+                else
+                {
+                    if (FadeToBlack.isFinish)
+                    {
+                        lightOn = !lightOn;
+                        count++;
+                        isPressed = true;
+                        FadeToBlack.ResetFade();
+                    }
+                    
+                }
             }
 
             if (!pressed)
@@ -90,15 +108,23 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
 
         if (!lightOn)
         {  // light off
-            //no need stuff off
-            roomOFFObject.SetActive(false);
-            //ui text off
-            distanceText.transform.gameObject.SetActive(false);
-            //cameramask on
-            Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;
-            // player move
-            player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = true;
 
+            if (FadeToBlack.isFinish)
+            {
+                //no need stuff off
+                roomOFFObject.SetActive(false);
+                //ui text off
+                distanceText.transform.gameObject.SetActive(false);
+                //cameramask on
+                Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;
+                // player move
+                player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = true;
+               
+            }
+            else
+            {
+                return;
+            }
         }
         else
         {
@@ -106,7 +132,7 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
             //no need stuff on
             roomOFFObject.SetActive(true);
             //cameramask on
-            Camera.main.GetComponent<Camera>().cullingMask = All;
+           Camera.main.GetComponent<Camera>().cullingMask = All;
             //show feedback
             //ui text on
             distanceText.transform.gameObject.SetActive(true);
@@ -159,7 +185,8 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
 
         if (nextTestCount < 1 && nextTestCount > 0)
         {
-            Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;
+            //Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;
+            FadeToBlack.StartFade();
         }
         if (nextTestCount <= 0)
         {
@@ -170,10 +197,11 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
             //active task object
             taskObject.SetActive(true);
             Camera.main.GetComponent<Camera>().cullingMask = All;  // camera mask on
-
+            //reset the fade
+            FadeToBlack.ResetFade();
             count = 2;
             //change target distance
-            taskObject.transform.position = new Vector3(targetTransform.position.x, targetTransform.position.y, distanceList[testCount]);
+            taskObject.transform.position = new Vector3(targetTransform.position.x, targetTransform.position.y, distanceList[testCount-2]);
         }
     }
 }

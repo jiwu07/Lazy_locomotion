@@ -412,7 +412,7 @@ MonoBehaviour:
   player: {fileID: 17480253}
   turnController: {fileID: 322543696}
   turnButton: 3
-  csvFilePath: CSVData/MovePathData/20x20PathDataLoco.csv
+  csvFilePath: CSVData/MovePathData/25PathDataLoco.csv
 --- !u!114 &322543696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,7 +558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath
-      value: CSVData/ArduinoData/Arduino20x20.csv
+      value: CSVData/ArduinoData/Arduino25.csv
       objectReference: {fileID: 0}
     - target: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Name

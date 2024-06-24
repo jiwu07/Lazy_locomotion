@@ -16,7 +16,7 @@ public class LightControllKeyboard : MonoBehaviour
     public LayerMask LightOnMask;
 
 
-    string text = "Light off in ";
+    string text = "Get Dark in ";
     float count = 9.0f;
     public bool isControll = true;
     public bool isCalibrate = false;

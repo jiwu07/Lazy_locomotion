@@ -1104,7 +1104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnCount: 0
-  nextSceneName: Room20x20
+  nextSceneName: Room25
   text: {fileID: 389275169}
   point1: {fileID: 857474435}
   point2: {fileID: 443790720}
@@ -1113,7 +1113,7 @@ MonoBehaviour:
   player: {fileID: 17480253}
   turnController: {fileID: 322543696}
   turnButton: 3
-  csvFilePath: CSVData/MovePathData/8x8x2PathDataLoco.csv
+  csvFilePath: CSVData/MovePathData/45x2PathDataLoco.csv
 --- !u!114 &322543696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1159,7 +1159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightText: {fileID: 389275169}
-  roomOFFObject: {fileID: 1251159921}
+  roomOFFObject: {fileID: 721970364}
   player: {fileID: 17480253}
   LightOffMask:
     serializedVersion: 2
@@ -1270,7 +1270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath
-      value: CSVData/ArduinoData/Arduino8x8x2.csv
+      value: CSVData/ArduinoData/Arduino45x2.csv
       objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
@@ -1994,6 +1994,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72b464f2a316cac429fe79632f721a11, type: 3}
+--- !u!1 &721970364 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5710311896713353767, guid: 72b464f2a316cac429fe79632f721a11, type: 3}
+  m_PrefabInstance: {fileID: 721970363}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &727086425
 PrefabInstance:
   m_ObjectHideFlags: 0

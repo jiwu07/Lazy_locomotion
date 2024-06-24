@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,7 @@ public class Controllerpractise : MonoBehaviour
     public string nextSceneName = "MainTestScene";
     float count = 5.0f;
     public GameObject player;
+
     
 
     void Update()
@@ -38,6 +40,9 @@ public class Controllerpractise : MonoBehaviour
     void LoadNextScene()
     {
         player.GetComponent<ArduinoComPort>().OnApplicationQuit();
+        Animator animator = player.GetComponent<Animator>();
+        animator.SetFloat("Forward", 0);
+        animator.SetFloat("Pace", 0);
         SceneManager.LoadScene(nextSceneName);
     }
 

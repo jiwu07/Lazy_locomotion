@@ -35,23 +35,25 @@ public class ControllerTestKeyboard : MonoBehaviour
         //save the point data
         if (!File.Exists(csvFilePath))
         {
-            File.WriteAllText(csvFilePath, "N,X,Y,Z\n");
+            File.WriteAllText(csvFilePath, "N,X,Z,Time\n");
         }
         //write point inside
         Vector3 position = point1.transform.position;
-        string pointData = string.Format("{0},{1},{2},{3}\n", "point 1", position.x, position.y, position.z);
+        string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+        string pointData = string.Format("{0},{1},{2},{3}\n", "point 1", position.x, position.z, timestamp);
         File.AppendAllText(csvFilePath, pointData);
 
          position = point2.transform.position;
-         pointData = string.Format("{0},{1},{2},{3}\n", "point 2", position.x, position.y, position.z);
+         pointData = string.Format("{0},{1},{2},{3}\n", "point 2", position.x,  position.z, timestamp);
         File.AppendAllText(csvFilePath, pointData);
 
          position = point3.transform.position;
-         pointData = string.Format("{0},{1},{2},{3}\n", "point 3", position.x, position.y, position.z);
+         pointData = string.Format("{0},{1},{2},{3}\n", "point 3", position.x, position.z, timestamp);
         File.AppendAllText(csvFilePath, pointData);
 
          position = point4.transform.position;
-         pointData = string.Format("{0},{1},{2},{3}\n", "point 4", position.x, position.y, position.z);
+         pointData = string.Format("{0},{1},{2},{3}\n", "point 4", position.x, position.z, timestamp);
         File.AppendAllText(csvFilePath, pointData);
 
       
@@ -71,7 +73,9 @@ public class ControllerTestKeyboard : MonoBehaviour
                 turnCount++;
             //record the turn point 
                 Vector3 position = player.transform.position;
-                string positionData = string.Format("{0},{1},{2},{3}\n","turn "+ turnCount, (int) position.x, (int)position.y, (int)position.z);
+                string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                string positionData = string.Format("{0},{1},{2},{3}\n","turn "+ turnCount,  position.x, position.z, timestamp);
                 File.AppendAllText(csvFilePath, positionData);
                 isPressed = true;
             }

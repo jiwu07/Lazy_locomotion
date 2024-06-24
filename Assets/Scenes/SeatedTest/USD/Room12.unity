@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnCount: 0
-  nextSceneName: Room8x8x1
+  nextSceneName: Room45x1
   text: {fileID: 389275169}
   point1: {fileID: 857474435}
   point2: {fileID: 443790720}
@@ -453,7 +453,7 @@ MonoBehaviour:
   player: {fileID: 17480253}
   turnController: {fileID: 322543696}
   turnButton: 5
-  csvFilePath: CSVData/MovePathData/4x4PathDataLoco.csv
+  csvFilePath: CSVData/MovePathData/12PathDataLoco.csv
 --- !u!1001 &389275168
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -480,7 +480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath
-      value: CSVData/ArduinoData/\arduino4x4.csv
+      value: CSVData/ArduinoData/\arduino12.csv
       objectReference: {fileID: 0}
     - target: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Name
