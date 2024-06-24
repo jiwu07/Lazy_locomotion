@@ -15,14 +15,17 @@ public class LightControllKeyboard : MonoBehaviour
     public LayerMask LightOffMask;
     public LayerMask LightOnMask;
 
-
+    FadeToBlack fadeToBlack;
     string text = "Get Dark in ";
-    float count = 9.0f;
+    float count = 5.0f;
     public bool isControll = true;
     public bool isCalibrate = false;
+    bool startfade = false;
 
-
-
+    private void Start()
+    {
+        fadeToBlack = transform.GetComponent<FadeToBlack>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -49,19 +52,31 @@ public class LightControllKeyboard : MonoBehaviour
         }
         else if(isControll)
         {
-            //Player can start move
-            player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = true;
-            player.transform.Find("Camera").GetComponent<Turn>().enabled = true;
-            //no need stuff off
-            roomOFFObject.SetActive(false);
-            //ui text off
-            lightText.transform.gameObject.SetActive(false);
-            //cameramask on
-            Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;
-            isControll = false;
+            if (!startfade)
+            {
+                fadeToBlack.StartFade();
+                startfade = true;
+                //ui text off
+                lightText.transform.gameObject.SetActive(false);
+                return;
+            }
+
+            if (fadeToBlack.isFinish)
+            {
+                //Player can start move
+                player.GetComponent<SimplePlayerArduino>().enabled = true;
+                player.transform.Find("Camera").GetComponent<Turn>().enabled = true;
+                //no need stuff off
+                roomOFFObject.SetActive(false);
+               
+                //cameramask on
+                Camera.main.GetComponent<Camera>().cullingMask = LightOffMask;
+                isControll = false;
+            }
+
         }
 
-        
-        
+
+
     }
 }

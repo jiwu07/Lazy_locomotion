@@ -111,6 +111,7 @@ public class ControllerTestLoco : MonoBehaviour
 
                 animator.SetFloat("Forward", 0);
                 animator.SetFloat("Pace", 0);
+               //animator.SetFloat("Phase", 0);
                 SceneManager.LoadScene(nextSceneName);
             }
         }

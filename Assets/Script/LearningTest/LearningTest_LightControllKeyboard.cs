@@ -73,10 +73,8 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
         if (Controller.inputDevice.IsPressed(Button, out bool pressed, Controller.axisToPressThreshold)) 
         {
             if (pressed && !isPressed)
-            {
-                             
-                // Log the time, player position, and distance difference
-                
+            {                    
+                // Log the time, player position, and distance difference         
                 if (lightOn)
                 {
                     lightOn = !lightOn;

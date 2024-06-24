@@ -11,7 +11,7 @@ public class VRHeadsetPositionAdjuster : MonoBehaviour
     public Transform headPosition;
 
     public bool isCalibrate;
-     Vector3 offsetZ = new Vector3(0,0.02f,0.1f);
+     Vector3 offsetZ = new Vector3(-0.03f,0.025f,-0.1f);
 
 
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class FadeToBlack : MonoBehaviour
 {
     public Image overlayImage; // Reference to the Image with the black overlay
-    public float fadeDuration ; // Duration over which the fade occurs
+     float fadeDuration =1; // Duration over which the fade occurs
 
     private Color initialColor;
     private float timer = 0;

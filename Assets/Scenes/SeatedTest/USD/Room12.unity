@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 322543696}
   - component: {fileID: 322543697}
   - component: {fileID: 322543698}
+  - component: {fileID: 322543699}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -454,6 +455,22 @@ MonoBehaviour:
   turnController: {fileID: 322543696}
   turnButton: 5
   csvFilePath: CSVData/MovePathData/12PathDataLoco.csv
+--- !u!114 &322543699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322543692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7edcdec01dec6449a6be9215acf740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlayImage: {fileID: 389275170}
+  fadeDuration: 0
+  isStart: 0
+  isFinish: 0
 --- !u!1001 &389275168
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -553,6 +570,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &389275170 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 788239209979863369, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+  m_PrefabInstance: {fileID: 389275168}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &443790720
