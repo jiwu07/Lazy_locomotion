@@ -165,6 +165,8 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
       //as mode 4
       if(pre_mode == MODE_M3){
         //switch from 3-4
+        UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
+
         ExpAbsPhase = NextAbsPhase;
         NextAbsPhase = NextAbsPhase + PhaseWidths[0];
         mode_list[1] = t;// update mode 3 time
@@ -186,6 +188,8 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
             pre_mode = MODE_M4;
             mode_list[2] =t; //update mode3 time
             t=0;//reset time
+            UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
+
             ExpAbsPhase = NextAbsPhase;
             NextAbsPhase = NextAbsPhase + PhaseWidths[0];//+current mode width 
             stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace [mode 4, 12, 3]
@@ -193,7 +197,6 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         }
         if (pre_mode == MODE_M4) { // switch mode from 4-1
             //pre mode 4 then update phase width
-            UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
             ExpAbsPhase = NextAbsPhase;
             NextAbsPhase = NextAbsPhase + PhaseWidths[1];//current mode 1
             mode_list[0] = t; // update mode 4 time
