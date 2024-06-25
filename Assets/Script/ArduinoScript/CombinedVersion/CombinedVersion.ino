@@ -56,12 +56,7 @@ AudioOutputI2S        i2s1;
 AudioConnection       patchCord1(waveformR, 0, i2s1, 0);
 AudioConnection       patchCord2(waveformL, 0, i2s1, 1);
 AudioControlSGTL5000  sgtl5000_1;
-
-
 }
-
-
-
 
 
 
@@ -132,10 +127,7 @@ int pre_height1 = 1023;
 float Threshold_up = 1000; //threshold up changing 
 float Threshold_mode4 = 950; //consider is mode 4 if the sensor data is more than this
 float Threshold_down = 900; // threshold min distance
-bool allowedUpL = true; //allowed moving up
-bool allowedDownL = false; // allowed moving down
-bool allowedUpR = true;
-bool allowedDownR = false;
+
 
 int vibrate_counterL = 0; // counter for vibrate interval
 int vibrate_counterR = 0;
@@ -166,77 +158,81 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 
 
 //check the string situation and update the current mode
-bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter, bool& allowedUp, bool& allowedDown,float PhaseWidths[], float& ExpAbsPhase, float& NextAbsPhase) { 
+bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter, float PhaseWidths[], float& ExpAbsPhase, float& NextAbsPhase) { 
     t += dt;//update time;
 
-   // if (pre_height - height > 2 &&   allowedUp) { // going up
-    if (pre_height - height > 2 && height < simulation::Threshold_mode4) {
+    if(height > simulation::Threshold_mode4){
+      //as mode 4
+      if(pre_mode == MODE_M3){
+        //switch from 3-4
+        ExpAbsPhase = NextAbsPhase;
+        NextAbsPhase = NextAbsPhase + PhaseWidths[0];
+        mode_list[1] = t;// update mode 3 time
+        t=0;
+        stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
+        pre_mode = MODE_M4;
+        return true;
+      }
+      //consider keep on the ground
+      pre_mode = MODE_M4;
+      return false;
+      
+    }
+
+    ///hier are mode 123
+    if (pre_height - height > 2 ) { //lifting up
         if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1 update time m3, reset the time
             up = false;
             pre_mode = MODE_M4;
-            t=0;
-            mode_list[2] =t;
+            mode_list[2] =t; //update mode3 time
+            t=0;//reset time
             ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidths[2];
-            stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace
+            NextAbsPhase = NextAbsPhase + PhaseWidths[0];//+current mode width 
+            stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace [mode 4, 12, 3]
             return true;
         }
         if (pre_mode == MODE_M4) { // switch mode from 4-1
             //pre mode 4 then update phase width
             UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
             ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidths[1];
-      
-              mode_list[0] = t; // update time
-              stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace
-              up = true;
-              pre_mode = MODE_M1;
-              t = 0;
-              return true;     
+            NextAbsPhase = NextAbsPhase + PhaseWidths[1];//current mode 1
+            mode_list[0] = t; // update mode 4 time
+            stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace
+            up = true;
+            pre_mode = MODE_M1;
+            t = 0; // reset time
+            return true;     
         }
+        //if pre is mode 2/1 do nothing 
         up = true;
         pre_mode = MODE_M1;
         return false;
-    //} else if (height - pre_height >2 && allowedDown && height < simulation::Threshold_mode4) { // going down
-     } else if (height - pre_height >2  && height < simulation::Threshold_mode4) { // going down
+     } else if (height - pre_height >2 ) { // going down
         //update vibrate counter
         vibrate_counter  = vibrate_counter + height - pre_height;
+        //if pre is 1 insert 2
         if (pre_mode == MODE_M1) {
             up = true;
-            pre_mode = MODE_M2;
-            return false;
+            pre_mode = MODE_M2; // donothing
+            return false; // 2 and 1 combined as 1 mode
         }
         if (pre_mode == MODE_M2) { // switch mode  from 2-3
             ExpAbsPhase = NextAbsPhase;
             NextAbsPhase = NextAbsPhase + PhaseWidths[2];
             mode_list[1] = t; // update time
             stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
-            up = false;
+            up = false; //going down
             pre_mode = MODE_M3;
-            t = 0;
+            t = 0; //reset timr
             return true;
-          
- 
         }
-        
+        //if pre is 3 then do nothing
         up = false;
         pre_mode = MODE_M3;
         return false;
     } else {
-        if(height > simulation::Threshold_mode4){
-          if(pre_mode == MODE_M3){
-            ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidths[0];
-            mode_list[2] = t;
-            t=0;
-            stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
-            pre_mode = MODE_M4;
-            return true;
-          }
-          //consider on the ground
-          pre_mode = MODE_M4;
-          return false;
-        }
+        // not moving here and also not on the ground/not mode 4  
+        //do nothing  
         if (up) {   
             pre_mode = MODE_M2;
             return false;
@@ -290,8 +286,8 @@ void loop() {
       CurTime = CurTime + dt;
 
    // check the update 
-  bool isChangeL = update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL,allowedUpL,allowedDownL,PhaseWidthsL,  ExpAbsPhaseL,  NextAbsPhaseL);
-  bool isChangeR = update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR,allowedUpR,allowedDownR,PhaseWidthsR,  ExpAbsPhaseR,  NextAbsPhaseR);
+  bool isChangeL = update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL,PhaseWidthsL,  ExpAbsPhaseL,  NextAbsPhaseL);
+  bool isChangeR = update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR,PhaseWidthsR,  ExpAbsPhaseR,  NextAbsPhaseR);
 
 
 
