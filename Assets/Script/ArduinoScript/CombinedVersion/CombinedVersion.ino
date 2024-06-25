@@ -166,11 +166,11 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
       if(pre_mode == MODE_M3){
         //switch from 3-4
         UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
-
         ExpAbsPhase = NextAbsPhase;
         NextAbsPhase = NextAbsPhase + PhaseWidths[0];
         mode_list[1] = t;// update mode 3 time
         t=0;
+        up=false;
         stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
         pre_mode = MODE_M4;
         return true;
@@ -180,10 +180,78 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
       return false;
       
     }
+/*
+  if(pre_mode == MODE_M1){
+    if (pre_height - height > 2 ) { //up
+      return false;
+    }
+    if (pre_height - height < 2 ) { //down
+      pre_mode = MODE_M2;
+      return false;
+    }   
+    //not change
+    pre_mode =MODE_M2;
+    return false;
+   }
+
+   if(pre_mode == MODE_M2){
+    if (pre_height - height > 2 ) { //up
+      return false;
+    }
+    if (pre_height - height < 2 ) { //down
+      pre_mode = MODE_M3;
+      ExpAbsPhase = NextAbsPhase;
+      NextAbsPhase = NextAbsPhase + PhaseWidths[2];
+      mode_list[1] = t; // update time
+      stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
+      up = false; //going down
+      pre_mode = MODE_M3;
+      t = 0; //reset time
+      return true;
+    }   
+    //not change
+    return false;
+   }
+
+  if(pre_mode == MODE_M3){
+    if(height > simulation::Threshold_mode4){
+      pre_mode = MODE_M4;
+     //switch from 3-4
+      UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
+      ExpAbsPhase = NextAbsPhase;
+      NextAbsPhase = NextAbsPhase + PhaseWidths[0];
+      mode_list[1] = t;// update mode 3 time
+      t=0;
+      stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
+      pre_mode = MODE_M4;
+      up=false;
+      return true;
+    }   
+    //not change
+    return false;
+   }
+
+   if(pre_mode == MODE_M4){
+     if (pre_height - height > 2 ) { //up
+      ExpAbsPhase = NextAbsPhase;
+            NextAbsPhase = NextAbsPhase + PhaseWidths[1];//current mode 1
+            mode_list[0] = t; // update mode 4 time
+            stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace
+            up = true;
+            pre_mode = MODE_M1;
+            t = 0; // reset time
+            return true;
+    }
+    //not change
+    return false;
+   }
+
+*/
+    
 
     ///hier are mode 123
     if (pre_height - height > 2 ) { //lifting up
-        if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1 update time m3, reset the time
+       if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1 update time m3, reset the time
             up = false;
             pre_mode = MODE_M4;
             mode_list[2] =t; //update mode3 time
@@ -206,9 +274,11 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
             t = 0; // reset time
             return true;     
         }
+        if (pre_mode == MODE_M2) {
         //if pre is mode 2/1 do nothing 
         up = true;
         pre_mode = MODE_M1;
+        }
         return false;
      } else if (height - pre_height >2 ) { // going down
         //update vibrate counter
@@ -350,7 +420,7 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
   //Serial.print(',');
   //Serial.print(Mode_R[1]);
   //Serial.print(',');
-   //Serial.print(AbsStepPace);
+  // Serial.print(AbsStepPace);
     Serial.print((xhatL[1]+xhatR[1])/2);
   //  Serial.print(" , ");
     //Serial.print(delta_tl);
@@ -371,9 +441,6 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
   pre_height0 = a0;
 
  }
-
-
-
 
 }
 

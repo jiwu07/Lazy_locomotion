@@ -30,6 +30,10 @@ public class ArduinoComPort : MonoBehaviour
     void Start()
     {
         stream.Open();
+        Animator animator = transform.GetComponent<Animator>();
+        animator.SetFloat("Forward", 0);
+        animator.SetFloat("Pace", 0);
+        animator.SetFloat("Phase", 0);
 
         //data writing
         fileWriter = new StreamWriter(filePath);

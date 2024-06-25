@@ -43,6 +43,8 @@ public class Controllerpractise : MonoBehaviour
         Animator animator = player.GetComponent<Animator>();
         animator.SetFloat("Forward", 0);
         animator.SetFloat("Pace", 0);
+        animator.SetFloat("Phase", 0);
+
         SceneManager.LoadScene(nextSceneName);
     }
 

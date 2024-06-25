@@ -500,6 +500,11 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 7098803130400669170, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
   m_PrefabInstance: {fileID: 305482513}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &305482515 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+  m_PrefabInstance: {fileID: 305482513}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &533964591
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,6 +676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextSceneName: K_Room12
   room: {fileID: 533964591}
+  player: {fileID: 305482515}
   text: {fileID: 1932540003}
   Controller: {fileID: 924189826}
   moveButton: 2
