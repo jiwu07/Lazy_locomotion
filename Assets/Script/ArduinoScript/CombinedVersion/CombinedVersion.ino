@@ -88,7 +88,7 @@ float maxTime = -1;
 float Mode_L[3] = { maxTime, maxTime, maxTime}; // pre time each mode left [mode4,mode1+2,mode3]
 float Mode_R[3] =  { maxTime, maxTime, maxTime}; // pre time each mode right
 
-float PhaseWidths[3] = { 0.6, 0.2, 0.2};
+float PhaseWidths[3] = { 0.6, 0.2, 0.2}; //mode 4,12,3
 
 float PhaseWidthsR[3] = { 0.6, 0.2, 0.2};
 float PhaseWidthsL[3] = { 0.6, 0.2, 0.2};
@@ -158,17 +158,17 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
 
 
 //check the string situation and update the current mode
-bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter, float PhaseWidths[], float& ExpAbsPhase, float& NextAbsPhase) { 
+bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter, float PhaseWidth[], float& ExpAbsPhase, float& NextAbsPhase, float& stepPaceUpdate) { 
     t += dt;//update time;
 
     if(height > simulation::Threshold_mode4){
       //as mode 4
       if(pre_mode == MODE_M3){
         //switch from 3-4
-        UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
+        UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidth);
         ExpAbsPhase = NextAbsPhase;
-        NextAbsPhase = NextAbsPhase + PhaseWidths[0];
-        mode_list[1] = t;// update mode 3 time
+        NextAbsPhase = NextAbsPhase + PhaseWidth[0];
+        mode_list[2] = t;// update mode 3 time
         t=0;
         up=false;
         stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
@@ -251,8 +251,11 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
 
     ///hier are mode 123
     if (pre_height - height > 2 ) { //lifting up
-       if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1 update time m3, reset the time
-            up = false;
+       if (pre_mode == MODE_M3) { 
+           //nothing change, must went to mlde 4 then allowed wen to mode 1
+           return false;
+           
+           /* up = false;
             pre_mode = MODE_M4;
             mode_list[2] =t; //update mode3 time
             t=0;//reset time
@@ -261,12 +264,12 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
             ExpAbsPhase = NextAbsPhase;
             NextAbsPhase = NextAbsPhase + PhaseWidths[0];//+current mode width 
             stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace [mode 4, 12, 3]
-            return true;
+            return true;*/
         }
         if (pre_mode == MODE_M4) { // switch mode from 4-1
             //pre mode 4 then update phase width
             ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidths[1];//current mode 1
+            NextAbsPhase = NextAbsPhase + PhaseWidth[1];//current mode 1
             mode_list[0] = t; // update mode 4 time
             stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace
             up = true;
@@ -291,17 +294,14 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         }
         if (pre_mode == MODE_M2) { // switch mode  from 2-3
             ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidths[2];
+            NextAbsPhase = NextAbsPhase + PhaseWidth[2];
             mode_list[1] = t; // update time
             stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
             up = false; //going down
             pre_mode = MODE_M3;
-            t = 0; //reset timr
+            t = 0; //reset time
             return true;
         }
-        //if pre is 3 then do nothing
-        up = false;
-        pre_mode = MODE_M3;
         return false;
     } else {
         // not moving here and also not on the ground/not mode 4  
@@ -359,8 +359,8 @@ void loop() {
       CurTime = CurTime + dt;
 
    // check the update 
-  bool isChangeL = update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL,PhaseWidthsL,  ExpAbsPhaseL,  NextAbsPhaseL);
-  bool isChangeR = update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR,PhaseWidthsR,  ExpAbsPhaseR,  NextAbsPhaseR);
+  bool isChangeL = update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL,PhaseWidthsL,  ExpAbsPhaseL,  NextAbsPhaseL,stepPaceUpdate);
+  bool isChangeR = update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR,PhaseWidthsR,  ExpAbsPhaseR,  NextAbsPhaseR,stepPaceUpdate);
 
 
 
@@ -506,14 +506,14 @@ void vibrate(int input, AudioSynthWaveform& signal){
 }
 
 
-void UpdatePhaseWidths(float w, float ModeLength[],float PhaseWidths[])
+void UpdatePhaseWidths(float w, float ModeLength[],float PhaseWidth[])
 {
   float SumModeLengths = SumofElements(ModeLength);
   
   for (int i = 0; i < 3; i++)
   {
     float ModeLengthPercent= ModeLength[i]/SumModeLengths;
-    PhaseWidths[i]= PhaseWidths[i]*(1-w) + ModeLengthPercent*w;
+    PhaseWidth[i]= PhaseWidth[i]*(1-w) + ModeLengthPercent*w;
   }
   //return NewPhaseWidths;
 }
