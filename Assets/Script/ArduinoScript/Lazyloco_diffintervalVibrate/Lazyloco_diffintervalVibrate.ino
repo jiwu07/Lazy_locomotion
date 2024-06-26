@@ -77,7 +77,7 @@ namespace simulation{
 /************* ************* Heigth - ************* ********************/
 /************* ************* Height - ************* ********************/
 /************* ************* Height - ************* ********************/
-float h = 1.6; // subject height
+float h = 1.7; // subject height
 
 
 
@@ -86,125 +86,158 @@ float h = 1.6; // subject height
 /************* *************  - ************* ********************/
 float step_length = h * h / (1.72 * 0.157 * 1.72 * 0.157); // WIP use 1.52 --GUDWIP using 0.157
 
-float Mode_L[2] = {1.0, 1.0}; // time predict each mode left
-float Mode_R[2] = {1.0, 1.0}; // time predict each mode right
+float maxTime = -1;
 
-bool L_up = false;
+
+
+float Mode_L[3] = { maxTime, maxTime, maxTime}; // pre time each mode left [mode4,mode1+2,mode3]
+float Mode_R[3] =  { maxTime, maxTime, maxTime}; // pre time each mode right
+
+float PhaseWidths[3] = { 0.6, 0.2, 0.2}; //mode 4,12,3
+
+float PhaseWidthsR[3] = { 0.6, 0.2, 0.2};
+float PhaseWidthsL[3] = { 0.6, 0.2, 0.2};
+
+float ExpAbsPhaseR = PhaseWidths[0];
+float NextAbsPhaseR = PhaseWidths[1];
+float ExpAbsPhaseL = PhaseWidths[0];
+float NextAbsPhaseL = PhaseWidths[1];
+
+float PhaseWidthWeight= 0.8;
+float w2 = 0.9;
+float xhatL[2]={0,0};
+float xhatR[2]={0,0};
+float P_apostL[2][2]={{0,0},{0,0}};
+float P_apostR[2][2]={{0,0},{0,0}};
+
+bool L_up = false; //determin if lift/put down feet
 bool R_up = false;
 
-float delta_tl = 0.000f;
+float delta_tl = 0.000f; //time count for current mode
 float delta_tr = 0.000f;
 
-int pre_mode_L = MODE_M4;
+float Threshold_timeChanging = 0.08;
+
+
+int pre_mode_L = MODE_M4; //previous mode
 int pre_mode_R = MODE_M4;
 
-float current_velocity = 0;
-float target_velocity = 0;
+float AbsStepPace = 0;
 
-int pre_height0 = 255;
-int pre_height1 = 255;
+float Threshold_VelChanging = 100;
+float Threshold_VelChanging2 = 300;
+int pre_height0 = 1023;
+int pre_height1 = 1023;
+
+float Threshold_up = 1000; //threshold up changing 
+float Threshold_mode4 = 950; //consider is mode 4 if the sensor data is more than this
+float Threshold_down = 900; // threshold min distance
 
 
-int vibrate_interval[25] = {100,100,100,100,50,50,50,50,50,10,10,5,5,5,5,5,5,5,5,5,5,5,5,5,5};
-int vibrate_counterL = 0;
-unsigned int interval_counterL =0;
+int vibrate_counterL = 0; // counter for vibrate interval
 int vibrate_counterR = 0;
-unsigned int interval_counterR =0;
 
 unsigned long previousMillis = 0;  //last time
-const long time_interval = 5;
+unsigned long previousMillisUnity =0;
+const long time_interval =2; // update time
+const long time_interval_Unity = 20; // send to unity time
+int vibrate_interval[25] = {100,100,100,100,50,50,50,50,50,10,10,5,5,5,5,5,5,5,5,5,5,5,5,5,5};
+
+int interval_counterL =0;
+int interval_counterR =0;
 }
-int analogValueA0 =0;
-int a1 =0;
-int analogValueA1 =0;
 int a0 =0;
+int a1 =0;
+float dt = ((float)simulation::time_interval)/1000.000f;
+float stepPaceUpdate = 0;
+int PrintEvery = 0;
+float CurTime = 0;
+
 
 
 //checking vibration based on the string length/sensor data(0-255)
 //vibrate every constat distance
-void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal, unsigned int& interval_counter ){
-
-  //Serial.println(interval_counter);
+void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& signal, int& interval_counter ){
   if(vibrate_counter > simulation::vibrate_interval[interval_counter]){
-   // Serial.println(vibrate_counter);
-
     vibrate(sensordata,signal);
-
     vibrate_counter = 0;
     interval_counter++; 
     return;
   }
 
 }
+bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[], int& vibrate_counter, float PhaseWidth[], float& ExpAbsPhase, float& NextAbsPhase, float& stepPaceUpdate) { 
+    t += dt; // update time
 
-
-//check the string situation and update the current mode
-void update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter,unsigned int& interval_counter) { 
-    float temp = ((float)simulation::time_interval)/1000.000f;
-    if (pre_height - height > 5) { // going up
-      interval_counter =0;
-        if (pre_mode == MODE_M3) { // if was M3, insert a M4 before goto M1
+    if (height > simulation::Threshold_mode4) {
+        // Enter mode 4
+        if (pre_mode == MODE_M3) {
+            // Switch from mode 3 to mode 4
+            UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list, PhaseWidth);
+            ExpAbsPhase = NextAbsPhase;
+            NextAbsPhase = NextAbsPhase + PhaseWidth[0];
+            mode_list[2] = t; // update mode 3 time
+            t = 0; // reset time
             up = false;
+            stepPaceUpdate = 1 / (mode_list[0] + mode_list[1] + mode_list[2]);
             pre_mode = MODE_M4;
-            t += temp;
-            return;
+            return true;
         }
-        if (pre_mode == MODE_M4) { // switch mode from 4-1
-            if (mode_list[0] == 1) { // if feet was stopped 
-                up = true; //go up
-                pre_mode = MODE_M1;
-                t = temp;
-                return; // means won't have time when mode put down
-            }else{
-              mode_list[1] = t; // update time
-              up = true;
-              pre_mode = MODE_M1;
-              t = temp;
-              return;
-            }
-            
+        // Continue in mode 4
+        pre_mode = MODE_M4;
+        return false;
+    }
+
+    if (pre_height - height > 2) { // lifting up
+        if (pre_mode == MODE_M3) {
+            return false; // Nothing changes, must go to mode 4 first
         }
-        up = true;
-        pre_mode = MODE_M1;
-        t += temp; // keep mode1 or 2
-        return;
-    } else if (height - pre_height >5) { // going down
-        //update vibrate counter
-        vibrate_counter  = vibrate_counter + height - pre_height;
+        if (pre_mode == MODE_M4) {
+            // Switch from mode 4 to mode 1
+            ExpAbsPhase = NextAbsPhase;
+            NextAbsPhase = NextAbsPhase + PhaseWidth[1]; // current mode 1
+            mode_list[0] = t; // update mode 4 time
+            stepPaceUpdate = 1 / (mode_list[0] + mode_list[1] + mode_list[2]);
+            up = true;
+            pre_mode = MODE_M1;
+            t = 0; // reset time
+            return true;
+        }
+        if (pre_mode == MODE_M2 || pre_mode == MODE_M1) {
+            // If pre is mode 2 or 1, switch to mode 1
+            up = true;
+            pre_mode = MODE_M1;
+            return false;
+        }
+    } else if (height - pre_height > 2) { // going down
+        vibrate_counter += height - pre_height;
         if (pre_mode == MODE_M1) {
+            // Combine modes 2 and 1 as mode 1
             up = true;
             pre_mode = MODE_M2;
-            t += temp;
-            return;
+            return false;
         }
-        if (pre_mode == MODE_M2) { // switch mode  from 2-3
-            mode_list[0] = t; // update time
-            up = false;
+        if (pre_mode == MODE_M2) {
+            // Switch from mode 2 to mode 3
+            ExpAbsPhase = NextAbsPhase;
+            NextAbsPhase = NextAbsPhase + PhaseWidth[2];
+            mode_list[1] = t; // update time
+            stepPaceUpdate = 1 / (mode_list[0] + mode_list[1] + mode_list[2]);
+            up = false; // going down
             pre_mode = MODE_M3;
-            t = temp;
-            return;
+            t = 0; // reset time
+            return true;
         }
-        up = false;
-        pre_mode = MODE_M3;
-        t += temp; // keep mode m3 or m4
-        return;
     } else {
-        t += temp;
+        // Not moving and not on the ground (not mode 4)
         if (up) {   
             pre_mode = MODE_M2;
-            return;
-        }  
-        pre_mode = MODE_M4;
-        return;
+            return false;
+        }
+        pre_mode = MODE_M3;
+        return false;
     }
-}
 
-//if the feet position is not changing until 0.8s then consider it stop moving
-bool if_stop(float t, int pre_mode ) {
-    if (t > 0.8) { // too long time not move feet then stop
-        return true;
-    }
-    pre_mode = MODE_M4;
     return false;
 }
 /************* ************* Setup - ************* ********************/
@@ -231,77 +264,107 @@ void setup() {
 int count = 0;
 
 void loop() {
-  using namespace simulation;
+ using namespace simulation;
   // Read analog input from A0
-  analogValueA0 = analogRead(A0);
-  a0 = map(analogValueA0, 0, 1023, 0, 1000);
-
+  a0 = analogRead(A0);
+ // a0 = map(analogValueA0, 0, 1023, 0, 255);
   // Read analog input from A1
- analogValueA1 = analogRead(A1);
-  a1 = map(analogValueA1, 0, 1023, 0, 1000);
+  a1 = analogRead(A1);
+  //a1 = map(analogValueA1, 0, 1023, 0, 255);
 
   unsigned long currentMillis = millis();  // current time
+  
+
   
   //if the time interval is reached
   if (currentMillis - previousMillis >= time_interval) {
     previousMillis = currentMillis;  //update the previous time
+      PrintEvery++;
+      CurTime = CurTime + dt;
+
    // check the update 
-  update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL, interval_counterL);
-  update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR, interval_counterR);
+  bool isChangeL = update_mode(a1, pre_height1, L_up, pre_mode_L, delta_tl, Mode_L,vibrate_counterL,PhaseWidthsL,  ExpAbsPhaseL,  NextAbsPhaseL,stepPaceUpdate);
+  bool isChangeR = update_mode(a0, pre_height0, R_up, pre_mode_R, delta_tr, Mode_R,vibrate_counterR,PhaseWidthsR,  ExpAbsPhaseR,  NextAbsPhaseR,stepPaceUpdate);
 
-  //check stop
-  //////// if stopping for too long time then consider it as stop walking
-  if (if_stop(delta_tl, pre_mode_L)) {
-      Mode_L[0] = 1.000;
-      Mode_L[1] = 1.000;
+
+
+  if( isChangeL  || isChangeR){
+    //Serial.print("update abssteppace");
+    //Serial.print(" , ");
+  AbsStepPace = AbsStepPace * (1 - w2) + stepPaceUpdate * w2;
   }
-  if (if_stop(delta_tr, pre_mode_R)) {
-      Mode_R[0] = 1.000;
-      Mode_R[1] = 1.000;
+if (delta_tl > 0.5 && delta_tr > 0.5) {
+  // Serial.print("here");
+    //Serial.print(" , ");
+    AbsStepPace = AbsStepPace * 0.9;
   }
-
-  //calculate velocity
-
-  float target_frequency;
-  if (Mode_R[0] + Mode_R[1] == 2.000 && Mode_L[0] + Mode_L[1] == 2.000) {
-      target_frequency = 0;
-  } else {
-      target_frequency = (1.000 / (Mode_R[0] + Mode_R[1]) + 1.000 / (Mode_L[0] + Mode_L[1])) / 2.000;
+//kalmanfilter part
+  if (ExpAbsPhaseR < NextAbsPhaseR) {
+    ExpAbsPhaseR = ExpAbsPhaseR + AbsStepPace * dt;
   }
 
-  target_velocity = target_frequency * target_frequency * step_length;
-   
-  if (current_velocity != target_velocity) {
-        current_velocity = 0.850 * target_velocity + 0.150 * current_velocity;
+  if (ExpAbsPhaseL < NextAbsPhaseL) {
+    ExpAbsPhaseL = ExpAbsPhaseL + AbsStepPace * dt;
   }
 
-  int velocity = int(current_velocity);
 
-  //send to unity //todo
-  //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
- //   previousMillisUnity = currentMillis;
-  Serial.print(previousMillis/1000.00);
-  Serial.print(',');
+KalmanFilter(ExpAbsPhaseL, AbsStepPace, (float*) xhatL, dt, (float*)P_apostL);
+KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
+
+  // Make delay for good sampling
+  int time=micros();
+  float t2=(float)time/1000000;
+  float TimeBtw=CurTime-t2-0.048;
+  if(TimeBtw>0)
+  {
+    delayMicroseconds((int)(TimeBtw*900));//1000));
+  }
+  
+  //send to unity 
+//currentMillis = millis();
+ //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
+  if (PrintEvery == 10) {
+
+  //  previousMillisUnity = currentMillis;
+  //Serial.print(currentMillis);
+  //Serial.print(',');
   Serial.print(a0);
   Serial.print(',');
   Serial.print(a1);
   Serial.print(',');
-  Serial.println(velocity);
- // }
+  //Serial.print(pre_mode_L);
+ //Serial.print(',');
+  //Serial.print(pre_mode_R);
+  //Serial.print(',');
+  //Serial.print(Mode_L[0]);
+  //Serial.print(',');
+  //Serial.print(Mode_L[1]);
+  //Serial.print(',');
+  //Serial.print(Mode_R[0]);
+  //Serial.print(',');
+  //Serial.print(Mode_R[1]);
+  //Serial.print(',');
+  // Serial.print(AbsStepPace);
+    Serial.print((xhatL[1]+xhatR[1])/2);
+  //  Serial.print(" , ");
+    //Serial.print(delta_tl);
+      //  Serial.print(" , ");
+ //Serial.print(delta_tr);
+        Serial.print(" , ");
+    Serial.println((xhatL[0]+xhatR[0])/2);
+    PrintEvery =0;
+  }
 
   /********************Vibration - start **********************/
   //vibrate when foot putting down
- update_vibrate(vibrate_counterL,a1,waveformL,interval_counterL);
- update_vibrate(vibrate_counterR,a0, waveformR,interval_counterR);
+ update_vibrate(vibrate_counterL,a1,waveformL, interval_counterL);
+ update_vibrate(vibrate_counterR,a0, waveformR, interval_counterR);
 
 //update value
   pre_height1 = a1;
   pre_height0 = a0;
 
  }
-
-
-
 
 }
 
@@ -358,10 +421,153 @@ void vibrate(int input, AudioSynthWaveform& signal){
 
   signal.amplitude(0.f);
   //waveformL.amplitude(0.f);
-  //Serial.print(amp);
+ // Serial.print(amp);
 
   last_bin = bin;
   last_triggered_pos = sensor_val_percent;
 
 //signal.amplitude(1);
 }
+
+
+void UpdatePhaseWidths(float w, float ModeLength[],float PhaseWidth[])
+{
+  float SumModeLengths = SumofElements(ModeLength);
+  
+  for (int i = 0; i < 3; i++)
+  {
+    float ModeLengthPercent= ModeLength[i]/SumModeLengths;
+    PhaseWidth[i]= PhaseWidth[i]*(1-w) + ModeLengthPercent*w;
+  }
+  //return NewPhaseWidths;
+}
+
+//Matrix Multiplication Routine
+// C = A*B
+void MatrixMultiply(float* A, float* B, int m, int p, int n, float* C)
+{
+	// A = input matrix (m x p)
+	// B = input matrix (p x n)
+	// m = number of rows in A
+	// p = number of columns in A = number of rows in B
+	// n = number of columns in B
+	// C = output matrix = A*B (m x n)
+	int i, j, k;
+	for (i = 0; i < m; i++)
+		for(j = 0; j < n; j++)
+		{
+			C[n * i + j] = 0;
+			for (k = 0; k < p; k++)
+				C[n * i + j] = C[n * i + j] + A[p * i + k] * B[n * k + j];
+		}
+}
+
+//Matrix Addition Routine
+void MatrixAdd(float* A, float* B, int m, int n, float* C)
+{
+	// A = input matrix (m x n)
+	// B = input matrix (m x n)
+	// m = number of rows in A = number of rows in B
+	// n = number of columns in A = number of columns in B
+	// C = output matrix = A+B (m x n)
+	int i, j;
+	for (i = 0; i < m; i++)
+		for(j = 0; j < n; j++)
+			C[n * i + j] = A[n * i + j] + B[n * i + j];
+}
+
+//Matrix Addition Routine
+/*void MatrixAdd2(float* A, float* B, int m, int n, float* C)
+{
+	// A = input matrix (m x n)
+	// B = input matrix (m x n)
+	// m = number of rows in A = number of rows in B
+	// n = number of columns in A = number of columns in B
+	// C = output matrix = A+B (m x n)
+	int i, j;
+	for (i = 0; i < m; i++)
+		for(j = 0; j < n; j++)
+			C[i][j] = A[i][j] + B[i][j];
+}*/
+
+void MatrixTranspose(float* A, int m, int n, float* C)
+{
+	// A = input matrix (m x n)
+	// m = number of rows in A
+	// n = number of columns in A
+	// C = output matrix = the transpose of A (n x m)
+	int i, j;
+	for (i = 0; i < m; i++)
+		for(j = 0; j < n; j++)
+			C[m * j + i] = A[n * i + j];
+}
+
+void MatrixCopy(float* A, int n, int m, float* B)
+{
+	int i, j;
+	for (i = 0; i < m; i++)
+		for(j = 0; j < n; j++)
+		{
+			B[n * i + j] = A[n * i + j];
+		}
+}
+
+float SumofElements(float Elements[])
+{
+  float sum=0;
+  for (int i=0; i < 3 ; i++)
+  {
+    sum = sum + Elements[i];
+  }
+  return sum;
+}
+
+
+void KalmanFilter(float ExpAbsPhase, float AbsStepPace, float* xhat,float dt, float* P_apost)
+{
+  //, float* A
+  float w=1;
+  float A[2][2]={{1,dt},{0,1}};
+  //float C[2]={1, 0};
+  //A=[1 dt; 0 1];
+  //C=[1 0];
+  //G=[dt^2/2; dt];
+  float P_apri[2][2];
+  //float Q[2][2]={{1/4*dt*dt*dt*dt*0.0001, 0},{0, dt*dt*0.0001}};//*0.01^2;%22^2;
+  float Q[2][2]={{1/4*dt*dt*dt*dt, 0},{0, dt*dt}};//*0.01^2;%22^2;
+  float AuxMult[2][2];//={{0f,0f},{0f,0f}};
+  float AT[2][2];
+  //float CT[1][2];
+  float Kl[2];//={0,0};
+  float xhat_pre[2];
+  float dy;
+  MatrixTranspose((float*)A,2,2,(float*)AT);
+  //MatrixTranspose((float*)C,1,2,(float*)CT);
+  float R=0.0034*0.0034;
+  // KALMAN FILTER
+  float y=ExpAbsPhase;
+  // ----- Prediction -----
+  float a_k=w*(AbsStepPace-xhat[1])/dt;
+  xhat_pre[0]=xhat[0] + xhat[1]*dt+dt*dt/2*a_k;
+  xhat_pre[1]=xhat[1]+dt*a_k;
+  //P_apri=A*P_apost*A' + Q;
+  MatrixMultiply((float*)A,(float*)P_apost,2,2,2,(float*)AuxMult); 
+  MatrixMultiply((float*)AuxMult,(float*)AT,2,2,2,(float*)P_apri);
+  MatrixAdd((float*)P_apri,(float*)Q,2,2,(float*)P_apri); 
+  //MatrixCopy((float*)P_apri2, 2, 2, (float*)P_apri);
+  // ----- Update -----
+  //MatrixMultiply((float*)P_apri,(float*)CT,2,2,1,(float*)Kl);
+  //float kl0=P_apri[0][0];
+  //float kl1= P_apri[1][0];
+  Kl[0]=P_apri[0][0];
+  Kl[1]=P_apri[1][0];
+  //Kr=inv(C*P_apri*C'+R);
+  float Kr=1/(P_apri[0][0]+R);
+  //K=Kl*Kr;
+  dy=y-A[0][0]*xhat_pre[0] + A[0][1]*xhat_pre[1];
+  xhat[0]= xhat_pre[0] + Kl[0]*Kr*dy;
+  xhat[1]= xhat_pre[1] + Kl[1]*Kr*dy;
+  float Km[2][2] = {{1-Kl[0]*Kr,0},{-Kl[1]*Kr,1}};
+  MatrixMultiply((float*)Km, (float*)P_apri, 2, 2, 2, (float*)P_apost);
+}
+
