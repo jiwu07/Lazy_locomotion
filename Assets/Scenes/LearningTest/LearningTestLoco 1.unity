@@ -238,6 +238,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
   m_PrefabInstance: {fileID: 389275168}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &17480258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17480253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c552e59cda8934d9f8810e093e206b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothingFactor: 0.1
+  h: 1.7
 --- !u!1 &27879592
 GameObject:
   m_ObjectHideFlags: 0
@@ -2305,7 +2319,7 @@ PrefabInstance:
     - target: {fileID: 4409383621008593390, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 4d976f94313bb2b4e9e44902e3c678a4, type: 2}
+      objectReference: {fileID: 9100000, guid: 4aea5ee3c7099e4459f61217993a3243, type: 2}
     - target: {fileID: 4409383621008593390, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_WarningMessage
       value: 
@@ -2393,6 +2407,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2115757097}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 17480258}
     - targetCorrespondingSourceObject: {fileID: 8454212268281439400, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       insertIndex: 8
       addedObject: {fileID: 389275170}

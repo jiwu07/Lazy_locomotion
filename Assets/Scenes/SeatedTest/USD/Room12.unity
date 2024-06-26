@@ -468,7 +468,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overlayImage: {fileID: 389275170}
-  fadeDuration: 0
   isStart: 0
   isFinish: 0
 --- !u!1001 &389275168
@@ -494,6 +493,22 @@ PrefabInstance:
     - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083121104728557410, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1770.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083121104728557410, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1565.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083121104728557410, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -107.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083121104728557410, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -101.3
       objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath

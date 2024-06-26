@@ -79,29 +79,33 @@ public class LearningTest_LightControllLoco : MonoBehaviour
         if (Controller.inputDevice.IsPressed(Button, out bool pressed, Controller.axisToPressThreshold))
         {
             // Log the time, player position, and distance difference
-
-            if (lightOn)
+            Debug.Log(lightOn);
+            if (pressed && !isPressed)
             {
-                lightOn = !lightOn;
-                count++;
-                isPressed = true;
-                FadeToBlack.StartFade();
-                LogLightSwitch();
-            }
-            else
-            {
-                if (FadeToBlack.isFinish)
+                // Log the time, player position, and distance difference         
+                if (lightOn)
                 {
+                    
                     lightOn = !lightOn;
                     count++;
                     isPressed = true;
-                    FadeToBlack.ResetFade();
+                    FadeToBlack.StartFade();
+                    LogLightSwitch();
                 }
+                else
+                {
+                    if (FadeToBlack.isFinish)
+                    {
+                        lightOn = !lightOn;
+                        count++;
+                        isPressed = true;
+                        FadeToBlack.ResetFade();
+                    }
 
+                }
             }
-        
 
-        if (!pressed)
+            if (!pressed)
             {
                 isPressed = false;
             }

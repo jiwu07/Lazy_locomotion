@@ -99,7 +99,7 @@ float ExpAbsPhaseL = PhaseWidths[0];
 float NextAbsPhaseL = PhaseWidths[1];
 
 float PhaseWidthWeight= 0.8;
-float w2 = 0.9;
+float w2 = 0.95;
 float xhatL[2]={0,0};
 float xhatR[2]={0,0};
 float P_apostL[2][2]={{0,0},{0,0}};
@@ -282,6 +282,9 @@ void loop() {
   if( isChangeL  || isChangeR){
     //Serial.print("update abssteppace");
     //Serial.print(" , ");
+    if(stepPaceUpdate < 0.5 ){
+      stepPaceUpdate=0.5;
+    }
   AbsStepPace = AbsStepPace * (1 - w2) + stepPaceUpdate * w2;
   }
 if (delta_tl > 0.5 && delta_tr > 0.5) {
@@ -305,7 +308,7 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
   // Make delay for good sampling
   int time=micros();
   float t2=(float)time/1000000;
-  float TimeBtw=CurTime-t2-0.048;
+  float TimeBtw=CurTime-t2-0.0465;
   if(TimeBtw>0)
   {
     delayMicroseconds((int)(TimeBtw*900));//1000));

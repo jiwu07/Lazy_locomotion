@@ -23,6 +23,11 @@ public class LightControllLoco : MonoBehaviour
     private void Start()
     {
         fadeToBlack = transform.GetComponent<FadeToBlack>();
+        Animator animator = player.GetComponent<Animator>();
+        player.GetComponent<SimplePlayerArduino>().UsingComPort = false;
+
+        animator.SetFloat("Forward", 0);
+        animator.SetFloat("Pace", 0);
     }
     // Update is called once per frame
     void Update()
@@ -34,7 +39,11 @@ public class LightControllLoco : MonoBehaviour
             lightText.text = text +  t.ToString() + "s";
             count -= Time.deltaTime;
             //freez player movement
+            player.GetComponent<SimplePlayerArduino>().UsingComPort = false;
+
             player.GetComponent<SimplePlayerArduino>().enabled = false;
+            player.GetComponent<ArduinoComPort>().enabled = false;
+
             player.transform.Find("Camera").GetComponent<Turn>().enabled = false;
 
         }
@@ -53,6 +62,9 @@ public class LightControllLoco : MonoBehaviour
             {
                     //Player can start move
                 player.GetComponent<SimplePlayerArduino>().enabled = true;
+                player.GetComponent<SimplePlayerArduino>().UsingComPort = true;
+                player.GetComponent<ArduinoComPort>().enabled = true;
+
                 player.transform.Find("Camera").GetComponent<Turn>().enabled = true;
                 //no need stuff off
                 roomOFFObject.SetActive(false);
