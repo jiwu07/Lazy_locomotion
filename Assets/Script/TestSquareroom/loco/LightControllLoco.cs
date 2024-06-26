@@ -15,7 +15,7 @@ public class LightControllLoco : MonoBehaviour
     public LayerMask LightOffMask;
 
     string text = "Get Dark in ";
-    float count = 10.0f;
+    float count = 8.0f;
     public bool isControll = true;
     bool startfade = false;
     FadeToBlack fadeToBlack;

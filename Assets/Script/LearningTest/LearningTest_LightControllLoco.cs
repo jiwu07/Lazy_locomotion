@@ -20,11 +20,11 @@ public class LearningTest_LightControllLoco : MonoBehaviour
     public XRController Controller;
     public InputHelpers.Button Button;
 
-    string text = " to task point ";
+    string text = "walk to task point ";
     string text2 = " trials: ";
     int count = 2;
 
-    int distance;
+    float distance;
     bool lightOn = true;
 
     Transform targetTransform;
@@ -79,7 +79,7 @@ public class LearningTest_LightControllLoco : MonoBehaviour
         if (Controller.inputDevice.IsPressed(Button, out bool pressed, Controller.axisToPressThreshold))
         {
             // Log the time, player position, and distance difference
-            Debug.Log(lightOn);
+            //Debug.Log(lightOn);
             if (pressed && !isPressed)
             {
                 // Log the time, player position, and distance difference         
@@ -143,9 +143,8 @@ public class LearningTest_LightControllLoco : MonoBehaviour
 
     void CheckArrive()
     {
-        distance = (int)(targetTransform.position.z - player.transform.position.z);
-
-        if (distance == 0)
+        distance = targetTransform.position.z - player.transform.position.z;
+        if (-1 < distance && distance < 1)
         {
             player.GetComponent<SimplePlayerArduino>().UsingComPort = false;  // player cannot move
             animator.SetFloat("Forward", 0);
@@ -156,7 +155,7 @@ public class LearningTest_LightControllLoco : MonoBehaviour
         }
         else
         {
-            distanceText.text = distance.ToString() + text + text2 + (count / 2).ToString();
+            distanceText.text =  text + text2 + (count / 2).ToString();
         }
     }
 

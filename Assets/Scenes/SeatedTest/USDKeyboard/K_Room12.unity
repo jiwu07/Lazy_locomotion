@@ -1101,7 +1101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overlayImage: {fileID: 389275169}
-  fadeDuration: 0
   isStart: 0
   isFinish: 0
 --- !u!1001 &348961253
@@ -1229,10 +1228,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: fileName
+      value: CSVData/PositionData/PPRK12.csv
+      objectReference: {fileID: 0}
+    - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: Controller
+      value: 
+      objectReference: {fileID: 322543696}
     - target: {fileID: 4409383621008593390, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 3e344e113cefb43219f57122cdecd5e6, type: 2}
+    - target: {fileID: 5944517683728468128, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1292,6 +1307,10 @@ PrefabInstance:
     - target: {fileID: 8454212268281439400, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 9112831516071071079, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9192555568693791163, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled

@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room45x1.unity
     guid: 46ad56cd6cc3a48cf8a794244e13c703
   - enabled: 1
-    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room45x2.unity
+    path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room40.unity
     guid: a3395444004234bd0913eae8cdf21cf5
   - enabled: 1
     path: Assets/Scenes/SeatedTest/USDKeyboard/K_Room25.unity
@@ -39,7 +39,7 @@ EditorBuildSettings:
     path: Assets/Scenes/SeatedTest/USD/Room45x1.unity
     guid: 94018ef5ce2124eb9b5de098c4a5181a
   - enabled: 1
-    path: Assets/Scenes/SeatedTest/USD/Room45x2.unity
+    path: Assets/Scenes/SeatedTest/USD/Room40.unity
     guid: aaffbbc95e2b04f61b3760528484c4ae
   - enabled: 1
     path: Assets/Scenes/SeatedTest/USD/Room25.unity

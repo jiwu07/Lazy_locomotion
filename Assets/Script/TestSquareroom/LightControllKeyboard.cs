@@ -17,7 +17,7 @@ public class LightControllKeyboard : MonoBehaviour
 
     FadeToBlack fadeToBlack;
     string text = "Get Dark in ";
-    float count = 5.0f;
+    float count = 8.0f;
     public bool isControll = true;
     public bool isCalibrate = false;
     bool startfade = false;
@@ -64,7 +64,7 @@ public class LightControllKeyboard : MonoBehaviour
             if (fadeToBlack.isFinish)
             {
                 //Player can start move
-                player.GetComponent<SimplePlayerArduino>().enabled = true;
+                player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = true;
                 player.transform.Find("Camera").GetComponent<Turn>().enabled = true;
                 //no need stuff off
                 roomOFFObject.SetActive(false);

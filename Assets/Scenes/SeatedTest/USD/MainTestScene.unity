@@ -286,14 +286,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "You will be placed in a corner of a square room. You have 10s to look
-    around (not allowed to move and turn) to estimate the room size. \nThen the light
-    will be off, you need to walk around this room and back to the start point.\nEverytime
-    you reach a corner of the room, you need to press button to turn right. \nAfter
-    you arrived the start point, you need to press the button again and  you will
-    be transfered to next room and do the same task.\nThere is in total 4 room. \nIf
-    you have any questions you can ask anytime. If you ready you, you can tell reseacher
-    that you are ready. ;)"
+  m_text: 'you already finished the first part of Test.
+
+    Now remove the head
+    set and filled out the questionnaire.
+
+    When you finish you can start again
+    with the next test.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -432,7 +431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -487,6 +486,10 @@ PrefabInstance:
       value: Camera
       objectReference: {fileID: 0}
     - target: {fileID: 8480834816101752103, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9112831516071071079, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}

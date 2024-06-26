@@ -21,11 +21,11 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
     public InputHelpers.Button Button;
 
 
-    string text = " to task point ";
+    string text = "walk to task point ";
     string text2 = " trails: ";
     int count = 2;
 
-    int distance;
+    float distance;
     bool lightOn = true;
 
     Transform targetTransform;
@@ -144,9 +144,9 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
 
     void CheckArrive()
     {
-        distance = (int)(targetTransform.position.z - player.transform.position.z) ;
+        distance = targetTransform.position.z - player.transform.position.z;
 
-        if (distance == 0)
+        if (-1 <distance && distance <1)
         {
             distanceText.text = " Congratulation! You arrived target point in " + ((count-2) / 2).ToString() + " trials";
             player.transform.Find("Camera").GetComponent<KeyBoardControll>().enabled = false;
@@ -157,7 +157,7 @@ public class LearningTest_LightControllKeyboard : MonoBehaviour
         else
         {
             //show distance and trials number
-            distanceText.text = distance.ToString() + text + text2 + (count / 2).ToString();
+            distanceText.text =  text + text2 + (count / 2).ToString();
         }
     }
 

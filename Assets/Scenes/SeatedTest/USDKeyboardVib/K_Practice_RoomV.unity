@@ -350,16 +350,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 379446332715793688, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 379446332715793688, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: turnController
       value: 
       objectReference: {fileID: 1044794951}
     - target: {fileID: 1069037398458119631, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1122167943907742511, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963778228587659423, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2297720484843064326, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_IsActive
@@ -375,7 +379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: fileName
-      value: CSVData/PositionData/PPRKMST2.csv
+      value: CSVData/PositionData/PPRKMST2Vcsv
       objectReference: {fileID: 0}
     - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
@@ -464,10 +468,6 @@ PrefabInstance:
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8037118028109405536, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8037118028109405536, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: moveController
@@ -1885,7 +1885,7 @@ PrefabInstance:
       objectReference: {fileID: 389275169}
     - target: {fileID: 3877558964272671576, guid: bfb59090fe793cb42b90ea157870d3c4, type: 3}
       propertyPath: nextSceneName
-      value: K_MainTestScene
+      value: K_MainTestSceneV
       objectReference: {fileID: 0}
     - target: {fileID: 4627863474596766817, guid: bfb59090fe793cb42b90ea157870d3c4, type: 3}
       propertyPath: m_LocalPosition.z
