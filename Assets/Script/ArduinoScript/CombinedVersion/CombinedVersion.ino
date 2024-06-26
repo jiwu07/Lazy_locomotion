@@ -156,156 +156,70 @@ void update_vibrate(int& vibrate_counter, int sensordata, AudioSynthWaveform& si
   }
 }
 
+bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[], int& vibrate_counter, float PhaseWidth[], float& ExpAbsPhase, float& NextAbsPhase, float& stepPaceUpdate) { 
+    t += dt; // update time
 
-//check the string situation and update the current mode
-bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, float mode_list[],int& vibrate_counter, float PhaseWidth[], float& ExpAbsPhase, float& NextAbsPhase, float& stepPaceUpdate) { 
-    t += dt;//update time;
-
-    if(height > simulation::Threshold_mode4){
-      //as mode 4
-      if(pre_mode == MODE_M3){
-        //switch from 3-4
-        UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidth);
-        ExpAbsPhase = NextAbsPhase;
-        NextAbsPhase = NextAbsPhase + PhaseWidth[0];
-        mode_list[2] = t;// update mode 3 time
-        t=0;
-        up=false;
-        stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
+    if (height > simulation::Threshold_mode4) {
+        // Enter mode 4
+        if (pre_mode == MODE_M3) {
+            // Switch from mode 3 to mode 4
+            UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list, PhaseWidth);
+            ExpAbsPhase = NextAbsPhase;
+            NextAbsPhase = NextAbsPhase + PhaseWidth[0];
+            mode_list[2] = t; // update mode 3 time
+            t = 0; // reset time
+            up = false;
+            stepPaceUpdate = 1 / (mode_list[0] + mode_list[1] + mode_list[2]);
+            pre_mode = MODE_M4;
+            return true;
+        }
+        // Continue in mode 4
         pre_mode = MODE_M4;
-        return true;
-      }
-      //consider keep on the ground
-      pre_mode = MODE_M4;
-      return false;
-      
+        return false;
     }
-/*
-  if(pre_mode == MODE_M1){
-    if (pre_height - height > 2 ) { //up
-      return false;
-    }
-    if (pre_height - height < 2 ) { //down
-      pre_mode = MODE_M2;
-      return false;
-    }   
-    //not change
-    pre_mode =MODE_M2;
-    return false;
-   }
 
-   if(pre_mode == MODE_M2){
-    if (pre_height - height > 2 ) { //up
-      return false;
-    }
-    if (pre_height - height < 2 ) { //down
-      pre_mode = MODE_M3;
-      ExpAbsPhase = NextAbsPhase;
-      NextAbsPhase = NextAbsPhase + PhaseWidths[2];
-      mode_list[1] = t; // update time
-      stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
-      up = false; //going down
-      pre_mode = MODE_M3;
-      t = 0; //reset time
-      return true;
-    }   
-    //not change
-    return false;
-   }
-
-  if(pre_mode == MODE_M3){
-    if(height > simulation::Threshold_mode4){
-      pre_mode = MODE_M4;
-     //switch from 3-4
-      UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
-      ExpAbsPhase = NextAbsPhase;
-      NextAbsPhase = NextAbsPhase + PhaseWidths[0];
-      mode_list[1] = t;// update mode 3 time
-      t=0;
-      stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
-      pre_mode = MODE_M4;
-      up=false;
-      return true;
-    }   
-    //not change
-    return false;
-   }
-
-   if(pre_mode == MODE_M4){
-     if (pre_height - height > 2 ) { //up
-      ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidths[1];//current mode 1
+    if (pre_height - height > 2) { // lifting up
+        if (pre_mode == MODE_M3) {
+            return false; // Nothing changes, must go to mode 4 first
+        }
+        if (pre_mode == MODE_M4) {
+            // Switch from mode 4 to mode 1
+            ExpAbsPhase = NextAbsPhase;
+            NextAbsPhase = NextAbsPhase + PhaseWidth[1]; // current mode 1
             mode_list[0] = t; // update mode 4 time
-            stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace
+            stepPaceUpdate = 1 / (mode_list[0] + mode_list[1] + mode_list[2]);
             up = true;
             pre_mode = MODE_M1;
             t = 0; // reset time
             return true;
-    }
-    //not change
-    return false;
-   }
-
-*/
-    
-
-    ///hier are mode 123
-    if (pre_height - height > 2 ) { //lifting up
-       if (pre_mode == MODE_M3) { 
-           //nothing change, must went to mlde 4 then allowed wen to mode 1
-           return false;
-           
-           /* up = false;
-            pre_mode = MODE_M4;
-            mode_list[2] =t; //update mode3 time
-            t=0;//reset time
-            UpdatePhaseWidths(simulation::PhaseWidthWeight, mode_list,PhaseWidths);
-
-            ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidths[0];//+current mode width 
-            stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace [mode 4, 12, 3]
-            return true;*/
         }
-        if (pre_mode == MODE_M4) { // switch mode from 4-1
-            //pre mode 4 then update phase width
-            ExpAbsPhase = NextAbsPhase;
-            NextAbsPhase = NextAbsPhase + PhaseWidth[1];//current mode 1
-            mode_list[0] = t; // update mode 4 time
-            stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]); //update pace
+        if (pre_mode == MODE_M2 || pre_mode == MODE_M1) {
+            // If pre is mode 2 or 1, switch to mode 1
             up = true;
             pre_mode = MODE_M1;
-            t = 0; // reset time
-            return true;     
+            return false;
+        }
+    } else if (height - pre_height > 2) { // going down
+        vibrate_counter += height - pre_height;
+        if (pre_mode == MODE_M1) {
+            // Combine modes 2 and 1 as mode 1
+            up = true;
+            pre_mode = MODE_M2;
+            return false;
         }
         if (pre_mode == MODE_M2) {
-        //if pre is mode 2/1 do nothing 
-        up = true;
-        pre_mode = MODE_M1;
-        }
-        return false;
-     } else if (height - pre_height >2 ) { // going down
-        //update vibrate counter
-        vibrate_counter  = vibrate_counter + height - pre_height;
-        //if pre is 1 insert 2
-        if (pre_mode == MODE_M1) {
-            up = true;
-            pre_mode = MODE_M2; // donothing
-            return false; // 2 and 1 combined as 1 mode
-        }
-        if (pre_mode == MODE_M2) { // switch mode  from 2-3
+            // Switch from mode 2 to mode 3
             ExpAbsPhase = NextAbsPhase;
             NextAbsPhase = NextAbsPhase + PhaseWidth[2];
             mode_list[1] = t; // update time
-            stepPaceUpdate = 1/(mode_list[0]+mode_list[1]+mode_list[2]);
-            up = false; //going down
+            stepPaceUpdate = 1 / (mode_list[0] + mode_list[1] + mode_list[2]);
+            up = false; // going down
             pre_mode = MODE_M3;
-            t = 0; //reset time
+            t = 0; // reset time
             return true;
         }
-        return false;
     } else {
-        // not moving here and also not on the ground/not mode 4  
-        //do nothing  
+        // Not moving and not on the ground (not mode 4)
         if (up) {   
             pre_mode = MODE_M2;
             return false;
@@ -313,8 +227,9 @@ bool update_mode(int height, int pre_height, bool& up, int& pre_mode, float& t, 
         pre_mode = MODE_M3;
         return false;
     }
-}
 
+    return false;
+}
 
 /************* ************* Setup - ************* ********************/
 /************* ************* Setup - ************* ********************/
