@@ -1164,7 +1164,7 @@ MonoBehaviour:
   player: {fileID: 389275170}
   turnController: {fileID: 322543696}
   turnButton: 3
-  csvFilePath: CSVData/MovePathData/45x1PathDataKeyboard.csv
+  csvFilePath: CSVData/MovePathData/45PK.csv
 --- !u!114 &322543699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,6 +1268,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 379446332715793688, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 379446332715793688, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: turnController
       value: 
       objectReference: {fileID: 322543696}
@@ -1297,6 +1301,10 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 3e344e113cefb43219f57122cdecd5e6, type: 2}
     - target: {fileID: 5944517683728468128, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6161945522201975949, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
@@ -1354,6 +1362,10 @@ PrefabInstance:
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8037118028109405536, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8037118028109405536, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: moveController

@@ -454,7 +454,7 @@ MonoBehaviour:
   player: {fileID: 17480253}
   turnController: {fileID: 322543696}
   turnButton: 5
-  csvFilePath: CSVData/MovePathData/12PathDataLoco.csv
+  csvFilePath: CSVData/MovePathData/12PL.csv
 --- !u!114 &322543699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,6 +494,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4083121104728557410, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_SizeDelta.x
       value: 1770.69
@@ -510,13 +514,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -101.3
       objectReference: {fileID: 0}
+    - target: {fileID: 4409383621008593390, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4d976f94313bb2b4e9e44902e3c678a4, type: 2}
     - target: {fileID: 5944517683728468128, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6161945522201975949, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath
-      value: CSVData/ArduinoData/\arduino12.csv
+      value: CSVData/ArduinoData/AD12.csv
       objectReference: {fileID: 0}
     - target: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Name
@@ -577,6 +589,10 @@ PrefabInstance:
     - target: {fileID: 9112831516071071079, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: fileName
       value: CSVData/PositionData/PPR12.csv
+      objectReference: {fileID: 0}
+    - target: {fileID: 9112831516071071079, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5867154226613311669, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}

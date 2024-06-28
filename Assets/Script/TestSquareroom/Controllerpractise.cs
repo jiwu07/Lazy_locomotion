@@ -39,11 +39,15 @@ public class Controllerpractise : MonoBehaviour
 
     void LoadNextScene()
     {
-        player.GetComponent<ArduinoComPort>().OnApplicationQuit();
+        player.GetComponent<SimplePlayerArduino>().UsingComPort = false;  // player cannot move
+        player.GetComponent<SimplePlayerArduino>().enabled = false;  // player cannot move
+
         Animator animator = player.GetComponent<Animator>();
         animator.SetFloat("Forward", 0);
         animator.SetFloat("Pace", 0);
         animator.SetFloat("Phase", 0);
+        player.GetComponent<ArduinoComPort>().OnApplicationQuit();
+        player.GetComponent<ArduinoComPort>().enabled = false;  // player cannot move
 
         SceneManager.LoadScene(nextSceneName);
     }

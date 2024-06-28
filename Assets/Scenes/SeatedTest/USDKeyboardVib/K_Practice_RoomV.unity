@@ -391,7 +391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: fileName
-      value: CSVData/PositionData/PPRKMST2Vcsv
+      value: CSVData/PositionData/PPRKMST2V.csv
       objectReference: {fileID: 0}
     - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled

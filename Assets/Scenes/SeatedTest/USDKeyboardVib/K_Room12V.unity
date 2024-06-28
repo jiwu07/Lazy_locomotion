@@ -1064,7 +1064,7 @@ MonoBehaviour:
   player: {fileID: 17480253}
   turnController: {fileID: 322543696}
   turnButton: 5
-  csvFilePath: CSVData/MovePathData/12PathDataKeyboardV.csv
+  csvFilePath: CSVData/MovePathData/12PKV.csv
 --- !u!114 &322543698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1254,7 +1254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: fileName
-      value: CSVData/PositionData/PPRK12Vcsv
+      value: CSVData/PositionData/PPRK12V.csv
       objectReference: {fileID: 0}
     - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled

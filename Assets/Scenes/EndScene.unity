@@ -315,6 +315,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5944517683728468128, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6280654997721643082, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_text
       value: All mission are completed ! you can remove the headset now.

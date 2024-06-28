@@ -33,6 +33,7 @@ public class SimplePlayerArduino : MonoBehaviour
             float PhDiff = ArduinoComPort.Phase - phase;
             forw = forw*(1-w) + PhDiff/Time.deltaTime*w;
             animator.SetFloat("Forward", forw);
+            //animator.SetFloat("Forward", 1);
 
             animator.SetFloat("Pace", ArduinoComPort.Pace*1.5f);
 

@@ -30,7 +30,7 @@ EditorBuildSettings:
     path: Assets/Scenes/SeatedTest/USD/MainTestScene.unity
     guid: cf1173fffe0be449b99ef11483467425
   - enabled: 1
-    path: Assets/Scenes/SeatedTest/USD/Practice_Room.unity
+    path: Assets/Scenes/SeatedTest/USD/MST2.unity
     guid: 9e89afbcd92f749de9ef4b798bbc1e64
   - enabled: 1
     path: Assets/Scenes/SeatedTest/USD/Room12.unity
@@ -45,10 +45,10 @@ EditorBuildSettings:
     path: Assets/Scenes/SeatedTest/USD/Room25.unity
     guid: f48d365f8dc414d78ab9af2dca4ca5d9
   - enabled: 1
-    path: Assets/Scenes/LearningTest/LearningTestKeyboard.unity
+    path: Assets/Scenes/LearningTest/LTKV.unity
     guid: 1e1db69abf17e4d6787928d90f014d51
   - enabled: 1
-    path: Assets/Scenes/LearningTest/LearningTestLoco.unity
+    path: Assets/Scenes/LearningTest/LTL.unity
     guid: 686cf3fdeab4b4b44b087a24da5962a6
   - enabled: 1
     path: Assets/Scenes/MSQTest/Keyboard.unity
@@ -65,6 +65,30 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndScene.unity
     guid: 8c5ea42703c0d48379ed8b36cf71382c
+  - enabled: 1
+    path: Assets/Scenes/SeatedTest/USDKeyboardVib/KMSTV.unity
+    guid: 3e9f82f3224408a409a6344c3e24ca5a
+  - enabled: 1
+    path: Assets/Scenes/SeatedTest/USDKeyboardVib/K_MainTestSceneV.unity
+    guid: ef7f195488a59794fb8855ebc50fa965
+  - enabled: 1
+    path: Assets/Scenes/SeatedTest/USDKeyboardVib/K_Practice_RoomV.unity
+    guid: 6f44fa29489e2ea478955a81ce9329f2
+  - enabled: 1
+    path: Assets/Scenes/SeatedTest/USDKeyboardVib/K_Room12V.unity
+    guid: 51b601eeff1821d44a2a953382e0dc80
+  - enabled: 1
+    path: Assets/Scenes/SeatedTest/USDKeyboardVib/K_Room25V.unity
+    guid: fc4bd109657c9874e98ad38a1ed1d70b
+  - enabled: 1
+    path: Assets/Scenes/SeatedTest/USDKeyboardVib/K_Room40V.unity
+    guid: 265328c77198a9249a1a0cb3c7bf0c77
+  - enabled: 1
+    path: Assets/Scenes/SeatedTest/USDKeyboardVib/K_Room45x1V.unity
+    guid: 8df981c073937bc42951d77a7d9ee180
+  - enabled: 1
+    path: Assets/Scenes/SeatedTest/USD/MST.unity
+    guid: 002fab3c3200e924a992b549b0dfeaec
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}

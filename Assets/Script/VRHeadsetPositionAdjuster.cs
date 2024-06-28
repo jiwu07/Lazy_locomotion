@@ -11,7 +11,8 @@ public class VRHeadsetPositionAdjuster : MonoBehaviour
     public Transform headPosition;
 
     public bool isCalibrate;
-    public Vector3 offsetZ = new Vector3(-0.03f,0.025f,0.2f);
+     Vector3 offsetZ = new Vector3(0f,0.035f,0.5f);
+    float startTime;
 
 
 
@@ -20,6 +21,8 @@ public class VRHeadsetPositionAdjuster : MonoBehaviour
         headPosition = avatarHead.transform;
         offset = headPosition.position - Camera.main.transform.position;
         //transform.position = headPosition.position - offset;
+        float startTime = Time.time;
+
         Calibrate();
 
     }
@@ -34,7 +37,7 @@ public class VRHeadsetPositionAdjuster : MonoBehaviour
     void Update()
     {
         offset = headPosition.position - Camera.main.transform.position;
-        if (isCalibrate)
+        if (isCalibrate && Time.time-startTime >1)
         {
             Calibrate();
             isCalibrate = false;
