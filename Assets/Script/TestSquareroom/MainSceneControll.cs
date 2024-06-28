@@ -50,6 +50,9 @@ public class MainSceneControll : MonoBehaviour
             animator.SetFloat("Forward", 0);
             animator.SetFloat("Pace", 0);
             animator.SetFloat("Phase", 0);
+            player.GetComponent<SimplePlayerArduino>().UsingComPort = false;
+            player.GetComponent<SimplePlayerArduino>().enabled = false;
+            player.GetComponent<ArduinoComPort>().enabled = false;
 
             SceneManager.LoadScene(nextSceneName);
         }
