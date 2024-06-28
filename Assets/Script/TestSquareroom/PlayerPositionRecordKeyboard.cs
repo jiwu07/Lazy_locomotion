@@ -35,6 +35,6 @@ public class PlayerPositionRecordKeyboad : MonoBehaviour
     void OnApplicationQuit()
     {
         // Close the StreamWriter when the application quits
-        writer.Close();
+       // writer.Close();
     }
 }

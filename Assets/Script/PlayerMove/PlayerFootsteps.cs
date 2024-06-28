@@ -17,7 +17,7 @@ public class PlayerFootsteps : MonoBehaviour
     // This method will be called from animation events for left footstep
     public void PlayLeftFootstepSound()
     {
-        if (audioSource != null && leftFootstepSound != null)
+        if (audioSource != null && leftFootstepSound != null )
         {
             audioSource.PlayOneShot(leftFootstepSound);
         }

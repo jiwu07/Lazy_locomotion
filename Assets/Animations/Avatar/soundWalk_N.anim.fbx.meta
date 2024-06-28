@@ -60,15 +60,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.3004292
+      - time: 0.30038193
         functionName: PlayLeftFootstepSound
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 14096e722874b8341b893cd7be9d174e, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.7690139
-        functionName: PlayLeftFootstepSound
+      - time: 0.82662284
+        functionName: PlayRightFootstepSound
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 14096e722874b8341b893cd7be9d174e, type: 3}
         floatParameter: 0

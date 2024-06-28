@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4635741472297725461
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1316,8 +1316,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14096e722874b8341b893cd7be9d174e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftFootstepSound: {fileID: 0}
-  rightFootstepSound: {fileID: 0}
+  leftFootstepSound: {fileID: 8300000, guid: 5654acac1aa220049b31e7f48d8d7693, type: 3}
+  rightFootstepSound: {fileID: 8300000, guid: 82252f47c2a60e3438d62f6ed2c466e0, type: 3}
   audioSource: {fileID: 1122167943907742511}
 --- !u!82 &1122167943907742511
 AudioSource:

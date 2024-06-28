@@ -6,7 +6,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class KeyBoardControll : MonoBehaviour
 {
 
-     float moveSpeed = 1f; 
+     float moveSpeed = 1f;
+    float offset = 0.05f;
     public Animator animator;
 
     public XRController moveController;
@@ -25,8 +26,8 @@ public class KeyBoardControll : MonoBehaviour
             
             if (pressed)
             {
-                if(moveSpeed<1) { moveSpeed = 1; }
-                moveSpeed *= moveSpeed * 1.001f;
+                // if(moveSpeed==0) { moveSpeed = 1f; }
+                moveSpeed += 0.03f;
                 moveSpeed = Mathf.Min(moveSpeed, maxSpeed);
                 animator.SetFloat("Speed",moveSpeed);
                 animator.SetFloat("f", 1);
@@ -38,9 +39,10 @@ public class KeyBoardControll : MonoBehaviour
             //animator.SetFloat("Speed", Mathf.Max(moveSpeed, 0));
             Debug.Log(moveSpeed);
 
-            moveSpeed = moveSpeed * 0.95f;
+            moveSpeed = moveSpeed * 0.8f;
+            if(moveSpeed < 0.1) { moveSpeed = 0; }
             animator.SetFloat("Speed", Mathf.Max(moveSpeed, 0f));
-            player.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            player.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime * offset);
 
 
         }

@@ -59,7 +59,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.302172
+        functionName: PlayLeftFootstepSound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 14096e722874b8341b893cd7be9d174e, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8293542
+        functionName: PlayRightFootstepSound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 14096e722874b8341b893cd7be9d174e, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -911,8 +925,7 @@ ModelImporter:
     hasTranslationDoF: 1
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 36078ab0369161e49a29d349ae3e0739,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 36078ab0369161e49a29d349ae3e0739, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1

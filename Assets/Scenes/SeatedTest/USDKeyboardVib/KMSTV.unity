@@ -350,9 +350,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 379446332715793688, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 379446332715793688, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: turnController
       value: 
       objectReference: {fileID: 1044794951}
+    - target: {fileID: 1122167943907742511, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: Pan2D
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1122167943907742511, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -360,6 +368,18 @@ PrefabInstance:
     - target: {fileID: 1963778228587659423, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963778228587659423, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: leftFootstepSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 82252f47c2a60e3438d62f6ed2c466e0, type: 3}
+    - target: {fileID: 1963778228587659423, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: rightFootstepSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 5654acac1aa220049b31e7f48d8d7693, type: 3}
+    - target: {fileID: 2297720484843064326, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2903268009545728891, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: fileName
@@ -369,6 +389,10 @@ PrefabInstance:
       propertyPath: Controller
       value: 
       objectReference: {fileID: 1044794951}
+    - target: {fileID: 6161945522201975949, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6961082274626998574, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Name
       value: player
@@ -412,6 +436,10 @@ PrefabInstance:
     - target: {fileID: 7769109433918507924, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8037118028109405536, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8037118028109405536, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: moveController
