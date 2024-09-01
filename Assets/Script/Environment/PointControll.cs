@@ -8,7 +8,7 @@ public class PointControll : MonoBehaviour
     {
        //point disappear
             gameObject.SetActive(false);
-        //play a sound ？
+        
         
     }
 

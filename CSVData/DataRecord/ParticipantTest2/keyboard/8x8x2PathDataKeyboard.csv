@@ -1,9 +1,0 @@
-N,X,Y,Z
-point 1,0,-0.5,0
-point 2,0,-0.5,8
-point 3,8,-0.5,8
-point 4,8,-0.5,0
-turn 1,0,0,3
-turn 2,2,0,3
-turn 3,2,0,0
-turn 4,0,0,0

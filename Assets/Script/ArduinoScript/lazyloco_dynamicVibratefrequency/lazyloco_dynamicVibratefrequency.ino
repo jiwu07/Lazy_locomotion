@@ -354,9 +354,10 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
 
   /********************Vibration - start **********************/
   //vibrate when foot putting down
-  float temp =1/(xhatL[1]+xhatR[1])/2;
-  waveformL.frequency(temp*0.5 + augmentation::kFrequency *0.5);
- waveformR.frequency(temp*0.5 + augmentation::kFrequency *0.5);
+  float temp = (xhatL[1]+xhatR[1])/2*100;
+  // Serial.println(temp*0.8 );
+ waveformL.frequency(temp);
+ waveformR.frequency(temp);
  update_vibrate(vibrate_counterL,a1,waveformL);
  update_vibrate(vibrate_counterR,a0, waveformR);
 

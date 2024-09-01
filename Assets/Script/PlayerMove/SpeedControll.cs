@@ -33,7 +33,7 @@ public class SpeedControll : MonoBehaviour
 
         //data writing
         fileWriter = new StreamWriter(filePath);
-        fileWriter.WriteLine("Time,A0,A1,V"); // Adjust column headers as needed
+        fileWriter.WriteLine("Time,A0,A1,V"); 
 
         //animation
         animator = GetComponent<Animator>();
@@ -51,7 +51,7 @@ public class SpeedControll : MonoBehaviour
 
        // data consists of time, sensor1 data, and sensor2 data, velocity, isjump
        float time =count  * timeInterval;
-	count ++; 
+	   count ++; 
        int A0 = int.Parse(dataArray[0]) ; 
        int A1 = int.Parse(dataArray[1]) ; 
        V = int.Parse(dataArray[2]);

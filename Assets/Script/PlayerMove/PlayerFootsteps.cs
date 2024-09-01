@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PlayerFootsteps : MonoBehaviour
 {
-    public AudioClip leftFootstepSound; // Left footstep sound clip
-    public AudioClip rightFootstepSound; // Right footstep sound clip
-    public AudioSource audioSource; // AudioSource to play the sound
+    public AudioClip leftFootstepSound; 
+    public AudioClip rightFootstepSound; 
+    public AudioSource audioSource; 
 
     void Start()
     {
@@ -14,7 +14,6 @@ public class PlayerFootsteps : MonoBehaviour
         }
     }
 
-    // This method will be called from animation events for left footstep
     public void PlayLeftFootstepSound()
     {
         if (audioSource != null && leftFootstepSound != null )
@@ -23,7 +22,6 @@ public class PlayerFootsteps : MonoBehaviour
         }
     }
 
-    // This method will be called from animation events for right footstep
     public void PlayRightFootstepSound()
     {
         if (audioSource != null && rightFootstepSound != null)

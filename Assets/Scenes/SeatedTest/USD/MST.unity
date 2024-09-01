@@ -1951,7 +1951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: filePath
-      value: CSVData/ArduinoData/AD12.csv
+      value: CSVData/ArduinoData/ADMST.csv
       objectReference: {fileID: 0}
     - target: {fileID: 6534508955188544781, guid: 353b26276dd2e6c47a239161ec3551e7, type: 3}
       propertyPath: m_Enabled
@@ -9743,7 +9743,7 @@ PrefabInstance:
       objectReference: {fileID: 389275169}
     - target: {fileID: 3877558964272671576, guid: bfb59090fe793cb42b90ea157870d3c4, type: 3}
       propertyPath: nextSceneName
-      value: MST2
+      value: MainTestScene
       objectReference: {fileID: 0}
     - target: {fileID: 5817304098257941643, guid: bfb59090fe793cb42b90ea157870d3c4, type: 3}
       propertyPath: m_LocalPosition.x

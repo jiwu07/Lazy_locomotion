@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class KeyBoardControll : MonoBehaviour
 {
 
-     float moveSpeed = 1f;
+    float moveSpeed = 1f;
     float offset = 0.05f;
     public Animator animator;
 

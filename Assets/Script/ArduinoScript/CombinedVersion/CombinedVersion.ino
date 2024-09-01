@@ -258,10 +258,8 @@ void loop() {
   using namespace simulation;
   // Read analog input from A0
   a0 = analogRead(A0);
- // a0 = map(analogValueA0, 0, 1023, 0, 255);
   // Read analog input from A1
   a1 = analogRead(A1);
-  //a1 = map(analogValueA1, 0, 1023, 0, 255);
 
   unsigned long currentMillis = millis();  // current time
   
@@ -315,36 +313,14 @@ KalmanFilter(ExpAbsPhaseR, AbsStepPace, (float*) xhatR, dt, (float*)P_apostR);
   }
   
   //send to unity 
-//currentMillis = millis();
- //if (currentMillis - previousMillisUnity >= time_interval_Unity) {
   if (PrintEvery == 10) {
+    Serial.print(a0);
+    Serial.print(',');
+    Serial.print(a1);
+    Serial.print(',');
 
-  //  previousMillisUnity = currentMillis;
-  //Serial.print(currentMillis);
-  //Serial.print(',');
-  Serial.print(a0);
-  Serial.print(',');
-  Serial.print(a1);
-  Serial.print(',');
-  //Serial.print(pre_mode_L);
- //Serial.print(',');
-  //Serial.print(pre_mode_R);
-  //Serial.print(',');
-  //Serial.print(Mode_L[0]);
-  //Serial.print(',');
-  //Serial.print(Mode_L[1]);
-  //Serial.print(',');
-  //Serial.print(Mode_R[0]);
-  //Serial.print(',');
-  //Serial.print(Mode_R[1]);
-  //Serial.print(',');
-  // Serial.print(AbsStepPace);
     Serial.print((xhatL[1]+xhatR[1])/2);
-  //  Serial.print(" , ");
-    //Serial.print(delta_tl);
-      //  Serial.print(" , ");
- //Serial.print(delta_tr);
-        Serial.print(" , ");
+    Serial.print(" , ");
     Serial.println((xhatL[0]+xhatR[0])/2);
     PrintEvery =0;
   }

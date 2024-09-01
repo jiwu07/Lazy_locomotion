@@ -407,7 +407,7 @@ MonoBehaviour:
   nextSceneName: EndScene
   text: {fileID: 389275169}
   point1: {fileID: 857474435}
-  point2: {fileID: 977841956}
+  point2: {fileID: 443790720}
   point3: {fileID: 977841956}
   point4: {fileID: 1704032682}
   player: {fileID: 17480253}
