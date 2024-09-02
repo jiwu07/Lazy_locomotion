@@ -15,7 +15,8 @@ public class FadeToBlack : MonoBehaviour
     {
         initialColor = overlayImage.color;
         initialColor.a = 0f;
-        overlayImage.color = initialColor; 
+        overlayImage.color = initialColor;
+    }
 
     void Update()
     {
